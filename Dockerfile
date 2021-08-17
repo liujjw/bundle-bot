@@ -11,3 +11,5 @@ RUN npm install
 # COPY . /code
 
 CMD ["node", "scripts/compound.js"]
+
+# redis install script
