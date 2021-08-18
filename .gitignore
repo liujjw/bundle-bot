@@ -3,3 +3,4 @@ built
 artifacts
 redis-stable
 .env
+cache
