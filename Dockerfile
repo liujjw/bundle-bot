@@ -13,3 +13,7 @@ RUN npm install
 CMD ["node", "scripts/compound.js"]
 
 # redis install script
+# wget http://download.redis.io/redis-stable.tar.gz
+# tar xvzf redis-stable.tar.gz
+# cd redis-stable
+# make
