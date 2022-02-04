@@ -21,15 +21,24 @@ async function main() {
         // what to do with queued?
         // instantaneous
         let content = (await provider.send("txpool_content")).pending;   
-        for(let account in content) {
-            for(let tx in account) {
+        for(let [account, txs] of Object.entries(content)) {
+            for(let [nonce, tx] of Object.entries(txs)) {
                 if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
+
+                    ///
+                    logger.log('found a tx to frontrun');
+                    process.exit(0);
+                    ///
                     fetch(`http://localhost${LOCAL.RUNNER_PORT}/priceUpdate`, {
                         method: "POST",
                         headers: "Content-Type: application/json",
                         body: JSON.stringify(tx)
                     });
                 } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
+                    ///
+                    logger.log('found a tx to frontrun');
+                    process.exit(0);
+                    ///
                     fetch(`http://localhost${LOCAL.RUNNER_PORT}/paramUpdate`, {
                         method: "POST",
                         headers: "Content-Type: application/json",
