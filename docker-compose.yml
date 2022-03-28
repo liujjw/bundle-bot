@@ -1,5 +1,6 @@
 version: '3'
 # todo 
+# todo remove bind mount (volumes) for prod
 services:
   bot:
     image: bot:0.1
