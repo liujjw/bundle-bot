@@ -1,26 +1,24 @@
 {
-  "name": "defi-bot-2",
+  "name": "defi-bot",
   "version": "1.0.0",
-  "description": "In `.env` file in project root put various keys for `dotenv` module to load. Ensure real provider endpoints are set. Prod env should be AWS ECS.",
+  "description": "",
   "main": "hardhat.config.js",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "check": "node ./scripts/startup.js",
-    "test": "npx hardhat test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liujjw/defi-bot-2.git"
+    "url": "git+https://github.com/liujjw/defi-bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/liujjw/defi-bot-2/issues"
+    "url": "https://github.com/liujjw/defi-bot/issues"
   },
-  "homepage": "https://github.com/liujjw/defi-bot-2#readme",
+  "homepage": "https://github.com/liujjw/defi-bot#readme",
   "devDependencies": {
     "@ethereumjs/common": "^2.3.1",
     "@ethereumjs/tx": "^3.2.1",
