@@ -8,13 +8,14 @@ services:
 #       - "5000:5000"
 #      volumes:
 #       - ./*:$HOME/bot
+    environment:
+      - REDIS_ENDPOINT=http://redis:6379/
+
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
-#     environment:
-#       - API_ENDPOINT=http://api:5000/api/
 
 #  mempool:
-#    ?
+#    ? download and run turbogeth txpool
 
