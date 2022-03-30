@@ -15,5 +15,4 @@ services:
       - "6379:6379"
     environment:
       - API_ENDPOINT=http://api:5000/api/
-    volumes:
-      - ./www:/var/www/html
+
