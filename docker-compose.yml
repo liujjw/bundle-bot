@@ -7,8 +7,8 @@ services:
     build: ./
     ports:
       - "5000:5000"
-     volumes:
-      - ./*:$HOME/bot
+#      volumes:
+#       - ./*:$HOME/bot
   redis:
     image: redis:latest
     ports:
