@@ -9,7 +9,7 @@ services:
 #      volumes:
 #       - ./*:$HOME/bot
     environment:
-      - REDIS_ENDPOINT=http://redis:6379/
+      - REDIS_ENDPOINT=redis://redis:6379/
 
   redis:
     image: redis:latest
