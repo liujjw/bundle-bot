@@ -3,6 +3,7 @@ FROM node:16.3.0
 WORKDIR $HOME/bot
 COPY ./* $HOME/bot/
 RUN npm install
+ENV REDIS_ENDPOINT="http://localhost:6379"
 
 CMD ["npx", "hardhat", "node", "&&", "npx", "hardhat", "test"]
 # CMD ["node", "scripts/Runner.js"]
