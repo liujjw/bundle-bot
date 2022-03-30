@@ -4,7 +4,7 @@ version: '3'
 services:
   bot:
     image: bot:0.1
-    build: ./bot
+    build: ./
     ports:
       - "5000:5000"
      volumes:
