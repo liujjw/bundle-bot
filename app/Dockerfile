@@ -1,7 +1,7 @@
 FROM node:16.3.0
 
-WORKDIR $HOME/bot
-COPY ./../* $HOME/bot/
+WORKDIR $HOME
+COPY ./../* $HOME
 RUN npm install
 
 CMD ["npx", "hardhat", "node", "&&", "npx", "hardhat", "deploy", "&&", "npx", "hardhat", "test"]
