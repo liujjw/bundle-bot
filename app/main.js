@@ -2,9 +2,10 @@ const { fork } = require('child_process');
 const { ethers } = require("ethers");
 
 const AccountsDbClient = require("../lib/AccountsDbClient");
-const { ABIS, ADDRS } = require('../lib/Constants');
-const winston = require('winston');
-let logger = winston.createLogger({
+const { ABIS, ADDRS, PARAMS } = require('../lib/Constants');
+const { createLogger, format, transports } = require('winston');
+
+let logger = createLogger({
     level: 'info',
     format: format.combine(
         format.timestamp({
@@ -16,13 +17,13 @@ let logger = winston.createLogger({
     ),
     defaultMeta: { service: 'main.js' },
     transports: [
-        new winston.transports.File({ filename: 'error.log', level: 'error'}),
-        new winston.transports.File({ filename: 'combined.log' }),
+        new transports.File({ filename: 'error.log', level: 'error'}),
+        new transports.File({ filename: 'combined.log' }),
     ],
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
+    logger.add(new transports.Console({
       format: format.combine(
         format.colorize(),
         format.simple()
@@ -47,10 +48,6 @@ let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_
 let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
 
 async function updateAccounts() {
-    // let provider = new ethers.providers.JsonRpcProvider();
-    // let provider = new ethers.providers.InfuraProvider(1, process.env.INFURA_KEY);
-    // FEATURE try websockets, look at docs tho
-
     while(true) {
         let blockNumber = await store.fetchLatestSyncedBlockNumber();
         try {   
@@ -60,14 +57,11 @@ async function updateAccounts() {
             continue;
         }
         logger.info(`updated db accounts around ${blockNumber}`);
-        // dont wait, since existing accounts may update frequently, even though new accounts usually dont have shortfall
-        // await sleep(3600000);
+        await sleep(PARAMS.DB_UPDATE_ACCOUNTS_SLEEP_MS);
     }
 }
 
 async function updateParams() {
-    // about 13 second average block time
-    // 8 secs already
     while(true) {
         try {   
             await store.setCompoundParams(); 
@@ -75,23 +69,21 @@ async function updateParams() {
             logger.error(`error updating db params with error ${e}`);
             continue;
         }
-        await sleep(5000);
-        // about 15 seconds between updates
-        // logger.info(`updated db params`);
+        await sleep(PARAMS.DB_UPDATE_PARAMS_SLEEP_MS);
+        logger.info(`updated db params`);
     }
 }
 
 async function main() {
     updateParams();
     updateAccounts();
-    // await sleep(80000); STARTUP reactivate?
+    await sleep(PARAMS.WAIT_TIME_FOR_DB_TO_INIT_MS);
     fork(__dirname + "/runner.js");    
     fork(__dirname + "/stalker.js");
 }
 
 logger.info(`started ${__filename} ${process.pid}`);
 main().catch(e => {
-    console.error("UNCAUGHT ERROR:", e)
-    process.exit(1);
+    logger.error(`uncaught error in main ${e}`);
 });
 

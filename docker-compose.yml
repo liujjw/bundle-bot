@@ -3,24 +3,31 @@ version: '3'
 services:
   bot:
     image: bot:0.1
-    build: ./lib/app
+    build: ./app
     environment:
       - REDIS_ENDPOINT=redis://redis:6379/
       - REDIS_HOST=localhost
       - REDIS_PORT=6379
       - REDIS_TEST_PORT=6380
-      # set by hardhat deploy command
       # - BOT_ADDR=0x0
       - PROVIDER_ENDPOINT=http://localhost:8545 
       - RUNNER_ENDPOINT=http://localhost:5000
       - RUNNER_PORT=5000
       - NODE_ENV=development
+      - IPC_PROVIDER_ENDPOINT=/root/.ethereum/geth.ipc
+      - WS_PROVIDER_ENDPOINT=ws://localhost:8545
+    depends_on:
+      - redis
+      - mempool
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
     # try using docker-compose exec redis redis-cli monitor for logs 
   mempool:
+  # --txpool.globalslots=150000
+  # --maxpeers=500
+  # filter only tx that come from a certain address relevant for us
     image: ethereum/client-go
     volumes: 
       - /d/ethereum:/root

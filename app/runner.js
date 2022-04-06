@@ -1,7 +1,6 @@
 const Runner = require('../lib/Runner');
-const Logger = require('../lib/Logger');
-const winston = require('winston');
-let logger = winston.createLogger({
+const { createLogger, format, transports } = require('winston');
+let logger = createLogger({
     level: 'info',
     format: format.combine(
         format.timestamp({
@@ -13,13 +12,13 @@ let logger = winston.createLogger({
     ),
     defaultMeta: { service: 'runner.js' },
     transports: [
-        new winston.transports.File({ filename: 'error.log', level: 'error'}),
-        new winston.transports.File({ filename: 'combined.log' }),
+        new transports.File({ filename: 'error.log', level: 'error'}),
+        new transports.File({ filename: 'combined.log' }),
     ],
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
+    logger.add(new transports.Console({
       format: format.combine(
         format.colorize(),
         format.simple()

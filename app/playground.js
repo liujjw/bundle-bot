@@ -2,12 +2,12 @@
 
 const { AbiCoder } = require('@ethersproject/abi');
 const { ethers } = require('hardhat');
-const { ADDRS, ABIS, ENDPOINTS } = require('../lib/Constants');
+const { ADDRS, ABIS, ENDPOINTS } = require('./lib/Constants');
 const Uniswap = require("@uniswap/sdk");
 const { Token, TokenAmount } = require('@uniswap/sdk');
-const Runner = require('../lib/Runner');
-const Poller = require('../lib/Poller');
-const Utils = require('../lib/Utils');
+const Runner = require('./lib/Runner');
+const Poller = require('./lib/Poller');
+const Utils = require('./lib/Utils');
 
 // let accountsDbClinet = new AccountsDbClient();
 // while (true) {

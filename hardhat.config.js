@@ -3,8 +3,10 @@ const { assert } = require("chai");
 const { BigNumber } = require("ethers");
 const { task } = require("hardhat/config");
 const shell = require('shelljs');
-const winston = require('winston');
-let logger = winston.createLogger({
+const { createLogger, format, transports } = require('winston');
+require('dotenv').config();
+
+let logger = createLogger({
   level: 'info',
   format: format.combine(
       format.timestamp({
@@ -16,13 +18,13 @@ let logger = winston.createLogger({
   ),
   defaultMeta: { service: 'hardhat.config.js' },
   transports: [
-      new winston.transports.File({ filename: 'error.log', level: 'error'}),
-      new winston.transports.File({ filename: 'combined.log' }),
+      new transports.File({ filename: 'error.log', level: 'error'}),
+      new transports.File({ filename: 'combined.log' }),
   ],
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
+  logger.add(new transports.Console({
     format: format.combine(
       format.colorize(),
       format.simple()
@@ -64,8 +66,6 @@ task("proxy-change", "", async () => {
   
 });
 
-require('dotenv').config();
-
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -93,10 +93,6 @@ module.exports = {
     ]
   },
   networks: {
-    main_local: {
-      url: process.env.PROVIDER_ENDPOINT,
-      accounts: [process.env.MM0A5_PK]
-    },
     main_alchemy: {
       url: ENDPOINTS.ALCHEMY,
       accounts: [process.env.MM0A5_PK]
@@ -110,7 +106,6 @@ module.exports = {
     hardhat: {
       forking: {
         blockNumber: TestConstants.FORK_2.blockNumber,
-        // blockNumber: TestConstants.FORK_3.blockNumber, 
         url: ENDPOINTS.ALCHEMY
       }
     }
