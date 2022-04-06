@@ -25,10 +25,13 @@ services:
       - "6379:6379"
     # try using docker-compose exec redis redis-cli monitor for logs 
   mempool:
-  # --txpool.globalslots=150000
-  # --maxpeers=500
-  # filter only tx that come from a certain address relevant for us
     image: ethereum/client-go
+    command: 
+      - --txpool.globalslots=75000
+      - --maxpeers=250
+      - --ws 
+      - --ws.api 
+      - --eth,txpool,net,web3
     volumes: 
       - d/ethereum:/root
     ports:
