@@ -3,20 +3,29 @@ version: '3'
 services:
   bot:
     image: bot:0.1
-    build: ./
-#     ports:
-#       - "5000:5000"
-#      volumes:
-#       - ./*:$HOME/bot
+    build: ./lib/app
     environment:
       - REDIS_ENDPOINT=redis://redis:6379/
-
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+      - REDIS_TEST_PORT=6380
+      # set by hardhat deploy command
+      # - BOT_ADDR=0x0
+      - PROVIDER_ENDPOINT=http://localhost:8545 
+      - RUNNER_ENDPOINT=http://localhost:5000
+      - RUNNER_PORT=5000
+      - NODE_ENV=development
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
-# try using docker-compose exec redis redis-cli monitor for logs 
+    # try using docker-compose exec redis redis-cli monitor for logs 
+  mempool:
+    image: ethereum/client-go
+    volumes: 
+      - /d/ethereum:/root
+    ports:
+      - "8545:8545" 
+      - "30303:30303"
 
-#  mempool:
-#    ? download and run turbogeth txpool
 

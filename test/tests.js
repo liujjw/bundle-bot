@@ -1,7 +1,7 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require('../lib/AccountsDbClient');
 const TestConstants = require('./TestConstants');
-const { ABIS, ADDRS, ENDPOINTS, LOCAL } = require('../lib/Constants');
+const { ABIS, ADDRS, ENDPOINTS } = require('../lib/Constants');
 const Poller = require("../lib/Poller");
 const Utils = require('../lib/Utils');
 const Runner = require("../lib/Runner");
@@ -14,14 +14,16 @@ const Common = require("@ethereumjs/common");
 const { FeeMarketEIP1599Transaction, Transaction } = require('@ethereumjs/tx');
 const { expect } = require('chai');
 
+// require('dotenv').config({ path: __dirname + "/../.env"});
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+let provider = new ethers.providers.JsonRpcProvider(process.env.PROVIDER_ENDPOINT);
 let db = {
-        host: LOCAL.REDIS_TEST_ACCOUNTS_STORE_HOST,
-        port: LOCAL.REDIS_TEST_PORT
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
     };
 let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
 let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
@@ -36,8 +38,8 @@ describe("", async function() {
         let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
 
         let store = new AccountsDbClient({
-            host: LOCAL.REDIS_ACCOUNTS_STORE_HOST,
-            port: LOCAL.REDIS_PORT
+            host: process.env.REDIS_HOST,
+            port: process.env.REDIS_PORT
         }, provider, priceFeed, comptroller);
         // await store.setCompoundAccounts();
         console.log(await store.getSickStoredCompoundAccounts('f'));
@@ -145,7 +147,7 @@ describe("", async function() {
     });
 
     xit("live test of compound", async function() {
-        let compound = fork(__dirname + "/../scripts/compound.js");
+        let compound = fork(__dirname + "/../app/compound.js");
         process.on("SIGINT", () => {
             compound.kill();
         })

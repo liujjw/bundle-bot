@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "liquidate-site",
+  "private_key_id": "5a34f4a5a915246001d278de2fbffebf9cf3ec0e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD8H/wHFroRixKb\nOxn9doy0asWQpLe2ByBV8QWQOtKExcYdzBKLF4tBpr4D37E4+6HuSWQfmkD0Uivn\nrENPP9EYZrWo48tIviibieXh9J2+aRD+NfpGpV8B+3dIh1KiCLO2RLMVVTzBfA6J\nHi5J/wLivVUSSUOARIFBxLZ+9gXa+QwjEpTEmEbftLYNdZLd7R9kK4qcAVSlIjgn\n7sR3LCB2XIvEMFw4upOi83a2F+alXeeuK2Vtj9NPeDOWCAGibe2IsqmcWZ7qvnxn\nuqT0dNx+w/N1030ucGzcjt/euy1ZdFmFJujQ6f1nqCkDFzK6vr6+KRYe4IykXMla\nsJmgNq1ZAgMBAAECggEAA/NQ2MAWiYaVM603BKmOPhfzsUbhcYbWTv5sLMS9LnMm\nXepoCnmjlxNgpBEl1tubf48zFEsvlBxy/2nrspLQiQo387XhBipjmr9MBLC3ZYfC\nKkeIfMGj1dU9uttS9ELAZR1ZtH59yZbS5/ta9JIcNpcKnZMcDYcVQuVtCht6/0Gy\nhLX6P86/Txprlggf5yUZ0jsWYsv2EDftNhj4Qq/MhgT6qffvMF+c3pVTikYrYSCD\nxTYIO4ApU2p7RcBpo0xGMPPxi9PAsQYpaNemHAcqW4kcEQBjRmfcYPkNR/RTfov0\nMcfJIWHXRZptNvZ1+BoHnjt3YXBVpOmjcABl30xjsQKBgQD+kZt2kxOMetgjX0Zs\n56eed4A48UnXgCI7vm+Kf8ChBJYRofSazYuF/Z3mYoag8Ybg0TrVF17/J4LM/k5V\n1A0GB99IuOtAI1RGEv4VFSzWePRo8qcEM4lRgPy6lj3UrsRXuHduoSor8Nn19qUH\nyzk+ZuZbjA5hJJA+cMKjC3U90QKBgQD9itwgJd1TQI/9nGZyZhTmBsZmuv2TuUYO\niuudJh4hmNo4NPgACnlAxAr2DAdHD+OkXUj0bCfVueDZTlqPPW62Ra1EVqBxmC2O\nLVUlSJK/o4hHNG/+v/jEdKyKD6dVxOh5x3SCRzDOZJaWq+xPgTzWgI+kERGojhgu\nI6cBqDqxCQKBgDyggN3keStjtkX2Utds9EaRP0BQdr2UDpMb74SUmFPAu9zHLXIQ\nscHffNN5c4aw/uZb7h8ByeYKiuQ3TIC0V8Wv6kVvhNdpkpB9xXVP7bXGaK7120Ds\n5S88APSPA3q7hJc/n3IBgAGnAsHJU9RfWeq6pvH2kRYhlxjH0hLyj6GBAoGBAIyo\narKTDxROrxNdnyA8Lb/nZk470s4PbSRIQapvKSwuZnHkQOmU5eveVs5loev0jq/y\n6LRhBEB33Jvx8h+hTzhjs1pETMJ4UF2eHKyQdIlIqiQGnVNRISusJsR5JrZYhTh6\nRNK5uAPonfp86p647g16STYWGhvOqO9/6/jpYZYxAoGANyZw2GgzgdKK8KjNQArU\nhxKVtxp7OLm8uHlotTn8LnFp/T0qVZ9azIHril4TnwasbuS8cx8qslb4JCcu8Aqn\nBwcOfungMeXhphq3Cn40+15cEKzCQS45cC9o8bq9ZL3i2JCdmgEUg+Wiht9243Gi\nkXdu3dzEw1e5iIx68cQmpRQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "liquidate-site-service-acc@liquidate-site.iam.gserviceaccount.com",
+  "client_id": "105381328322729641365",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/liquidate-site-service-acc%40liquidate-site.iam.gserviceaccount.com"
+}

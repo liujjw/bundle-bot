@@ -43,6 +43,8 @@ interface Erc20Interface {
     function balanceOf(address _owner) external view returns (uint256 balance);
 }
 
+interface Erc20InterfaceUSDT is Erc20Interface {}
+
 interface CTokenInterface {
     function balanceOfUnderlying(address account) external returns (uint);
     function balanceOf(address owner) external view returns (uint256);
@@ -75,4 +77,27 @@ interface UniswapV2Router02 {
 interface WETHInterface is Erc20Interface {
     function deposit() payable external;
     function withdraw(uint wad) external;
+}
+
+interface WETHGateway {
+    function withdrawETH(address lendingPool, uint256 amount, address to) external;
+}
+
+interface ILendingPool {
+    function repay(
+        address asset,
+        uint256 amount,
+        uint256 rateMode,
+        address onBehalfOf
+    ) external returns (uint256);
+
+    function withdraw(
+        address asset,
+        uint256 amount,
+        address to
+    ) external returns (uint256);
+}
+
+interface ILendingPoolAddressesProvider {
+    function getLendingPool() external view returns (address);
 }
