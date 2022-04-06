@@ -1,11 +1,11 @@
 const fetch = require('node-fetch');
 const Web3 = require('web3');
-const net = require('net');
+// const net = require('net');
 const { ADDRS } = require('../lib/Constants');
 const { createLogger, format, transports } = require('winston');
 
-let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT), net);
-
+// let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT), net);
+let web3 = new Web3(new Web3.providers.WebsocketProvider(process.env.WS_PROVIDER_ENDPOINT));
 let logger = createLogger({
     level: 'info',
     format: format.combine(

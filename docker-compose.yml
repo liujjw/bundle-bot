@@ -15,7 +15,7 @@ services:
       - RUNNER_PORT=5000
       - NODE_ENV=development
       - IPC_PROVIDER_ENDPOINT=/root/.ethereum/geth.ipc
-      - WS_PROVIDER_ENDPOINT=ws://localhost:8545
+      - WS_PROVIDER_ENDPOINT=ws://localhost:8546
     depends_on:
       - redis
       - mempool
@@ -30,7 +30,7 @@ services:
   # filter only tx that come from a certain address relevant for us
     image: ethereum/client-go
     volumes: 
-      - /d/ethereum:/root
+      - d/ethereum:/root
     ports:
       - "8545:8545" 
       - "30303:30303"
