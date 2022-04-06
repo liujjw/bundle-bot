@@ -3,8 +3,8 @@ const Web3 = require('web3');
 const { ADDRS } = require('../lib/Constants');
 const { createLogger, format, transports } = require('winston');
 
-let web3 = new Web3(process.env.WS_PROVIDER_ENDPOINT);
-let web3_ipc = new Web3(process.env.IPC_PROVIDER_ENDPOINT);
+// let web3 = new Web3(process.env.WS_PROVIDER_ENDPOINT);
+let web3 = new Web3(process.env.IPC_PROVIDER_ENDPOINT);
 
 let logger = createLogger({
     level: 'info',
