@@ -25,14 +25,14 @@ if (process.env.NODE_ENV !== 'production') {
       ),
     }));
 }
-const cluster = require('cluster');
 
 async function main() {
     let runner = new Runner();
+    logger.info(`started ${__filename}`);
 }
 
-logger.info(`started ${__filename} ${process.pid}`);
-main().catch(e => logger.error(`${e}`));
+main().catch(e => logger.error(`error in ${__filename} ${e}`));
+// const cluster = require('cluster');
 // will need to ipc.config.unlink and then maybe stop server on sigint 
 // if(cluster.isPrimary) {
 //     for(let i = 0; i < 2; i++) {
