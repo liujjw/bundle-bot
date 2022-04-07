@@ -3,5 +3,4 @@ built
 artifacts
 redis-stable
 cache
-.env
 *.log
