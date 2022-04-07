@@ -2,5 +2,6 @@ node_modules
 built
 artifacts
 redis-stable
-.env
 cache
+.env
+*.log
