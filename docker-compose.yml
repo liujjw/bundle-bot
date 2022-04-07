@@ -3,7 +3,7 @@ version: '3'
 services:
   bot:
     image: bot:0.1
-    build: ./app
+    build: .
     environment:
       - REDIS_ENDPOINT=redis://redis:6379/
       - REDIS_HOST=localhost
@@ -32,8 +32,8 @@ services:
       - --ws 
       - --ws.api 
       - --eth,txpool,net,web3
-    volumes: 
-      - d/ethereum:/root
+    # volumes: 
+    #   - d/ethereum:/root
     ports:
       - "8545:8545" 
       - "30303:30303"
