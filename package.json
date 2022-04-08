@@ -26,7 +26,7 @@
     "chai": "^4.3.4",
     "ethereum-block-by-date": "^1.4.0",
     "ethereum-waffle": "^3.3.0",
-    "hardhat": "^2.3.0"
+    "hardhat": "^2.9.3"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",

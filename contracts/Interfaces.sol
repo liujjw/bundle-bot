@@ -43,8 +43,6 @@ interface Erc20Interface {
     function balanceOf(address _owner) external view returns (uint256 balance);
 }
 
-interface Erc20InterfaceUSDT is Erc20Interface {}
-
 interface CTokenInterface {
     function balanceOfUnderlying(address account) external returns (uint);
     function balanceOf(address owner) external view returns (uint256);

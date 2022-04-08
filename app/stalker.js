@@ -1,12 +1,14 @@
 const fetch = require('node-fetch');
 const Web3 = require('web3');
-// const net = require('net');
+const net = require('net');
 const { ADDRS } = require('../lib/Constants');
 const { createLogger, format, transports } = require('winston');
 
-// let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT), net);
+let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net));
+// let web3 = new Web3(new Web3.providers.IpcProvider('/d/ethereum/.ethereum/geth.ipc', net));
 // let web3 = new Web3(new Web3.providers.WebsocketProvider(process.env.WS_PROVIDER_ENDPOINT));
-let web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
+// let web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
+// let web3 = new Web3("http://localhost:8545");
 let logger = createLogger({
     level: 'info',
     format: format.combine(
@@ -42,7 +44,7 @@ async function main() {
         if (error) {
             logger.error("could not subscribe to tx pool")
         } 
-    }).on("data", async function(tx) {
+    }).on("data", function(tx) {
         if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
             logger.info('found a tx to frontrun sent to offchain agg');
             fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {

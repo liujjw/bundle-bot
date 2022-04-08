@@ -7,12 +7,13 @@ const Utils = require('../lib/Utils');
 const Runner = require("../lib/Runner");
 const AuctionBidPricer = require("../lib/AuctionBidPricer");
 
+const shell = require('shelljs');
 const { BigNumber } = require('ethers');
 const { ethers } = require('hardhat');
 const { fork } = require('child_process');
 const Common = require("@ethereumjs/common");
 const { FeeMarketEIP1599Transaction, Transaction } = require('@ethereumjs/tx');
-const { expect } = require('chai');
+const { expect, assert } = require('chai');
 
 // require('dotenv').config({ path: __dirname + "/../.env"});
 
@@ -20,20 +21,25 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let provider = new ethers.providers.JsonRpcProvider(process.env.PROVIDER_ENDPOINT);
-let db = {
+let provider = new ethers.providers.AlchemyProvider(1, process.env.ALCHEMY_KEY);
+let store = makeStoreWithProvider(provider);
+
+function makeStoreWithProvider(provider) {
+    let db = {
         host: process.env.REDIS_HOST,
         port: process.env.REDIS_PORT
     };
-let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
-let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
-let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
+    let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
+    let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
+    let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
+    return store;
+}
 
 describe("", async function() {
     this.timeout(Number.MAX_SAFE_INTEGER);
 
     xit("fetches most recent data", async function() {
-        let provider = new ethers.providers.JsonRpcProvider(ENDPOINTS.INFURA);
+        let provider = new ethers.providers.AlchemyProvider(1, process.env.ALCHEMY_KEY);;
         let priceFeed = new ethers.Contract(ADDRS.UNISWAP_ANCHORED_VIEW, ABIS.UNISWAP_ANCHORED_VIEW, provider)
         let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
 
@@ -78,12 +84,12 @@ describe("", async function() {
         ipc.server.stop();
     });
 
-    xit("auction bid pricer", async function() {
+    xit("auction bid pricer launches", async function() {
         let abp = new AuctionBidPricer();
         abp.v1_getWinningGasPrice(0, 0).then(()=>{});
     });
 
-    xit("Runner lib", async function() {
+    xit("Runner lib launches", async function() {
         // let signerWithProvider = provider.getSigner();
         let signerWithProvider = new ethers.Wallet('0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', provider);
         let runner = new Runner(
@@ -153,10 +159,18 @@ describe("", async function() {
         })
     });
 
-    // NOTE a similar test is tagged with TEST
-    xit("successfully liquidates a majority of positions and makes close to expected profits", async function() {
-        store.blockNumber = TestConstants.FORK_2.blockNumber;
-        // await store.setCompoundAccounts();
+    // TODO also test small and medium datasets of actual liqiuidations (backtest)
+
+    // 60% success rate on a specific block (theoretical test)
+    xit("successfully liquidates a majority of found opportunities at one blockheight and makes close to expected profits with relaxed profit parameters so there's more oppurtunities", async function() {
+        assert(shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx hardhat node`).code == 0);
+        assert(shell.exec(`npx hardhat deploy`).code === 0);
+
+        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+        store = makeStoreWithProvider(provider);
+        store.blockNumber = TestConstants.FORK.blockNumber;
+        // TODO switch store's provider to 
+        await store.setCompoundAccounts();
         await store.setCompoundParams();
 
         let accounts = await store.getSickStoredCompoundAccounts();
@@ -200,16 +214,16 @@ describe("", async function() {
                     countSuccesses += 1;
                 }
             } catch (e) {
-                // console.log(e);
+                console.log(e);
             }
         }
     
         expect(countSuccesses / total * 100).to.be.gte(80);
     });
 
-    xit("reserializes tx data with signature", async function(){
-        // NOTE set appropriate forked blocknumber 
-        let provider = new ethers.providers.JsonRpcProvider();
+    xit("reconstructs tx data with signature from geth txpool", async function(){
+        assert(shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK_3.blockNumber} npx hardhat node`).code == 0);
+        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 
         let tx = TestConstants.FORK_3.tx_1;
         let txParams = {
@@ -247,5 +261,5 @@ describe("", async function() {
         provider.send("eth_sendRawTransaction", [serializedTx2]);
     });
 
-    // UPDATE test flashbots on ropsten test 
+    // TODO test flashbots on ropsten test 
 });

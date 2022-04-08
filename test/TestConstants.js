@@ -1,12 +1,11 @@
-// random fork num?
-exports.FORK_1 = {
-    blockNumber: 12462649
-}
-
-exports.FORK_2 = {
+exports.FORK = {
     // eth price falls from 4k to 1.7k
     date: "2021-05-23T12:59:00Z",
     blockNumber: 12490660
+}
+
+exports.FORK_2 = {
+    blockNumber: 12462649
 }
 
 exports.FORK_3 = {

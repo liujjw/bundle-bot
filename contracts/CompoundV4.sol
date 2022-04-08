@@ -9,14 +9,15 @@ import { ILendingPoolAddressesProvider } from "./ILendingPoolAddressesProvider.s
 import { IFlashLoanReceiver } from "./IFlashLoanReceiver.sol";
 
 import { SafeERC20 } from './SafeERC20.sol';
+import { IERC20 } from './IERC20.sol';
 
 import { SafeMath } from './SafeMath.sol';
 
 import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface, 
-            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface, Erc20InterfaceUSDT
+            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface
         } from './Interfaces.sol';
 
-contract CompoundV3 is IFlashLoanReceiver {
+contract CompoundV4 is IFlashLoanReceiver {
 
     mapping(string => address) ADDRESSES;
     address payable private OWNER;
@@ -32,7 +33,7 @@ contract CompoundV3 is IFlashLoanReceiver {
     ILendingPool public override LENDING_POOL;
 
     using SafeMath for uint256;
-    using SafeERC20 for Erc20InterfaceUSDT;
+    using SafeERC20 for IERC20;
 
     modifier onlyOwner {
         require(msg.sender == OWNER, "erorr, not owner");
@@ -43,7 +44,7 @@ contract CompoundV3 is IFlashLoanReceiver {
         if (symbol == 0xdAC17F958D2ee523a2206206994597C13D831ec7) {
             // see openzeppelin thread usdt approve estimate_gas error (use safeApprove, otherwise modify erc20 approve signature for usdt to match its actual signature)
             // see erc20 verifier from openzeppelin for other non-standard usdt erc20 functions
-            Erc20InterfaceUSDT usdt = Erc20InterfaceUSDT(symbol);
+            IERC20 usdt = IERC20(symbol);
             usdt.safeApprove(csymbol, 2**256 - 1);
             usdt.safeApprove(address(LENDING_POOL), 2**256 - 1);
             usdt.safeApprove(ADDRESSES["uniswapRouter"], 2**256 - 1);
@@ -232,7 +233,11 @@ contract CompoundV3 is IFlashLoanReceiver {
             path[2] = assets[0]; 
 
             Erc20Interface token = Erc20Interface(TOKEN_COLLATERAL);
-            // token.balanceOf(address(this))
+            
+            ///
+            console.log("starting balance of tokens", token.balanceOf(address(this)));
+            ///
+
             uint[] memory swapAmounts = 
                 uniRouter.swapTokensForExactTokens(
                     amountOwed, 
@@ -248,8 +253,25 @@ contract CompoundV3 is IFlashLoanReceiver {
             }
             console.log("remaining tokens after swap", token.balanceOf(address(this)));
             ///
+
+            path = new address[](2);
+            path[0] = TOKEN_COLLATERAL;
+            path[1] = ADDRESSES["WETH"];
+            // TODO make 2**256 - 1 safer by computing minimum eth received offchain
+            swapAmounts = 
+                uniRouter.swapExactTokensForEth(
+                    token.balanceOf(address(this)), 
+                    2**256 - 1,
+                    path, 
+                    OWNER, 
+                    block.timestamp
+                );
             
-            token.transfer(OWNER, token.balanceOf(address(this)));
+            ///
+            for(uint i = 0; i < swapAmounts.length; i++) {
+                console.log("swap amount", swapAmounts[i]);
+            }
+            ///
         }
         return true;
     }  

@@ -14,7 +14,7 @@ services:
       - RUNNER_ENDPOINT=http://localhost:5000
       - RUNNER_PORT=5000
       - NODE_ENV=development
-      - IPC_PROVIDER_ENDPOINT=/root/.ethereum/geth.ipc
+      - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546
     depends_on:
       - redis
@@ -27,15 +27,14 @@ services:
   mempool:
     image: ethereum/client-go
     command: 
-      - --txpool.globalslots=75000
+      - --txpool.globalslots=30000
       - --maxpeers=250
       - --ws 
-      - --ws.api 
-      - --eth,txpool,net,web3
+      - --ws.api="eth,txpool,net,web3"
     # volumes: 
     #   - d/ethereum:/root
     ports:
       - "8545:8545" 
       - "30303:30303"
-
+    # docker run --name eth_node -d -p 8545:8545 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --ws --ws.api="eth,txpool,net,web3" --http --http.api="eth,txpool,net,web3" --maxpeers=250 --txpool.globalslots=30000
 

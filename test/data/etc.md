@@ -9,3 +9,8 @@ amount received 94   uni expected 66
     94296888648630714972 6680016649813116000 
 
 
+## Scripts
+curl http://localhost:8545 \
+-X POST \
+-H "Content-Type: application/json" \
+-d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1}'

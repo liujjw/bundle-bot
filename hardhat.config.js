@@ -105,7 +105,7 @@ module.exports = {
     },
     hardhat: {
       forking: {
-        blockNumber: TestConstants.FORK_2.blockNumber,
+        blockNumber: process.env.FORK_BLOCKNUMBER,
         url: ENDPOINTS.ALCHEMY
       }
     }
