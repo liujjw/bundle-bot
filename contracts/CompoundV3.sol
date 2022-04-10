@@ -60,7 +60,7 @@ contract CompoundV3 is IFlashLoanReceiver {
         LENDING_POOL = 
             ILendingPool(ADDRESSES_PROVIDER.getLendingPool());
 
-        // FEATURE use permit to save some gas
+        // TODO use permit to save some gas
         // dai
         approve(0x6B175474E89094C44Da98b954EedeAC495271d0F, 
             0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643);

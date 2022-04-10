@@ -73,7 +73,7 @@ contract CompoundV4 is IFlashLoanReceiver {
         LENDING_POOL = 
             ILendingPool(ADDRESSES_PROVIDER.getLendingPool());
 
-        // FEATURE use permit to save some gas
+        // TODO use permit to save some gas
         // approve cdai to take dai
         approve(0x6B175474E89094C44Da98b954EedeAC495271d0F, 
             0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643);
@@ -259,7 +259,7 @@ contract CompoundV4 is IFlashLoanReceiver {
             path[1] = ADDRESSES["WETH"];
             // TODO make 2**256 - 1 safer by computing minimum eth received offchain
             swapAmounts = 
-                uniRouter.swapExactTokensForEth(
+                uniRouter.swapExactTokensForETH(
                     token.balanceOf(address(this)), 
                     2**256 - 1,
                     path, 

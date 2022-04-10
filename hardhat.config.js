@@ -59,7 +59,7 @@ task("deploy-proxied", "", async () => {
 });
 
 task("proxy-change", "", async () => {
-  // UPDATE accept an arg for this address or set manually
+  // TODO accept an arg for this address or set manually
   const proxyAddress = '';
   const diffImpl = await ethers.getContractFactory("Aave");
   const upgraded = await upgrades.upgradeProxy(proxyAddress, diffImpl);
@@ -105,7 +105,7 @@ module.exports = {
     },
     hardhat: {
       forking: {
-        blockNumber: process.env.FORK_BLOCKNUMBER,
+        blockNumber: Number.parseInt(process.env.FORK_BLOCKNUMBER),
         url: ENDPOINTS.ALCHEMY
       }
     }

@@ -7,7 +7,9 @@
     "lib": "lib",
     "test": "test"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "DB_READY=false REDIS_STARTED=true LOCAL_NODE_STARTED=false BOT_DEPLOYED=false npx hardhat test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liujjw/defi-bot.git"
@@ -42,6 +44,7 @@
     "express": "^4.17.3",
     "lodash": "^4.17.21",
     "net": "^1.0.2",
+    "node-fetch": "^2.6.7",
     "node-ipc": "^11.1.0",
     "piscina": "^3.2.0",
     "redis": "^4.0.6",

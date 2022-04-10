@@ -23,7 +23,11 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
-    # try using docker-compose exec redis redis-cli monitor for logs 
+    volumes:
+      - /d/redis_live:/data
+    # docker-compose exec redis redis-cli monitor for logs 
+    # docker run -it --network some-network --rm redis redis-cli -h some-redis
+    # docker run -v /myredis/conf:/usr/local/etc/redis --name myredis redis redis-server /usr/local/etc/redis/redis.conf
   mempool:
     image: ethereum/client-go
     command: 
@@ -31,10 +35,14 @@ services:
       - --maxpeers=250
       - --ws 
       - --ws.api="eth,txpool,net,web3"
-    # volumes: 
-    #   - d/ethereum:/root
+      - --http 
+      - --http.port=8547
+      - --http.api="eth,txpool,net,web3"
+    volumes: 
+      - d/ethereum:/root
     ports:
-      - "8545:8545" 
+      - "8546:8546" 
+      - "8547:8547"
       - "30303:30303"
-    # docker run --name eth_node -d -p 8545:8545 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --ws --ws.api="eth,txpool,net,web3" --http --http.api="eth,txpool,net,web3" --maxpeers=250 --txpool.globalslots=30000
+    # docker run --name eth_node -d -p 8547:8547 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --ws --ws.api "eth,txpool,net,web3" --http --http.port 8547 --http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000
 

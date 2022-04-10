@@ -127,3 +127,12 @@ exports.getBlockNumberOnDate = async function(date) {
     const dater = new EthDater(provider);
     return await dater.getDate(date);
 }
+
+exports.ENDPOINTS = {
+  REDIS_HOST: "localhost",
+  REDIS_PORT: 6379,
+}
+
+exports.PARAMS = {
+  NODE_STARTUP_TIME_MS: 10000
+}

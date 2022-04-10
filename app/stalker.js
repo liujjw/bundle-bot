@@ -4,8 +4,8 @@ const net = require('net');
 const { ADDRS } = require('../lib/Constants');
 const { createLogger, format, transports } = require('winston');
 
-let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net));
-// let web3 = new Web3(new Web3.providers.IpcProvider('/d/ethereum/.ethereum/geth.ipc', net));
+// let web3 = new Web3(new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net));
+let web3 = new Web3(new Web3.providers.IpcProvider('/d/ethereum/.ethereum/geth.ipc', net));
 // let web3 = new Web3(new Web3.providers.WebsocketProvider(process.env.WS_PROVIDER_ENDPOINT));
 // let web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
 // let web3 = new Web3("http://localhost:8545");
@@ -44,7 +44,11 @@ async function main() {
         if (error) {
             logger.error("could not subscribe to tx pool")
         } 
-    }).on("data", function(tx) {
+    }).on("data", async function(txHash) {
+        let tx = await web3.eth.getTransaction(txHash);
+        if (tx === null) return;
+        // TODO assert(shell.exec("REDIS_HOST=localhost REDIS_PORT=6379 redis-server").code == 0);
+        // perhaps process.env is not set
         if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
             logger.info('found a tx to frontrun sent to offchain agg');
             fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
