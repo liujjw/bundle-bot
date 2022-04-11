@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "DB_READY=false REDIS_STARTED=true LOCAL_NODE_STARTED=false BOT_DEPLOYED=false npx hardhat test"
+    "test": "DB_READY=false REDIS_STARTED=true LOCAL_NODE_STARTED=false BOT_DEPLOYED=false jest"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
     "chai": "^4.3.4",
     "ethereum-block-by-date": "^1.4.0",
     "ethereum-waffle": "^3.3.0",
-    "hardhat": "^2.9.3"
+    "hardhat": "^2.9.3",
+    "jest": "^27.5.1"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",

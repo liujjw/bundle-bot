@@ -14,10 +14,7 @@ Gas tokens are still a thing. To compete, we would need to have our own capital 
 ### Gas API for basefee
 Blocknative has one. (TODO)
 
-## Testing 
-### Backtest
-(TODO) Check medium dataset of liquidations for this, also refactor some shitty code, test for using flashbots infra, also need to backrun post param updates, i dont pay for these tx tho, the sender does, use the testnet 
-
+## Info 
 ### handle all todos and todo2 (designate as todo2 to triage todos, todo2 are less important), also to some extent similar to open issues
 
 ## Prod
@@ -25,3 +22,5 @@ Blocknative has one. (TODO)
 
 ## Test env assumptions
 `npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
+
+## the redis format

@@ -2,53 +2,83 @@ const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require('../lib/AccountsDbClient');
 const TestConstants = require('./TestConstants');
 const { ABIS, ADDRS, ENDPOINTS } = require('../lib/Constants');
-const Utils = require('../lib/Utils');
 
 const shell = require('shelljs');
 const { BigNumber } = require('ethers');
 const { ethers } = require('hardhat');
 const Common = require("@ethereumjs/common");
 const { FeeMarketEIP1599Transaction, Transaction } = require('@ethereumjs/tx');
-const { expect, assert } = require('chai');
 
 require('dotenv').config({ path: __dirname + "/../.env"});
+jest.setTimeout(300 * 1000);
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function makeStoreWithProvider(provider, port=TestConstants.ENDPOINTS.REDIS_PORT) {
-    let db = {
-        host: TestConstants.ENDPOINTS.REDIS_HOST,
-        port: port
-    };
-    let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
-    let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
-    let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
-    return store;
-}
+let compoundAccounts;
+let compoundParams;
+let sickCompoundAccounts;
+// TODO native .sol tests 
+// foundry solidity tests 
+beforeAll(async () => {
+    if (process.env.REDIS_STARTED === "false") {
+        assert(shell.exec(`docker run --name myredis -d -p ${TestConstants.ENDPOINTS.REDIS_PORT}:${TestConstants.ENDPOINTS.REDIS_PORT} -v /d/redis_0:/data redis redis-server --save 60 1 --loglevel warning`).code === 0);
+        console.log('redis started');
+    }
 
+    // TODO stop async run when test exits
+    // ie a shutdown handle
+    if (process.env.LOCAL_NODE_STARTED === "false") {
+        // needs to be async since the node continues to run
+        shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx -c 'hardhat node'`, {async:true, silent:true});
+        await sleep(TestConstants.PARAMS.NODE_STARTUP_TIME_MS);
+        console.log("node started");
+    }
+    
+    function makeStoreWithProvider(provider, port=TestConstants.ENDPOINTS.REDIS_PORT) {
+        let db = {
+            host: TestConstants.ENDPOINTS.REDIS_HOST,
+            port: port
+        };
+        let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
+        let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
+        let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
+        return store;
+    }
 
-describe("Bot", async function() {
-    this.timeout(Number.MAX_SAFE_INTEGER);
+    if (process.env.DB_READY === "false") {
+        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+        let store = makeStoreWithProvider(provider);
+        await store.setCompoundAccounts(TestConstants.FORK.blockNumber);
+        await store.setCompoundParams();
+        compoundAccounts = await store.getStoredCompoundAccounts();
+        sickCompoundAccounts = await store.getSickStoredCompoundAccounts();
+        compoundParams = await store.getStoredCompoundParams();
+        console.log('db has been set');
+    }
 
-    xit("fetches the current most recent data about compound accounts and params with the store", async function() {
-        console.log("sick accounts: \n", await store.getSickStoredCompoundAccounts('f'));
-        console.log("params: \n", await store.getStoredCompoundParams());
+    if (process.env.BOT_DEPLOYED === "false") {
+        assert(shell.exec(`npx hardhat deploy`).code === 0);
+        console.log("bot contract deployed");
+    }
+});
+
+describe("Bot", function() {
+    xtest("fetches the current most recent data about compound accounts and params with the store", async function() {
+        console.log("sick accounts: \n", sickCompoundAccounts);
+        console.log("params: \n", compoundParams);
     });
 
     // TODO also test small and medium datasets of actual liqiuidations (backtest)
-    xit("liquidates small and medium dataset of actual liquidations through the bot contract", async function() {
+    xtest("liquidates small and medium dataset of actual liquidations through the bot contract", async function() {
 
     });
 
     // 60% success rate on liquidations on a specific block (theoretical test)
-    it("liquidates, directly through the bot contract, a majority of found opportunities at one blockheight, and makes close to expected profits with relaxed profit parameters so there's more oppurtunities", async function() {
-        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
-        store = makeStoreWithProvider(provider);
-
-        let accounts = await store.getSickStoredCompoundAccounts();
-        let params = await store.getStoredCompoundParams();
+    test("liquidates, directly through the bot contract, a majority of found opportunities at one blockheight, and makes close to expected profits with relaxed profit parameters so there's more oppurtunities", async function() {
+        let accounts = sickCompoundAccounts;
+        let params = compoundParams;
 
         // 3 gwei, so its cheap to liquidate so we likely liquidate 
         let lowTestingGasPrice = BigNumber.from("3000000000");
@@ -91,11 +121,11 @@ describe("Bot", async function() {
             }
         }
     
-        expect(countSuccesses / total * 100).to.be.gte(80);
+        expect(countSuccesses / total * 100).toBeGreaterThan(80);
     });
 
     // todo make this a infra test of acutally using flashbots infra, serializing, backrunning, etc
-    xit("reconstructs tx data with signature from geth txpool", async function(){
+    xtest("reconstructs tx data with signature from geth txpool", async function(){
         assert(shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK_3.blockNumber} npx hardhat node`).code == 0);
         let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 
