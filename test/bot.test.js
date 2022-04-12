@@ -2,6 +2,7 @@ const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require('../lib/AccountsDbClient');
 const TestConstants = require('./TestConstants');
 const { ABIS, ADDRS, ENDPOINTS } = require('../lib/Constants');
+const Utils = require('../lib/Utils');
 
 const shell = require('shelljs');
 const { BigNumber } = require('ethers');
@@ -19,8 +20,7 @@ function sleep(ms) {
 let compoundAccounts;
 let compoundParams;
 let sickCompoundAccounts;
-// TODO native .sol tests 
-// foundry solidity tests 
+// TODO native .sol tests/foundry sol tests
 beforeAll(async () => {
     if (process.env.REDIS_STARTED === "false") {
         assert(shell.exec(`docker run --name myredis -d -p ${TestConstants.ENDPOINTS.REDIS_PORT}:${TestConstants.ENDPOINTS.REDIS_PORT} -v /d/redis_0:/data redis redis-server --save 60 1 --loglevel warning`).code === 0);
@@ -35,21 +35,15 @@ beforeAll(async () => {
         await sleep(TestConstants.PARAMS.NODE_STARTUP_TIME_MS);
         console.log("node started");
     }
-    
-    function makeStoreWithProvider(provider, port=TestConstants.ENDPOINTS.REDIS_PORT) {
-        let db = {
-            host: TestConstants.ENDPOINTS.REDIS_HOST,
-            port: port
-        };
-        let priceFeed = new ethers.Contract(ADDRS.OLD_UNISWAP_ANCHORED_VIEW, ABIS.OLD_UNISWAP_ANCHORED_VIEW, provider)
-        let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
-        let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
-        return store;
-    }
 
     if (process.env.DB_READY === "false") {
         let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
-        let store = makeStoreWithProvider(provider);
+        let db = {
+            host: TestConstants.ENDPOINTS.REDIS_HOST,
+            port: TestConstants.ENDPOINTS.REDIS_PORT
+        };
+        let store = new AccountsDbClient(db, provider);
+        await store.init();
         await store.setCompoundAccounts(TestConstants.FORK.blockNumber);
         await store.setCompoundParams();
         compoundAccounts = await store.getStoredCompoundAccounts();

@@ -6,7 +6,7 @@ Consider searcher A who only needs 500k gas and searcher B who needs 1 million g
 ### Losing to more efficient searchers who are arbitraging other opportunities
 If there are even more efficient searchers who are doing other arbitrage but not liquidations, then even though their more gas efficient bundles would push out the liquidation bundle, there is space and time to include the liquidation in the next `n` blocks, asssuming the liquidation bundle is the most efficient liquidation bundle out of all the competing liquidation bundles. 
 ### Gas refunds
-Gas tokens are still a thing. To compete, we would need to have our own capital to not have to swap and flashloan. Otherwise maybe gas refunds can help. Assume I win with gas refund, how much does that cut into profit? (TODO)
+Gas tokens are still a thing. To compete, we would need to have our own capital to not have to swap and flashloan. Otherwise maybe gas refunds can help. Assume I win with gas refund, how much does that cut into profit? (TODO) Even with gas refunds, I still have to pay for them and that cuts into profits, they are a well known tehcnique so it's not "alpha", what stops more efficient traders from using them as well? All this is dooming the liquidation style of arbitrage. 
 ### Gas efficient contracts
 (TODO) make contract more gas efficient. 
 ### block.coinbase.transfer
@@ -20,7 +20,8 @@ Blocknative has one. (TODO)
 ## Prod
 `docker-compose up`
 
-## Test env assumptions
+## Test env assumptions (TODO make dockerfile for this as well)
 `npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
 
-## the redis format
+## The Redis format
+We set string keys to JS objects (the library we use turns them into strings?). When we get, we use a string key to fetch a stringified JS object which we parse back into a JS object. In general we serialize data as strings (not bytearrays (TODO)?) and then deserialize back into objects.

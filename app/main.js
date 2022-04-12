@@ -37,15 +37,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let provider = new ethers.providers.JsonRpcProvider(process.env.PROVIDER_ENDPOINT);
-let db = {
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
-};
-let priceFeed = new ethers.Contract(ADDRS.UNISWAP_ANCHORED_VIEW, ABIS.UNISWAP_ANCHORED_VIEW, provider)
-let comptroller = new ethers.Contract(ADDRS.COMPOUND_COMPTROLLER, ABIS.COMPOUND_COMPTROLLER, provider);
-
-let store = new AccountsDbClient(db, provider, priceFeed, comptroller);
+let store;
 
 async function updateAccounts() {
     while(true) {
@@ -75,6 +67,13 @@ async function updateParams() {
 }
 
 async function main() {
+    let provider = new ethers.providers.JsonRpcProvider(process.env.PROVIDER_ENDPOINT);
+    let db = {
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
+    };
+    store = new AccountsDbClient(db, provider);
+    await store.init();
     updateParams();
     updateAccounts();
     await sleep(PARAMS.WAIT_TIME_FOR_DB_TO_INIT_MS);
