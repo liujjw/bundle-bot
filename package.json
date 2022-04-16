@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "DB_READY=false REDIS_STARTED=true LOCAL_NODE_STARTED=false BOT_DEPLOYED=false jest"
+    "test": "REDIS_STARTED=true DB_READY=true LOCAL_NODE_STARTED=false BOT_DEPLOYED=false TEST_CONSTANTS_REVIEWED=true jest"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,8 @@
     "ethereum-block-by-date": "^1.4.0",
     "ethereum-waffle": "^3.3.0",
     "hardhat": "^2.9.3",
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",
@@ -40,6 +41,7 @@
     "@ethersproject/solidity": "^5.6.0",
     "@flashbots/ethers-provider-bundle": "^0.4.3",
     "@uniswap/sdk": "^3.0.3",
+    "body-parser": "^1.19.2",
     "dotenv": "^16.0.0",
     "ethers": "^5.6.2",
     "express": "^4.17.3",

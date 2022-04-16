@@ -1,14 +1,15 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require('../lib/AccountsDbClient');
 const TestConstants = require('./TestConstants');
-const { ABIS, ADDRS, ENDPOINTS } = require('../lib/Constants');
-const Utils = require('../lib/Utils');
+const { ABIS, PARAMS } = require('../lib/Constants');
 
+const fs = require('fs');
 const shell = require('shelljs');
 const { BigNumber } = require('ethers');
 const { ethers } = require('hardhat');
-const Common = require("@ethereumjs/common");
-const { FeeMarketEIP1599Transaction, Transaction } = require('@ethereumjs/tx');
+const fetch = require('node-fetch');
+
+const Runner = require("../lib/Runner");
 
 require('dotenv').config({ path: __dirname + "/../.env"});
 jest.setTimeout(300 * 1000);
@@ -17,64 +18,72 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let compoundAccounts;
-let compoundParams;
-let sickCompoundAccounts;
-// TODO native .sol tests/foundry sol tests
-beforeAll(async () => {
-    if (process.env.REDIS_STARTED === "false") {
-        assert(shell.exec(`docker run --name myredis -d -p ${TestConstants.ENDPOINTS.REDIS_PORT}:${TestConstants.ENDPOINTS.REDIS_PORT} -v /d/redis_0:/data redis redis-server --save 60 1 --loglevel warning`).code === 0);
-        console.log('redis started');
-    }
+describe.only("Data", function() {
+    let compoundAccounts;
+    let compoundParams;
+    let sickCompoundAccounts;
+    let hardhatNode;
 
-    // TODO stop async run when test exits
-    // ie a shutdown handle
-    if (process.env.LOCAL_NODE_STARTED === "false") {
-        // needs to be async since the node continues to run
-        shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx -c 'hardhat node'`, {async:true, silent:true});
-        await sleep(TestConstants.PARAMS.NODE_STARTUP_TIME_MS);
-        console.log("node started");
-    }
-
-    if (process.env.DB_READY === "false") {
-        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+    beforeAll(async () => {
+        if (process.env.TEST_CONSTANTS_REVIEWED === "false") {
+            process.exit(1);
+        }
+    
+        if (process.env.REDIS_STARTED === "false") {
+            expect(shell.exec(`docker run --name myredis -d -p ${TestConstants.ENDPOINTS.REDIS_PORT}:${TestConstants.ENDPOINTS.REDIS_PORT} -v /d/redis_0:/data redis redis-server --save 60 1 --loglevel warning`)).toBe(0);
+            console.log('redis started');
+        }
+    
+        if (process.env.LOCAL_NODE_STARTED === "false") {
+            hardhatNode = shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx -c 'hardhat node'`, {async:true, silent:true}, (code, stdout, stderr) => {
+                // TODO log
+            });
+            await sleep(TestConstants.PARAMS.NODE_STARTUP_TIME_MS);
+            console.log("node started");
+        }
+    
+        let provider = new ethers.providers.JsonRpcProvider(TestConstants.ENDPOINTS.RPC_PROVIDER);
         let db = {
             host: TestConstants.ENDPOINTS.REDIS_HOST,
             port: TestConstants.ENDPOINTS.REDIS_PORT
         };
         let store = new AccountsDbClient(db, provider);
         await store.init();
-        await store.setCompoundAccounts(TestConstants.FORK.blockNumber);
-        await store.setCompoundParams();
+        if (process.env.DB_READY === "false") {
+            await store.setCompoundAccounts(TestConstants.FORK.blockNumber);
+            await store.setCompoundParams();
+            console.log('db has been set');
+        } 
         compoundAccounts = await store.getStoredCompoundAccounts();
         sickCompoundAccounts = await store.getSickStoredCompoundAccounts();
         compoundParams = await store.getStoredCompoundParams();
-        console.log('db has been set');
-    }
+    
+        if (process.env.BOT_DEPLOYED === "false") {
+            expect(shell.exec(`npx hardhat compile && npx hardhat deploy`).code).toBe(0);
+            console.log("bot contract deployed");
+        }
+    });
+    
+    afterAll(() => {
+        hardhatNode.kill('SIGKILL');
+    });
 
-    if (process.env.BOT_DEPLOYED === "false") {
-        assert(shell.exec(`npx hardhat deploy`).code === 0);
-        console.log("bot contract deployed");
-    }
-});
-
-describe("Bot", function() {
-    xtest("fetches the current most recent data about compound accounts and params with the store", async function() {
+    test("fetches the current most recent data about compound accounts and params with the store", async function() {
         console.log("sick accounts: \n", sickCompoundAccounts);
         console.log("params: \n", compoundParams);
     });
 
-    // TODO also test small and medium datasets of actual liqiuidations (backtest)
-    xtest("liquidates small and medium dataset of actual liquidations through the bot contract", async function() {
+    // TODO backtest on mediumDatasetOfLiquidations
+    test("liquidates small and medium dataset of actual liquidations through the bot contract", async function() {
 
     });
 
-    // 60% success rate on liquidations on a specific block (theoretical test)
-    test("liquidates, directly through the bot contract, a majority of found opportunities at one blockheight, and makes close to expected profits with relaxed profit parameters so there's more oppurtunities", async function() {
+    test("finder finds compound arbs given a low gas price and contract liquidates a majority of arbs at one blockheight; eth balance of sender grows", async function() {
+        let provider = new ethers.providers.JsonRpcProvider(TestConstants.ENDPOINTS.RPC_PROVIDER)
         let accounts = sickCompoundAccounts;
         let params = compoundParams;
 
-        // 3 gwei, so its cheap to liquidate so we likely liquidate 
+        // 3 gewi
         let lowTestingGasPrice = BigNumber.from("3000000000");
         let finder = new FindShortfallPositions( 
             accounts, 
@@ -85,12 +94,18 @@ describe("Bot", function() {
         finder.chainId = 1337;
         finder.minProfit = 15;
 
-        let bot = new ethers.Contract(process.env.BOT_ADDR, ABIS['BOT'], provider.getSigner());
+        let bot = new ethers.Contract(TestConstants.ENDPOINTS.DEFAULT_BOT_ADDRESS, ABIS['BOT'], provider.getSigner(TestConstants.ENDPOINTS.DEFAULT_SENDER_ADDRESS));
+        let initialEth = await provider.getBalance(TestConstants.ENDPOINTS.DEFAULT_SENDER_ADDRESS);
 
-        let arr = await finder.getLiquidationTxs();
+        let arr = await finder.getLiquidationTxsInfo();
         let countSuccesses = 0;
         let total = arr.length;
+        
+        expect(total).toBeGreaterThan(10);
+
+        let totalEthUsedForGas = BigNumber.from(0);
         for (let elem of arr) {
+            console.log("arb:\n", elem);
             try {
                 let response = await bot.liquidate(
                     elem.cTokenBorrowed,
@@ -101,12 +116,14 @@ describe("Bot", function() {
                     elem.repayAmount,
                     elem.maxSeizeTokens,
                     {
-                        gasLimit: BigNumber.from(2000000),
+                        gasLimit: BigNumber.from(PARAMS.LIQUIDATION_GAS_UPPER_BOUND),
                         gasPrice: elem.gasPrice
                     }
                 );
 
                 let receipt = await response.wait();
+                totalEthUsedForGas.add(receipt.effectiveGasPrice.mul(receipt.cumulativeGasUsed));
+                console.log("receipt:\n", receipt);
                 if(receipt.status === 1) {
                     countSuccesses += 1;
                 }
@@ -114,49 +131,42 @@ describe("Bot", function() {
                 console.log(e);
             }
         }
-    
-        expect(countSuccesses / total * 100).toBeGreaterThan(80);
+        let finalEth = await provider.getBalance(TestConstants.ENDPOINTS.DEFAULT_SENDER_ADDRESS);
+        expect((countSuccesses / total) * 100).toBeGreaterThan(80);
+        console.log('final eth balance:', finalEth.gt(initialEth.sub(totalEthUsedForGas)).toString());
+        expect(finalEth.gt(initialEth.sub(totalEthUsedForGas))).toBe(true);
     });
 
-    // todo make this a infra test of acutally using flashbots infra, serializing, backrunning, etc
-    xtest("reconstructs tx data with signature from geth txpool", async function(){
-        assert(shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK_3.blockNumber} npx hardhat node`).code == 0);
-        let provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
+    // need to test server and workers together bc workers assume the servers env vars
+    test.only("arb processor (runner server) processes arb oppurtunities and bundle gets into mev mempool", async function(){
+        shell.env['RUNNER_ENDPOINT'] = TestConstants.ENDPOINTS.RUNNER_ENDPOINT;
+        shell.env['RUNNER_PORT'] = TestConstants.ENDPOINTS.RUNNER_PORT;
+        shell.env['BOT_ADDR'] = TestConstants.ENDPOINTS.DEFAULT_BOT_ADDRESS;
+        shell.env['PROVIDER_ENDPOINT'] = TestConstants.ENDPOINTS.RPC_PROVIDER;
+        shell.env['NODE_ENV'] = TestConstants.PARAMS.TEST_RUNNER_FLAG;
+        shell.env['REDIS_HOST'] = TestConstants.ENDPOINTS.REDIS_HOST;
+        shell.env['REDIS_PORT'] = TestConstants.ENDPOINTS.REDIS_PORT;
+        new Runner();
+        fetch(`${TestConstants.ENDPOINTS.RUNNER_ENDPOINT}/priceUpdate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(TestConstants.MODEL_TXS.ETH_OFFCHAIN_AGG_TRANSMIT_CALL),
+        });
+        // have not found sample tx yet/does not happen often enough anyway
+        // fetch(`${TestConstants.ENDPOINTS.RUNNER_ENDPOINT}/paramUpdate`, {
+        //     method: "POST",
+        //     headers : { "Content-Type": "application/json" },
+        //     body: JSON.stringify(TestConstants.MODEL_TXS.SET_COLLATERAL_FACTOR)
+        // })
 
-        let tx = TestConstants.FORK_3.tx_1;
-        let txParams = {
-            to: tx.to,
-            nonce: "0x"+tx.nonce.toString(16),
-            gasLimit: "0x"+tx.gas.toString(16),
-            gasPrice: BigNumber.from(tx.gasPrice).toHexString(),
-            data: tx.input,
-            value: BigNumber.from(tx.value).toHexString(),
-            v: tx.v,
-            r: tx.r, 
-            s: tx.s
-        }
-        // let common = new Common({ chain: "mainnet", hardfork: "berlin" });
-        let unserializedTx = Transaction.fromTxData(txParams);
-        let serializedTx = unserializedTx.serialize(); 
-        serializedTx = "0x"+serializedTx.toString('hex');
-        // NOTE doesnt work because the signature is signed for mainnet and is EIP155
-        provider.send("eth_sendRawTransaction", [serializedTx]);
-
-        let txParams2 = {
-            to: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-            nonce: "0x01",
-            gasLimit: "0xffff",
-            gasPrice: "0xffff",
-            value: "0x00"
-        } 
-
-        let c = new Common({chain: 1337});
-        let unserializedTx2 = Transaction.fromTxData(txParams2, c);
-        let pk = Buffer.from("ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", "hex");
-        unserializedTx2 = unserializedTx2.sign(pk);
-        let serializedTx2 = unserializedTx2.serialize();
-        serializedTx2 = "0x"+serializedTx2.toString("hex");
-        provider.send("eth_sendRawTransaction", [serializedTx2]);
+        // sleep test so server can catch up
+        await sleep(10000);
     });
+});
 
+describe("Infra", function() {
+    test("mempool listener works", async function() {
+        // run stalker.js
+        // assert standard json tx object format
+    });
 });

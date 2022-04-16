@@ -18,10 +18,13 @@ Blocknative has one. (TODO)
 ### handle all todos and todo2 (designate as todo2 to triage todos, todo2 are less important), also to some extent similar to open issues
 
 ## Prod
-`docker-compose up`
+`docker-compose up` and set `NODE_ENV="production"`
 
-## Test env assumptions (TODO make dockerfile for this as well)
-`npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
+## Test env assumptions 
+Modify `env` variables for `npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
 
-## The Redis format
-We set string keys to JS objects (the library we use turns them into strings?). When we get, we use a string key to fetch a stringified JS object which we parse back into a JS object. In general we serialize data as strings (not bytearrays (TODO)?) and then deserialize back into objects.
+## Data passing
+In Redis, we set string keys to JS objects (the library we use turns them into strings?). When we get, we use a string key to fetch a stringified JS object which we parse back into a JS object. In general we serialize data as strings (not bytearrays (TODO)?) and then deserialize back into objects.
+
+## Modularity
+An arb finder is associated with a contract that may be used to execute the arb. There's a web server that processes data and sends transactions, and may or may not use an arb finder to process its data. There's a mempool watcher that observes the mempool.

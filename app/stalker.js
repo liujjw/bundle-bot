@@ -19,7 +19,7 @@ let logger = createLogger({
         format.splat(),
         format.json()
     ),
-    defaultMeta: { service: 'stalker.js' },
+    defaultMeta: { service: `${__filename}` },
     transports: [
         new transports.File({ filename: 'error.log', level: 'error'}),
         new transports.File({ filename: 'combined.log' }),
@@ -47,20 +47,19 @@ async function main() {
     }).on("data", async function(txHash) {
         let tx = await web3.eth.getTransaction(txHash);
         if (tx === null) return;
-        // TODO assert(shell.exec("REDIS_HOST=localhost REDIS_PORT=6379 redis-server").code == 0);
         // perhaps process.env is not set
         if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
             logger.info('found a tx to frontrun sent to offchain agg');
             fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
                 method: "POST",
-                headers: "Content-Type: application/json",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(tx)
             });
         } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
             logger.info('found a tx to frontrun sent to comptroller');
             fetch(`${process.env.RUNNER_ENDPOINT}/paramUpdate`, {
                 method: "POST",
-                headers: "Content-Type: application/json",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(tx)
             });
         }

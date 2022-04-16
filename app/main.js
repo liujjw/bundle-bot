@@ -15,7 +15,7 @@ let logger = createLogger({
         format.splat(),
         format.json()
     ),
-    defaultMeta: { service: 'main.js' },
+    defaultMeta: { service: `${__filename}` },
     transports: [
         new transports.File({ filename: 'error.log', level: 'error'}),
         new transports.File({ filename: 'combined.log' }),

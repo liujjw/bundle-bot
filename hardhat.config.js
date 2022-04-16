@@ -16,7 +16,7 @@ let logger = createLogger({
       format.splat(),
       format.json()
   ),
-  defaultMeta: { service: 'hardhat.config.js' },
+  defaultMeta: { service: `${__filename}` },
   transports: [
       new transports.File({ filename: 'error.log', level: 'error'}),
       new transports.File({ filename: 'combined.log' }),
@@ -46,7 +46,7 @@ task("deploy", "", async () => {
   let receipt = await bot.deployTransaction.wait();
   assert(receipt.status != 0, "deploy failed");
   logger.info(`deployed bot at ${receipt.contractAddress}`);
-  shell.env["BOT_ADDR"] = `${receipt.contractAddress}}`;
+  // shell.env["BOT_ADDR"] = `${receipt.contractAddress}}`;
 });
 
 task("deploy-proxied", "", async () => {
@@ -105,7 +105,7 @@ module.exports = {
     },
     hardhat: {
       forking: {
-        blockNumber: Number.parseInt(process.env.FORK_BLOCKNUMBER),
+        blockNumber: Number.parseInt(process.env.FORK_BLOCKNUMBER ?? TestConstants.FORK.blockNumber),
         url: ENDPOINTS.ALCHEMY
       }
     }
