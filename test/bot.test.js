@@ -18,7 +18,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-describe.only("Data", function() {
+describe("Data", function() {
     let compoundAccounts;
     let compoundParams;
     let sickCompoundAccounts;
@@ -138,7 +138,7 @@ describe.only("Data", function() {
     });
 
     // need to test server and workers together bc workers assume the servers env vars
-    test.only("arb processor (runner server) processes arb oppurtunities and bundle gets into mev mempool", async function(){
+    test("arb processor (runner server) processes arb oppurtunities and bundle gets into mev mempool", async function(){
         shell.env['RUNNER_ENDPOINT'] = TestConstants.ENDPOINTS.RUNNER_ENDPOINT;
         shell.env['RUNNER_PORT'] = TestConstants.ENDPOINTS.RUNNER_PORT;
         shell.env['BOT_ADDR'] = TestConstants.ENDPOINTS.DEFAULT_BOT_ADDRESS;
@@ -150,13 +150,13 @@ describe.only("Data", function() {
         fetch(`${TestConstants.ENDPOINTS.RUNNER_ENDPOINT}/priceUpdate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(TestConstants.MODEL_TXS.ETH_OFFCHAIN_AGG_TRANSMIT_CALL),
+            body: JSON.stringify(TestConstants.FORK.ETH_OFFCHAIN_AGG_TRANSMIT_CALL),
         });
         // have not found sample tx yet/does not happen often enough anyway
         // fetch(`${TestConstants.ENDPOINTS.RUNNER_ENDPOINT}/paramUpdate`, {
         //     method: "POST",
         //     headers : { "Content-Type": "application/json" },
-        //     body: JSON.stringify(TestConstants.MODEL_TXS.SET_COLLATERAL_FACTOR)
+        //     body: JSON.stringify(TestConstants.FORK.SET_COLLATERAL_FACTOR)
         // })
 
         // sleep test so server can catch up
@@ -168,5 +168,22 @@ describe("Infra", function() {
     test("mempool listener works", async function() {
         // run stalker.js
         // assert standard json tx object format
+    });
+});
+
+describe.only("Contracts", function() {
+    beforeAll(async function() {
+        if (process.env.LOCAL_NODE_STARTED === "false") {
+            hardhatNode = shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx -c 'hardhat node'`, {async:true, silent:true}, (code, stdout, stderr) => {
+                // TODO log
+            });
+            await sleep(TestConstants.PARAMS.NODE_STARTUP_TIME_MS);
+            console.log("node started");
+        }
+    })
+    
+
+    test("compound liquidation contract works", async function() {
+        shell.exec('forge test -vvvv --fork-url http://localhost:8545');
     });
 });

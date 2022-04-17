@@ -21,7 +21,7 @@ Blocknative has one. (TODO)
 `docker-compose up` and set `NODE_ENV="production"`
 
 ## Test env assumptions 
-Modify `env` variables for `npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
+`forge install` and `npm install` to init. Modify `env` variables for `npm test` to test: change env variables in `package.json` as needed to start services automatically. The mempool lurker relies on `geth.ipc`, so it must have access to the filesystem containing that socket. Access to Redis on localhost at appropriate test ports. 
 
 ## Data passing
 In Redis, we set string keys to JS objects (the library we use turns them into strings?). When we get, we use a string key to fetch a stringified JS object which we parse back into a JS object. In general we serialize data as strings (not bytearrays (TODO)?) and then deserialize back into objects.

@@ -1,0 +1,4 @@
+[default]
+src = 'contracts'
+lib = 'lib'
+test = 'contracts/test'

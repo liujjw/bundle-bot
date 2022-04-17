@@ -1,8 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity 0.6.12;
 
-import "hardhat/console.sol";
-
 // not importing from @ modules, since this way pramga solidity version gets version controlled
 import { ILendingPool } from "./ILendingPool.sol";
 import { ILendingPoolAddressesProvider } from "./ILendingPoolAddressesProvider.sol";
@@ -22,11 +20,6 @@ contract CompoundV5 is IFlashLoanReceiver {
     mapping(string => address) ADDRESSES;
     address payable private OWNER;
     WETHInterface weth;
-    address c_TOKEN_BORROWED;
-    address c_TOKEN_COLLATERAL;
-    address TOKEN_COLLATERAL;
-    address BORROWER;
-    uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH;
     
     // required by IFlashLoanReceiver 
     ILendingPoolAddressesProvider public override ADDRESSES_PROVIDER;
@@ -104,44 +97,6 @@ contract CompoundV5 is IFlashLoanReceiver {
 
     receive() external payable {} 
 
-    function liquidate(
-        address cTokenBorrowed,
-        address tokenBorrowed,
-        address cTokenCollateral,
-        address tokenCollateral,
-        address borrower,
-        uint repayAmount,
-        uint maxSeizeTokensToSwapWith
-    ) external onlyOwner {        
-        c_TOKEN_BORROWED = cTokenBorrowed;
-        c_TOKEN_COLLATERAL = cTokenCollateral;
-        TOKEN_COLLATERAL = tokenCollateral;
-        BORROWER = borrower;
-        MAX_SEIZE_TOKENS_TO_SWAP_WITH = maxSeizeTokensToSwapWith;
-
-        address receiverAddress = address(this);
-        address[] memory assets = new address[](1);
-        assets[0] = tokenBorrowed;
-        uint256[] memory amounts = new uint256[](1);
-        amounts[0] = repayAmount;
-        uint256[] memory modes = new uint256[](1);
-        modes[0] = 0;
-
-        address onBehalfOf = address(this);
-        bytes memory params = "";
-        uint16 referralCode = 0;
-
-        LENDING_POOL.flashLoan(
-            receiverAddress,
-            assets,
-            amounts,
-            modes,
-            onBehalfOf,
-            params,
-            referralCode
-        );
-    }
-
     function executeOperation(
         address[] calldata assets,
         uint256[] calldata amounts,
@@ -149,51 +104,31 @@ contract CompoundV5 is IFlashLoanReceiver {
         address initiator,
         bytes calldata params
     ) override external returns (bool) {
+        (   
+            address c_TOKEN_BORROWED,
+            address c_TOKEN_COLLATERAL,
+            address TOKEN_COLLATERAL,
+            address BORROWER,
+            uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH
+        ) = abi.decode(params, (address, address, address, address, uint256));
         
-        /// 
-        console.log("borrower", BORROWER);
-        console.log("borrowed asset ctoken", c_TOKEN_BORROWED);
-        console.log("collateral asset ctoken", c_TOKEN_COLLATERAL);
-        console.log("repay amount", amounts[0]);
-        console.log("maximum seized tokens to pay", MAX_SEIZE_TOKENS_TO_SWAP_WITH);
-        ///
-        
-        uint code;
         if (assets[0] == ADDRESSES["WETH"]) {
             weth.withdraw(amounts[0]);
-            CEtherInterface cether = CEtherInterface(c_TOKEN_BORROWED);
-            // no code, reverts upon failure
-            cether.liquidateBorrow{value: amounts[0]}(BORROWER, c_TOKEN_COLLATERAL);
+            // reverts upon failure
+            CEtherInterface(c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(BORROWER, c_TOKEN_COLLATERAL);
         } else {
-            CErc20Interface ctokenOfBorrow = CErc20Interface(c_TOKEN_BORROWED);
-            code = ctokenOfBorrow.liquidateBorrow(BORROWER, amounts[0], c_TOKEN_COLLATERAL);
-            
-            /// 
-            if (code != 0) console.log("failure code", code);
-            ///
-
-            require(code == 0, "liquidateBorrow failed");
+            require(CErc20Interface(c_TOKEN_BORROWED).liquidateBorrow(BORROWER, amounts[0], c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
         }
         
         if (TOKEN_COLLATERAL == ADDRESSES["WETH"]) {
-            CEtherInterface cether = CEtherInterface(c_TOKEN_COLLATERAL);
-            // we redeem to get eth back, NOT weth (70% confidence)
-            code = cether.redeem(cether.balanceOf(address(this)));
+            // we redeem to get eth back, NOT weth 
+            require(CEtherInterface(c_TOKEN_COLLATERAL).redeem(CEtherInterface(c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
         } else {
-            CErc20Interface ctoken = CErc20Interface(c_TOKEN_COLLATERAL);
-            
-            ///
-            console.log("ctoken balance", ctoken.balanceOf(address(this)));
-            ///
-            
-            code = ctoken.redeem(ctoken.balanceOf(address(this)));
-
-            ///
-            Erc20Interface token = Erc20Interface(TOKEN_COLLATERAL);
-            console.log("token balance after redeem", token.balanceOf(address(this)));
-            ///
+            require(CErc20Interface(c_TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
+            require(CErc20Interface(c_TOKEN_COLLATERAL).redeem(CErc20Interface(c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
+            require(Erc20Interface(TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
         }
-        require(code == 0, "redeem failed");
+
 
         uint amountOwed = amounts[0].add(premiums[0]);
         UniswapV2Router02 uniRouter = UniswapV2Router02(ADDRESSES["uniswapRouter"]);   
@@ -210,7 +145,6 @@ contract CompoundV5 is IFlashLoanReceiver {
                 path[1] = ADDRESSES["WETH"];
             }
 
-            // address(this).balance
             uint[] memory swapAmounts = 
                 uniRouter.swapETHForExactTokens{value: MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
                     amountOwed, 
@@ -219,11 +153,9 @@ contract CompoundV5 is IFlashLoanReceiver {
                     block.timestamp
                 );
             
-            ///
             for(uint i = 0; i < swapAmounts.length; i++) {
-                console.log("swap amount", swapAmounts[i]);
+                require(swapAmounts[i] != 0);
             }
-            ///
 
             OWNER.transfer(address(this).balance);
         } else {
@@ -233,10 +165,7 @@ contract CompoundV5 is IFlashLoanReceiver {
             path[2] = assets[0]; 
 
             Erc20Interface token = Erc20Interface(TOKEN_COLLATERAL);
-            
-            ///
-            console.log("starting balance of tokens", token.balanceOf(address(this)));
-            ///
+            require(token.balanceOf(address(this)) != 0);
 
             uint[] memory swapAmounts = 
                 uniRouter.swapTokensForExactTokens(
@@ -247,12 +176,10 @@ contract CompoundV5 is IFlashLoanReceiver {
                     block.timestamp
                 );
 
-            ///
             for(uint i = 0; i < swapAmounts.length; i++) {
-                console.log("swap amount", swapAmounts[i]);
+                require(swapAmounts[i] != 0);
             }
-            console.log("remaining tokens after swap", token.balanceOf(address(this)));
-            ///
+            require(token.balanceOf(address(this)) != 0);
 
             path = new address[](2);
             path[0] = TOKEN_COLLATERAL;
@@ -267,11 +194,9 @@ contract CompoundV5 is IFlashLoanReceiver {
                     block.timestamp
                 );
             
-            ///
             for(uint i = 0; i < swapAmounts.length; i++) {
-                console.log("swap amount", swapAmounts[i]);
+                require(swapAmounts[i] != 0);
             }
-            ///
         }
         return true;
     }  
