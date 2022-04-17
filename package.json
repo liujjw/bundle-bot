@@ -25,6 +25,7 @@
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts-upgradeable": "^4.1.0",
     "@openzeppelin/hardhat-upgrades": "^1.8.2",
+    "abi-decoder": "^2.4.0",
     "chai": "^4.3.4",
     "ethereum-block-by-date": "^1.4.0",
     "ethereum-waffle": "^3.3.0",

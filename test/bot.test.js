@@ -78,6 +78,7 @@ describe("Data", function() {
 
     });
 
+    // TODO failing
     test("finder finds compound arbs given a low gas price and contract liquidates a majority of arbs at one blockheight; eth balance of sender grows", async function() {
         let provider = new ethers.providers.JsonRpcProvider(TestConstants.ENDPOINTS.RPC_PROVIDER)
         let accounts = sickCompoundAccounts;
@@ -171,7 +172,7 @@ describe("Infra", function() {
     });
 });
 
-describe.only("Contracts", function() {
+describe("Contracts", function() {
     beforeAll(async function() {
         if (process.env.LOCAL_NODE_STARTED === "false") {
             hardhatNode = shell.exec(`FORK_BLOCKNUMBER=${TestConstants.FORK.blockNumber} npx -c 'hardhat node'`, {async:true, silent:true}, (code, stdout, stderr) => {
@@ -182,8 +183,8 @@ describe.only("Contracts", function() {
         }
     })
     
-
+    // TODO failing
     test("compound liquidation contract works", async function() {
-        shell.exec('forge test -vvvv --fork-url http://localhost:8545');
+        shell.exec('forge test -vvvvv --fork-url http://localhost:8545');
     });
 });

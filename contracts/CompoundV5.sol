@@ -17,9 +17,16 @@ import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface,
 
 contract CompoundV5 is IFlashLoanReceiver {
 
+    struct LiquidationParameters {
+        address c_TOKEN_BORROWED;
+        address c_TOKEN_COLLATERAL;
+        address TOKEN_COLLATERAL;
+        address BORROWER;
+        uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH;
+    }
     mapping(string => address) ADDRESSES;
     address payable private OWNER;
-    WETHInterface weth;
+    WETHInterface WETH;
     
     // required by IFlashLoanReceiver 
     ILendingPoolAddressesProvider public override ADDRESSES_PROVIDER;
@@ -42,10 +49,10 @@ contract CompoundV5 is IFlashLoanReceiver {
             usdt.safeApprove(address(LENDING_POOL), 2**256 - 1);
             usdt.safeApprove(ADDRESSES["uniswapRouter"], 2**256 - 1);
         } else if (symbol == ADDRESSES["WETH"]) {
-            weth = WETHInterface(ADDRESSES["WETH"]);
-            // dont need to approve cether contract to take weth since eth is sent
-            weth.approve(address(LENDING_POOL), 2**256 - 1);
-            weth.approve(ADDRESSES["uniswapRouter"], 2**256 - 1);
+            WETH = WETHInterface(ADDRESSES["WETH"]);
+            // dont need to approve cether contract to take WETH since eth is sent
+            WETH.approve(address(LENDING_POOL), 2**256 - 1);
+            WETH.approve(ADDRESSES["uniswapRouter"], 2**256 - 1);
         } else {
             Erc20Interface erc20 = Erc20Interface(symbol);
             erc20.approve(csymbol, 2**256 - 1);
@@ -91,7 +98,7 @@ contract CompoundV5 is IFlashLoanReceiver {
         // usdt
         approve(0xdAC17F958D2ee523a2206206994597C13D831ec7, 
             0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9);
-        // weth 
+        // WETH 
         approve(ADDRESSES["WETH"], address(0));
     }
 
@@ -104,36 +111,38 @@ contract CompoundV5 is IFlashLoanReceiver {
         address initiator,
         bytes calldata params
     ) override external returns (bool) {
-        (   
-            address c_TOKEN_BORROWED,
-            address c_TOKEN_COLLATERAL,
-            address TOKEN_COLLATERAL,
-            address BORROWER,
-            uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH
-        ) = abi.decode(params, (address, address, address, address, uint256));
+        LiquidationParameters memory liqParams;
+        {
+            (   
+                address c_TOKEN_BORROWED,
+                address c_TOKEN_COLLATERAL,
+                address TOKEN_COLLATERAL,
+                address BORROWER,
+                uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH
+            ) = abi.decode(params, (address, address, address, address, uint256));
+            liqParams = LiquidationParameters(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
+        }
         
         if (assets[0] == ADDRESSES["WETH"]) {
-            weth.withdraw(amounts[0]);
-            // reverts upon failure
-            CEtherInterface(c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(BORROWER, c_TOKEN_COLLATERAL);
+            WETH.withdraw(amounts[0]);
+            CEtherInterface(liqParams.c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(liqParams.BORROWER, liqParams.c_TOKEN_COLLATERAL);
         } else {
-            require(CErc20Interface(c_TOKEN_BORROWED).liquidateBorrow(BORROWER, amounts[0], c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
+            require(CErc20Interface(liqParams.c_TOKEN_BORROWED).liquidateBorrow(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
         }
         
-        if (TOKEN_COLLATERAL == ADDRESSES["WETH"]) {
-            // we redeem to get eth back, NOT weth 
-            require(CEtherInterface(c_TOKEN_COLLATERAL).redeem(CEtherInterface(c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
+        if (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]) {
+            // we redeem to get eth back, NOT WETH 
+            require(CEtherInterface(liqParams.c_TOKEN_COLLATERAL).redeem(CEtherInterface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
         } else {
-            require(CErc20Interface(c_TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
-            require(CErc20Interface(c_TOKEN_COLLATERAL).redeem(CErc20Interface(c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
-            require(Erc20Interface(TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
+            require(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
+            require(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).redeem(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
+            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
         }
-
 
         uint amountOwed = amounts[0].add(premiums[0]);
         UniswapV2Router02 uniRouter = UniswapV2Router02(ADDRESSES["uniswapRouter"]);   
         
-        bool isEthCollateral = (TOKEN_COLLATERAL == ADDRESSES["WETH"]);
+        bool isEthCollateral = (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]);
         bool isEthBorrow = (assets[0] == ADDRESSES["WETH"]);
         if (isEthCollateral || isEthBorrow) {
             address[] memory path = new address[](2);
@@ -146,7 +155,7 @@ contract CompoundV5 is IFlashLoanReceiver {
             }
 
             uint[] memory swapAmounts = 
-                uniRouter.swapETHForExactTokens{value: MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
+                uniRouter.swapETHForExactTokens{value: liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
                     amountOwed, 
                     path, 
                     address(this), 
@@ -160,17 +169,16 @@ contract CompoundV5 is IFlashLoanReceiver {
             OWNER.transfer(address(this).balance);
         } else {
             address[] memory path = new address[](3);
-            path[0] = TOKEN_COLLATERAL;
+            path[0] = liqParams.TOKEN_COLLATERAL;
             path[1] = ADDRESSES["WETH"];
             path[2] = assets[0]; 
 
-            Erc20Interface token = Erc20Interface(TOKEN_COLLATERAL);
-            require(token.balanceOf(address(this)) != 0);
+            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
 
             uint[] memory swapAmounts = 
                 uniRouter.swapTokensForExactTokens(
                     amountOwed, 
-                    MAX_SEIZE_TOKENS_TO_SWAP_WITH, 
+                    liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH, 
                     path, 
                     address(this), 
                     block.timestamp
@@ -179,15 +187,15 @@ contract CompoundV5 is IFlashLoanReceiver {
             for(uint i = 0; i < swapAmounts.length; i++) {
                 require(swapAmounts[i] != 0);
             }
-            require(token.balanceOf(address(this)) != 0);
+            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
 
             path = new address[](2);
-            path[0] = TOKEN_COLLATERAL;
+            path[0] = liqParams.TOKEN_COLLATERAL;
             path[1] = ADDRESSES["WETH"];
             // TODO make 2**256 - 1 safer by computing minimum eth received offchain
             swapAmounts = 
                 uniRouter.swapExactTokensForETH(
-                    token.balanceOf(address(this)), 
+                    Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)), 
                     2**256 - 1,
                     path, 
                     OWNER, 

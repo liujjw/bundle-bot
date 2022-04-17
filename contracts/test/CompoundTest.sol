@@ -26,17 +26,21 @@ contract CompoundTest is DSTest {
     }
 
     function testLiquidate() public {
-        require(block.number == 14574363, "invalid blocknumber in evm environment");
+        require(block.number == 14574363, "invalid blocknumber in forked node");
+        bytes memory params;
+        {
+            address c_TOKEN_BORROWED = 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643;
+            address c_TOKEN_COLLATERAL = 0x39AA39c021dfbaE8faC545936693aC917d5E7563;
+            address TOKEN_COLLATERAL = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+            address BORROWER = 0xD6B5986a966D084580226beD115D9C30c4fdEDAa;
+            uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH = 0x1570966ac2;
+            params = abi.encode(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, 
+                BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
+        }
+        // dai
         address tokenBorrowed = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
         uint repayAmount = 0x12fea46ba741b041e500;
         uint16 referralCode = 0;
-        address c_TOKEN_BORROWED = 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643;
-        address c_TOKEN_COLLATERAL = 0x39AA39c021dfbaE8faC545936693aC917d5E7563;
-        address TOKEN_COLLATERAL = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
-        address BORROWER = 0xD6B5986a966D084580226beD115D9C30c4fdEDAa;
-        uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH = 0x1570966ac2;
-        bytes memory params = abi.encode(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, 
-            BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
 
         address receiverAddress = address(compoundBot);
         address onBehalfOf = address(compoundBot);
@@ -47,6 +51,9 @@ contract CompoundTest is DSTest {
         uint256[] memory modes = new uint256[](1);
         modes[0] = 0;
 
+        // TODO
+        // adai (not proxy) has 400 million dai, so why would it fail when we ask for 90k?
+        // SafeERC20 fails flashloan -> proxy -> adai -> proxy -> dai?
         LENDING_POOL.flashLoan(
             receiverAddress,
             assets,
