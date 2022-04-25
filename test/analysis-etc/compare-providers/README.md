@@ -7,7 +7,6 @@ Per second, ethspam generates around 500,000 lines, or 120 megabytes of data, on
 
 Also makes for an okay superniche screensaver.
 
-
 ## Getting Started
 
 A few options:
@@ -22,7 +21,6 @@ Then run it and enjoy. Ethspam will emit output but it can be throttled by backf
 $ ethspam | head
 ...
 ```
-
 
 ## License
 
