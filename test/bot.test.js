@@ -59,7 +59,7 @@ describe.only("Data", function () {
       await store.setCompoundParams();
       console.log("db has been set");
     }
-    sickCompoundAccounts = await store.getSickStoredCompoundAccounts();
+    sickCompoundAccounts = await store.getStoredCompoundAccounts();
     compoundParams = await store.getStoredCompoundParams();
 
     expect(shell.exec(`npx hardhat compile && npx hardhat deploy`).code).toBe(
@@ -72,14 +72,15 @@ describe.only("Data", function () {
     hardhatNode.kill("SIGKILL");
   });
 
-  test(`fetches the current most recent data about compound accounts and 
+  test.only(`fetches the current most recent data about compound accounts and 
   params with the store`, async function () {
-    console.log("sick accounts: \n", sickCompoundAccounts);
+    console.log(`sick accounts n=${sickCompoundAccounts.length}: \n`, 
+      sickCompoundAccounts);
     console.log("params: \n", compoundParams);
   });
 
   // TODO failing
-  test.only(`finder finds compound arbs given a low gas price and 
+  test(`finder finds compound arbs given a low gas price and 
   contract liquidates a majority of arbs at one blockheight and 
   eth balance of sender grows`, async function () {
     const provider = new ethers.providers.JsonRpcProvider(

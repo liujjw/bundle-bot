@@ -12,26 +12,23 @@ const AccountsDbClient = require("../lib/AccountsDbClient");
  * One optimization is to keep sick accounts in node's memory (assuming 
  * memory is not shared but copied over to node's page table). TODO
  * 
- * Please start an npx hardhat node and sync
- * a database first before running. 
+ * Please sync a database first before running. 
  * 
  * Use `node --prof test/profile.js`. Could use `ab -k -c 20 -n 250` for
  * a web server or use tick file processor 
  * `node --prof-process isolate-0x63e9e60-15214-v8.log > processed.txt`.
  */
 async function main() {
-  const provider = new ethers.providers.JsonRpcProvider(
-    ENDPOINTS.RPC_PROVIDER
-  );
+  const provider = new ethers.providers.JsonRpcProvider(ENDPOINTS.RPC_PROVIDER);
   const db = {
     host: ENDPOINTS.REDIS_HOST,
     port: ENDPOINTS.REDIS_PORT,
   };
-  const store = new AccountsDbClient(db, provider);
+  const store = new AccountsDbClient(db);
   await store.init();
   
   console.log(new Date());
-  const accounts = await store.getSickStoredCompoundAccounts();
+  const accounts = await store.getStoredCompoundAccounts();
   console.log(new Date());
   console.log(`# of sick accounts: ${accounts.length}`);
   const params = await store.getStoredCompoundParams();
