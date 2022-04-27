@@ -1,0 +1,4 @@
+{
+  "filter_paths": "contracts",
+  "solc_remaps": ["ds-test/=lib/ds-test/src/", "forge-std/=lib/forge-std/src/"]
+}

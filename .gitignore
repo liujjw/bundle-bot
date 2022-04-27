@@ -1,6 +1,6 @@
 node_modules
 built
 artifacts
-redis-stable
 cache
 *.log
+.clinic

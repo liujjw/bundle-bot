@@ -1,207 +1,124 @@
-Statistical profiling result from isolate-0x63e9e60-15214-v8.log, (21914 ticks, 5 unaccounted, 0 excluded).
+Statistical profiling result from isolate-0x4a4ff20-7080-v8.log, (4985 ticks, 5 unaccounted, 0 excluded).
 
  [Shared libraries]:
    ticks  total  nonlib   name
-   6699   30.6%          /root/.nvm/versions/node/v16.3.0/bin/node
-    178    0.8%          /usr/lib/x86_64-linux-gnu/libc-2.31.so
-     11    0.1%          /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
-      5    0.0%          [vdso]
+   3615   72.5%          /root/.nvm/versions/node/v16.3.0/bin/node
+     72    1.4%          /usr/lib/x86_64-linux-gnu/libc-2.31.so
+      7    0.1%          /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28
+      2    0.0%          [vdso]
 
  [JavaScript]:
    ticks  total  nonlib   name
-     31    0.1%    0.2%  LazyCompile: *encodeCommand /root/defi-bot/node_modules/@node-redis/client/dist/lib/commander.js:68:24
-     31    0.1%    0.2%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:336:21
-     27    0.1%    0.2%  LazyCompile: *getStoredCompoundAccounts /root/defi-bot/lib/AccountsDbClient.js:237:34
-     23    0.1%    0.2%  LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     21    0.1%    0.1%  LazyCompile: *_RedisCommandsQueue_setReturnBuffers /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:279:88
-     21    0.1%    0.1%  LazyCompile: *_RedisClient_sendCommand /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:406:64
-     18    0.1%    0.1%  LazyCompile: *Readable.read node:internal/streams/readable:391:35
-     17    0.1%    0.1%  LazyCompile: *writeCommand /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:52:17
-     17    0.1%    0.1%  LazyCompile: *returnReply /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:40:26
-     17    0.1%    0.1%  LazyCompile: *_RedisClient_tick /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:427:50
-     15    0.1%    0.1%  LazyCompile: *readableAddChunk node:internal/streams/readable:234:26
-     15    0.1%    0.1%  LazyCompile: *__classPrivateFieldGet /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:2:80
-     14    0.1%    0.1%  LazyCompile: *f /root/defi-bot/node_modules/js-sha3/src/sha3.js:459:20
-     14    0.1%    0.1%  LazyCompile: *execute /root/defi-bot/node_modules/redis-parser/lib/parser.js:491:11
-     14    0.1%    0.1%  LazyCompile: *clearBuffer node:internal/streams/writable:529:21
-     13    0.1%    0.1%  LazyCompile: *__classPrivateFieldGet /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:8:80
-     12    0.1%    0.1%  LazyCompile: *resolve node:path:1091:10
-      9    0.0%    0.1%  LazyCompile: *onStreamRead node:internal/stream_base_commons:167:22
-      9    0.0%    0.1%  LazyCompile: *maybeReadMore_ node:internal/streams/readable:602:24
-      9    0.0%    0.1%  LazyCompile: *commandsExecutor /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:164:27
-      9    0.0%    0.1%  LazyCompile: *__classPrivateFieldGet /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:8:80
-      8    0.0%    0.1%  LazyCompile: *runMicrotask node:internal/process/task_queues:137:22
-      8    0.0%    0.1%  LazyCompile: *getEncodingOps node:buffer:676:24
-      8    0.0%    0.1%  LazyCompile: *cork /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:79:9
-      8    0.0%    0.1%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:189:29
-      7    0.0%    0.0%  LazyCompile: *nextTick node:internal/process/task_queues:104:18
-      6    0.0%    0.0%  LazyCompile: *maybeReadMore node:internal/streams/readable:595:23
-      6    0.0%    0.0%  LazyCompile: *afterWriteTick node:internal/streams/writable:482:24
-      6    0.0%    0.0%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-      5    0.0%    0.0%  LazyCompile: *processPromiseRejections node:internal/process/promises:203:34
-      5    0.0%    0.0%  LazyCompile: *onwrite node:internal/streams/writable:425:17
-      5    0.0%    0.0%  LazyCompile: *emit node:events:343:44
-      5    0.0%    0.0%  LazyCompile: *AsyncResource node:async_hooks:156:14
-      5    0.0%    0.0%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:76:28
-      4    0.0%    0.0%  RegExp: ^0x[0-9A-Fa-f]*$
-      4    0.0%    0.0%  RegExp: ^((?:(?:[0-9a-fA-F]{1,4}):){7}(?:(?:[0-9a-fA-F]{1,4})|:)|(?:(?:[0-9a-fA-F]{1,4}):){6}(?:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|:(?:[0-9a-fA-F]{1,4})|:)|(?:(?:[0-9a-fA-F]{1,4}):){5}(?::((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(:(?:[0-9a-fA-F]{1,4})){1,2}|:)|(?:(?:[0-9a-fA-F]{1,4}):){4}(?:(:(?:[0-9a-fA-F]{1,4})){0,1}:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(:(?:[0-9a-fA-F]{1,4})){1,3}|:)|(?:(?:[0-9a-fA-F]{1,4}):){3}(?:(:(?:[0-9a-fA-F]{1,4})){0,2}:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(:(?:[0-9a-fA-F]{1,4})){1,4}|:)|(?:(?:[0-9a-fA-F]{1,4}):){2}(?:(:(?:[0-9a-fA-F]{1,4})){0,3}:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(:(?:[0-9a-fA-F]{1,4})){1,5}|:)|(?:(?:[0-9a-fA-F]{1,4}):){1}(?:(:(?:[0-9a-fA-F]{1,4})){0,4}:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(:(?:[0-9a-fA-F]{1,4})){1,6}|:)|(?::((?::(?:[0-9a-fA-F]{1,4})){0,5}:((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])|(?::(?:[0-9a-fA-F]{1,4})){1,7}|:)))(%[0-9a-zA-Z-.:]{1,})?$
-      4    0.0%    0.0%  LazyCompile: *writeOrBuffer node:internal/streams/writable:365:23
-      4    0.0%    0.0%  LazyCompile: *readPackage node:internal/modules/cjs/loader:286:21
-      4    0.0%    0.0%  LazyCompile: *get node:internal/bootstrap/pre_execution:319:8
-      4    0.0%    0.0%  LazyCompile: *Keccak.toString.Keccak.hex /root/defi-bot/node_modules/js-sha3/src/sha3.js:353:63
-      3    0.0%    0.0%  LazyCompile: *toString /root/defi-bot/node_modules/bn.js/lib/bn.js:442:45
-      3    0.0%    0.0%  LazyCompile: *toHex /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:250:15
-      3    0.0%    0.0%  LazyCompile: *getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
-      3    0.0%    0.0%  LazyCompile: *emitBeforeScript node:internal/async_hooks:476:26
-      3    0.0%    0.0%  LazyCompile: *dirname node:path:1275:10
-      3    0.0%    0.0%  LazyCompile: *ParamType.fromObject /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:313:37
-      3    0.0%    0.0%  LazyCompile: *Keccak.update /root/defi-bot/node_modules/js-sha3/src/sha3.js:187:38
-      2    0.0%    0.0%  RegExp: ^[a-zA-Z$_][a-zA-Z0-9$_]*$
-      2    0.0%    0.0%  RegExp: ^(0x)?[0-9a-fA-F]{40}$
-      2    0.0%    0.0%  RegExp: ([A-F].*[a-f])|([a-f].*[A-F])
-      2    0.0%    0.0%  LazyCompile: *transformArguments /root/defi-bot/node_modules/@node-redis/client/dist/lib/commands/GET.js:6:28
-      2    0.0%    0.0%  LazyCompile: *step /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:15:18
-      2    0.0%    0.0%  LazyCompile: *push node:internal/fixed_queue:75:7
-      2    0.0%    0.0%  LazyCompile: *newAsyncId node:internal/async_hooks:392:20
-      2    0.0%    0.0%  LazyCompile: *multiply /root/defi-bot/node_modules/jsbi/dist/jsbi-cjs.js:1:2811
-      2    0.0%    0.0%  LazyCompile: *hexlify /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:146:17
-      2    0.0%    0.0%  LazyCompile: *hasHooks node:internal/async_hooks:437:18
-      2    0.0%    0.0%  LazyCompile: *addChunk node:internal/streams/readable:302:18
-      2    0.0%    0.0%  LazyCompile: *__classPrivateFieldSet /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:2:80
-      2    0.0%    0.0%  LazyCompile: *_RedisCommandsQueue_shiftWaitingForReply /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:284:96
-      2    0.0%    0.0%  LazyCompile: *ParamType.format /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:260:43
-      2    0.0%    0.0%  LazyCompile: *Node /root/defi-bot/node_modules/@node-redis/client/node_modules/yallist/yallist.js:400:15
-      2    0.0%    0.0%  LazyCompile: *Module._nodeModulePaths node:internal/modules/cjs/loader:625:37
-      2    0.0%    0.0%  LazyCompile: *<anonymous> node:vm:314:27
-      1    0.0%    0.0%  RegExp: ^uint($|[^1-9])
-      1    0.0%    0.0%  RegExp: ^-?0x[0-9a-f]+$
-      1    0.0%    0.0%  RegExp: ^(\/\/?(?!\/)[^?\s]*)(\?[^\s]*)?$
-      1    0.0%    0.0%  RegExp: :[0-9]*$
-      1    0.0%    0.0%  LazyCompile: *toUtf8Bytes /root/defi-bot/node_modules/@ethersproject/strings/lib/utf8.js:172:21
-      1    0.0%    0.0%  LazyCompile: *step /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:30:18
-      1    0.0%    0.0%  LazyCompile: *step /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:30:18
-      1    0.0%    0.0%  LazyCompile: *realpathSync node:fs:2398:22
-      1    0.0%    0.0%  LazyCompile: *readPackageScope node:internal/modules/cjs/loader:317:26
-      1    0.0%    0.0%  LazyCompile: *pushAsyncContext node:internal/async_hooks:506:26
-      1    0.0%    0.0%  LazyCompile: *parseArrayElements /root/defi-bot/node_modules/redis-parser/lib/parser.js:255:29
-      1    0.0%    0.0%  LazyCompile: *parse node:url:168:37
-      1    0.0%    0.0%  LazyCompile: *isInteger /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:25:19
-      1    0.0%    0.0%  LazyCompile: *initHooksExist node:internal/async_hooks:445:24
-      1    0.0%    0.0%  LazyCompile: *init /root/defi-bot/node_modules/bn.js/lib/bn.js:80:38
-      1    0.0%    0.0%  LazyCompile: *getUtf8CodePoints /root/defi-bot/node_modules/@ethersproject/strings/lib/utf8.js:87:27
-      1    0.0%    0.0%  LazyCompile: *getDefaultTriggerAsyncId node:internal/async_hooks:408:34
-      1    0.0%    0.0%  LazyCompile: *get node:_http_incoming:108:16
-      1    0.0%    0.0%  LazyCompile: *emitAfterScript node:internal/async_hooks:484:25
-      1    0.0%    0.0%  LazyCompile: *defineReadOnly /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:43:24
-      1    0.0%    0.0%  LazyCompile: *basename node:path:1306:11
-      1    0.0%    0.0%  LazyCompile: *_parseBase /root/defi-bot/node_modules/bn.js/lib/bn.js:275:49
-      1    0.0%    0.0%  LazyCompile: *__inplaceSub /root/defi-bot/node_modules/jsbi/dist/jsbi-cjs.js:1:22464
-      1    0.0%    0.0%  LazyCompile: *__absoluteDivLarge /root/defi-bot/node_modules/jsbi/dist/jsbi-cjs.js:1:21367
-      1    0.0%    0.0%  LazyCompile: *Yallist.shift /root/defi-bot/node_modules/@node-redis/client/node_modules/yallist/yallist.js:137:36
-      1    0.0%    0.0%  LazyCompile: *Readable.on node:internal/streams/readable:868:33
-      1    0.0%    0.0%  LazyCompile: *ParamType /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:228:23
-      1    0.0%    0.0%  LazyCompile: *FunctionFragment.fromObject /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:721:44
-      1    0.0%    0.0%  LazyCompile: *FastBuffer node:internal/buffer:958:14
-      1    0.0%    0.0%  LazyCompile: *BN /root/defi-bot/node_modules/bn.js/lib/bn.js:21:15
-      1    0.0%    0.0%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:3635:33
-      1    0.0%    0.0%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:691:64
-      1    0.0%    0.0%  Function: *wasm-function[8]
-      1    0.0%    0.0%  Function: *wasm-function[25]
+     13    0.3%    1.0%  LazyCompile: *resolve node:path:1091:10
+      5    0.1%    0.4%  LazyCompile: *f /root/defi-bot/node_modules/js-sha3/src/sha3.js:459:20
+      4    0.1%    0.3%  LazyCompile: *dirname node:path:1275:10
+      3    0.1%    0.2%  LazyCompile: *Module._nodeModulePaths node:internal/modules/cjs/loader:625:37
+      2    0.0%    0.2%  RegExp: ^0x[0-9A-Fa-f]*$ {1}
+      2    0.0%    0.2%  RegExp: ^0x[0-9A-Fa-f]*$
+      2    0.0%    0.2%  LazyCompile: *toUtf8Bytes /root/defi-bot/node_modules/@ethersproject/strings/lib/utf8.js:172:21
+      2    0.0%    0.2%  LazyCompile: *Keccak.toString.Keccak.hex /root/defi-bot/node_modules/js-sha3/src/sha3.js:353:63
+      1    0.0%    0.1%  RegExp: ^int($|[^1-9])
+      1    0.0%    0.1%  LazyCompile: *toBuffer /root/defi-bot/node_modules/ethereumjs-util/dist/bytes.js:136:27
+      1    0.0%    0.1%  LazyCompile: *realpathSync node:fs:2398:22
+      1    0.0%    0.1%  LazyCompile: *readPackageScope node:internal/modules/cjs/loader:317:26
+      1    0.0%    0.1%  LazyCompile: *populate /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:211:18
+      1    0.0%    0.1%  LazyCompile: *normalizeString node:path:66:25
+      1    0.0%    0.1%  LazyCompile: *nextTick node:internal/process/task_queues:104:18
+      1    0.0%    0.1%  LazyCompile: *multiply /root/defi-bot/node_modules/jsbi/dist/jsbi-cjs.js:1:2811
+      1    0.0%    0.1%  LazyCompile: *isFileType node:fs:202:20
+      1    0.0%    0.1%  LazyCompile: *iadd /root/defi-bot/node_modules/bn.js/lib/bn.js:860:37
+      1    0.0%    0.1%  LazyCompile: *getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
+      1    0.0%    0.1%  LazyCompile: *decodeInstructions /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:69:28
+      1    0.0%    0.1%  LazyCompile: *canBeRequiredByUsers node:internal/bootstrap/loaders:240:30
+      1    0.0%    0.1%  LazyCompile: *_parseHex /root/defi-bot/node_modules/bn.js/lib/bn.js:208:47
+      1    0.0%    0.1%  LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      1    0.0%    0.1%  LazyCompile: *FunctionFragment.fromObject /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:721:44
+      1    0.0%    0.1%  LazyCompile: *FastBuffer node:internal/buffer:958:14
+      1    0.0%    0.1%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:3635:33
+      1    0.0%    0.1%  LazyCompile: *<anonymous> /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:691:64
+      1    0.0%    0.1%  Function: wasm-function[40]
+      1    0.0%    0.1%  Function: wasm-function[29]
 
  [C++]:
    ticks  total  nonlib   name
-  11862   54.1%   79.0%  epoll_pwait
-    702    3.2%    4.7%  __write
-    689    3.1%    4.6%  __libc_write
-    659    3.0%    4.4%  __lll_lock_wait
-    105    0.5%    0.7%  __libc_read
-     94    0.4%    0.6%  epoll_ctl
-     56    0.3%    0.4%  __pthread_cond_wait
-     55    0.3%    0.4%  __GI___pthread_mutex_unlock
-     42    0.2%    0.3%  __libc_malloc
-     26    0.1%    0.2%  shutdown
-     22    0.1%    0.1%  syscall
-     18    0.1%    0.1%  std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
-     17    0.1%    0.1%  _IO_fwrite
-     16    0.1%    0.1%  _IO_file_xsputn
-     13    0.1%    0.1%  __pthread_cond_signal
-     11    0.1%    0.1%  __mprotect
-     10    0.0%    0.1%  __clock_gettime
-      8    0.0%    0.1%  std::ostream::sentry::sentry(std::ostream&)
-      8    0.0%    0.1%  __GI___pthread_mutex_lock
-      5    0.0%    0.0%  std::ostream& std::ostream::_M_insert<long>(long)
-      5    0.0%    0.0%  operator new(unsigned long)
-      5    0.0%    0.0%  __libc_free
-      3    0.0%    0.0%  std::ostream::operator<<(int)
-      3    0.0%    0.0%  operator delete(void*)
-      3    0.0%    0.0%  _IO_default_xsputn
-      2    0.0%    0.0%  std::__detail::_Prime_rehash_policy::_M_next_bkt(unsigned long) const
-      2    0.0%    0.0%  std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
-      2    0.0%    0.0%  fputc
-      2    0.0%    0.0%  __pthread_enable_asynccancel
-      2    0.0%    0.0%  __munmap
-      2    0.0%    0.0%  _IO_setb
-      1    0.0%    0.0%  std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const
-      1    0.0%    0.0%  std::ostream& std::ostream::_M_insert<unsigned long>(unsigned long)
-      1    0.0%    0.0%  std::locale::id::_M_id() const
-      1    0.0%    0.0%  std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
-      1    0.0%    0.0%  std::_Rb_tree_decrement(std::_Rb_tree_node_base*)
-      1    0.0%    0.0%  operator delete[](void*)
-      1    0.0%    0.0%  getrusage
-      1    0.0%    0.0%  do_futex_wait.constprop.0
-      1    0.0%    0.0%  brk
-      1    0.0%    0.0%  __pthread_once_slow
-      1    0.0%    0.0%  __mmap
-      1    0.0%    0.0%  __libc_realloc
-      1    0.0%    0.0%  __libc_open
-      1    0.0%    0.0%  _IO_file_write
-      1    0.0%    0.0%  _IO_file_sync
-      1    0.0%    0.0%  _IO_do_write
+    558   11.2%   43.3%  epoll_pwait
+    384    7.7%   29.8%  __write
+     68    1.4%    5.3%  __pthread_cond_wait
+     28    0.6%    2.2%  __GI___pthread_mutex_unlock
+     27    0.5%    2.1%  __lll_lock_wait
+     23    0.5%    1.8%  syscall
+     23    0.5%    1.8%  _IO_fwrite
+     15    0.3%    1.2%  std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+     15    0.3%    1.2%  __libc_malloc
+     15    0.3%    1.2%  _IO_file_xsputn
+     11    0.2%    0.9%  __pthread_cond_signal
+      8    0.2%    0.6%  __mprotect
+      7    0.1%    0.5%  shutdown
+      5    0.1%    0.4%  std::ostream::sentry::sentry(std::ostream&)
+      4    0.1%    0.3%  std::__detail::_Prime_rehash_policy::_M_next_bkt(unsigned long) const
+      4    0.1%    0.3%  __GI___pthread_mutex_lock
+      3    0.1%    0.2%  std::ostream& std::ostream::_M_insert<long>(long)
+      3    0.1%    0.2%  __libc_read
+      2    0.0%    0.2%  std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const
+      2    0.0%    0.2%  std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
+      2    0.0%    0.2%  __munmap
+      2    0.0%    0.2%  __libc_write
+      2    0.0%    0.2%  __libc_open
+      2    0.0%    0.2%  __GI___pthread_rwlock_wrlock
+      2    0.0%    0.2%  _IO_fflush
+      2    0.0%    0.2%  _IO_default_xsputn
+      1    0.0%    0.1%  std::ostream::put(char)
+      1    0.0%    0.1%  std::ostream::operator<<(int)
+      1    0.0%    0.1%  std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
+      1    0.0%    0.1%  operator new[](unsigned long)
+      1    0.0%    0.1%  operator delete(void*)
+      1    0.0%    0.1%  getrusage
+      1    0.0%    0.1%  fputc
+      1    0.0%    0.1%  epoll_ctl
+      1    0.0%    0.1%  __pthread_cond_broadcast
+      1    0.0%    0.1%  __libc_free
+      1    0.0%    0.1%  __errno_location
+      1    0.0%    0.1%  __clock_gettime
+      1    0.0%    0.1%  __GI___pthread_rwlock_unlock
 
  [Summary]:
    ticks  total  nonlib   name
-    551    2.5%    3.7%  JavaScript
-  14465   66.0%   96.3%  C++
-   1513    6.9%   10.1%  GC
-   6893   31.5%          Shared libraries
-      5    0.0%          Unaccounted
+     54    1.1%    4.2%  JavaScript
+   1230   24.7%   95.4%  C++
+    439    8.8%   34.1%  GC
+   3696   74.1%          Shared libraries
+      5    0.1%          Unaccounted
 
  [C++ entry points]:
    ticks    cpp   total   name
-    678   53.8%    3.1%  __libc_write
-    424   33.7%    1.9%  __write
-     27    2.1%    0.1%  __libc_malloc
-     22    1.7%    0.1%  syscall
-     15    1.2%    0.1%  std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
-     15    1.2%    0.1%  _IO_fwrite
-     15    1.2%    0.1%  _IO_file_xsputn
-      8    0.6%    0.0%  std::ostream::sentry::sentry(std::ostream&)
-      6    0.5%    0.0%  __lll_lock_wait
-      6    0.5%    0.0%  __GI___pthread_mutex_lock
-      4    0.3%    0.0%  std::ostream& std::ostream::_M_insert<long>(long)
-      4    0.3%    0.0%  __mprotect
-      3    0.2%    0.0%  std::ostream::operator<<(int)
-      3    0.2%    0.0%  __pthread_cond_signal
-      3    0.2%    0.0%  __libc_free
-      3    0.2%    0.0%  __GI___pthread_mutex_unlock
-      2    0.2%    0.0%  std::__detail::_Prime_rehash_policy::_M_next_bkt(unsigned long) const
-      2    0.2%    0.0%  std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
-      2    0.2%    0.0%  operator new(unsigned long)
-      2    0.2%    0.0%  operator delete(void*)
-      2    0.2%    0.0%  fputc
-      2    0.2%    0.0%  _IO_setb
-      1    0.1%    0.0%  std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const
-      1    0.1%    0.0%  std::ostream& std::ostream::_M_insert<unsigned long>(unsigned long)
-      1    0.1%    0.0%  std::locale::id::_M_id() const
-      1    0.1%    0.0%  std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
-      1    0.1%    0.0%  std::_Rb_tree_decrement(std::_Rb_tree_node_base*)
-      1    0.1%    0.0%  operator delete[](void*)
-      1    0.1%    0.0%  brk
-      1    0.1%    0.0%  __pthread_enable_asynccancel
-      1    0.1%    0.0%  __libc_open
-      1    0.1%    0.0%  __clock_gettime
-      1    0.1%    0.0%  _IO_file_write
-      1    0.1%    0.0%  _IO_file_sync
+    285   67.1%    5.7%  __write
+     23    5.4%    0.5%  syscall
+     20    4.7%    0.4%  _IO_fwrite
+     14    3.3%    0.3%  std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long)
+     14    3.3%    0.3%  __libc_malloc
+     12    2.8%    0.2%  _IO_file_xsputn
+      8    1.9%    0.2%  __GI___pthread_mutex_unlock
+      7    1.6%    0.1%  __lll_lock_wait
+      5    1.2%    0.1%  std::ostream::sentry::sentry(std::ostream&)
+      5    1.2%    0.1%  __mprotect
+      4    0.9%    0.1%  std::__detail::_Prime_rehash_policy::_M_next_bkt(unsigned long) const
+      4    0.9%    0.1%  __pthread_cond_signal
+      3    0.7%    0.1%  std::ostream& std::ostream::_M_insert<long>(long)
+      3    0.7%    0.1%  __GI___pthread_mutex_lock
+      2    0.5%    0.0%  std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const
+      2    0.5%    0.0%  std::_Rb_tree_increment(std::_Rb_tree_node_base const*)
+      2    0.5%    0.0%  __libc_open
+      2    0.5%    0.0%  __GI___pthread_rwlock_wrlock
+      1    0.2%    0.0%  std::ostream::put(char)
+      1    0.2%    0.0%  std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
+      1    0.2%    0.0%  operator new[](unsigned long)
+      1    0.2%    0.0%  operator delete(void*)
+      1    0.2%    0.0%  __libc_free
+      1    0.2%    0.0%  __errno_location
+      1    0.2%    0.0%  __clock_gettime
+      1    0.2%    0.0%  __GI___pthread_rwlock_unlock
+      1    0.2%    0.0%  _IO_fflush
+      1    0.2%    0.0%  _IO_default_xsputn
 
  [Bottom up (heavy) profile]:
   Note: percentage shows a share of a particular caller in the total
@@ -209,410 +126,657 @@ Statistical profiling result from isolate-0x63e9e60-15214-v8.log, (21914 ticks, 
   Callers occupying less than 1.0% are not shown.
 
    ticks parent  name
-  11862   54.1%  epoll_pwait
-
-   6699   30.6%  /root/.nvm/versions/node/v16.3.0/bin/node
-   3522   52.6%    /root/.nvm/versions/node/v16.3.0/bin/node
-   1401   39.8%      LazyCompile: ~compileFunction node:vm:309:25
-   1401  100.0%        LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1025:18
-   1401  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-   1401  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-    298    8.5%      LazyCompile: *getStoredCompoundAccounts /root/defi-bot/lib/AccountsDbClient.js:237:34
-    298  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
-    298  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-    298  100.0%            LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-    132    3.7%      /root/.nvm/versions/node/v16.3.0/bin/node
-     23   17.4%        LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-      8    6.1%        LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
-      8  100.0%          LazyCompile: ~Contract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:1053:22
-      7   87.5%            LazyCompile: ~fetchPairData /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:1553:49
-      1   12.5%            LazyCompile: ~AccountsDbClient /root/defi-bot/lib/AccountsDbClient.js:12:14
-      7    5.3%        LazyCompile: ~allocate /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:1:12662
-      7  100.0%          LazyCompile: ~callMain /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:15:4964
-      7  100.0%            LazyCompile: ~doRun /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:15:5868
-      7    5.3%        LazyCompile: ~Reader.coerce /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:130:30
-      7  100.0%          LazyCompile: ~Reader.coerce /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:137:40
-      7  100.0%            LazyCompile: ~NumberCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/number.js:54:45
-      5    3.8%        LazyCompile: ~readPackage node:internal/modules/cjs/loader:286:21
-      5  100.0%          LazyCompile: ~readPackageScope node:internal/modules/cjs/loader:317:26
-      5  100.0%            LazyCompile: ~trySelf node:internal/modules/cjs/loader:437:17
-      5    3.8%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
-      5  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
-      5  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
-      4    3.0%        LazyCompile: ~BigNumber.from /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:190:31
-      3   75.0%          LazyCompile: ~BigNumber.from /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:190:31
-      2   66.7%            LazyCompile: ~Reader.readValue /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:167:43
-      1   33.3%            Eval: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/bignumber/lib/fixednumber.js:1:1
-      1   25.0%          LazyCompile: *toBN /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:293:14
-      1  100.0%            LazyCompile: ~BigNumber.mul /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:71:40
-      4    3.0%        LazyCompile: *getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
+   3615   72.5%  /root/.nvm/versions/node/v16.3.0/bin/node
+   2516   69.6%    /root/.nvm/versions/node/v16.3.0/bin/node
+   1267   50.4%      LazyCompile: ~compileFunction node:vm:309:25
+   1267  100.0%        LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1025:18
+   1267  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+   1267  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+     98    3.9%      LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+     84   85.7%        LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+     10   11.9%          Eval: ~<anonymous> node:crypto:1:1
+     10  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      8    9.5%          Eval: ~<anonymous> node:internal/child_process:1:1
+      8  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      6    7.1%          Eval: ~<anonymous> node:tls:1:1
+      6  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      6    7.1%          Eval: ~<anonymous> node:http:1:1
+      6  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      4    4.8%          LazyCompile: ~initializeCJSLoader node:internal/bootstrap/pre_execution:414:29
+      4  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
+      4    4.8%          Eval: ~<anonymous> node:internal/modules/esm/loader:1:1
+      4  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      3    3.6%          Eval: ~<anonymous> node:internal/modules/cjs/loader:1:1
+      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      3    3.6%          Eval: ~<anonymous> node:child_process:1:1
+      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      3    3.6%          Eval: ~<anonymous> node:_http_client:1:1
+      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2    2.4%          LazyCompile: ~setupChildProcessIpcChannel node:internal/bootstrap/pre_execution:330:37
+      2  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
+      2    2.4%          LazyCompile: ~lazyRequire node:internal/crypto/util:66:21
+      2  100.0%            LazyCompile: ~get node:crypto:287:8
+      2    2.4%          LazyCompile: ~lazyLoadStreams node:fs:2795:25
+      2  100.0%            LazyCompile: ~get ReadStream node:fs:2936:17
+      2    2.4%          Eval: ~<anonymous> node:internal/source_map/source_map_cache:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2    2.4%          Eval: ~<anonymous> node:internal/modules/esm/get_source:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2    2.4%          Eval: ~<anonymous> node:internal/main/run_main_module:1:1
+      2    2.4%          Eval: ~<anonymous> node:internal/crypto/random:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2    2.4%          Eval: ~<anonymous> node:assert:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2    2.4%          Eval: ~<anonymous> node:_http_common:1:1
+      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          LazyCompile: ~setupChannel node:internal/child_process:572:22
+      1  100.0%            LazyCompile: ~_forkChild node:child_process:146:20
+      1    1.2%          LazyCompile: ~initializeReport node:internal/bootstrap/pre_execution:180:26
+      1  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
+      1    1.2%          LazyCompile: ~get node:dns:329:8
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.2%          LazyCompile: ~get BlockList node:net:1746:16
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.2%          Eval: ~<anonymous> node:tty:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:net:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:module:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/process/esm_loader:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/modules/esm/translators:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/modules/esm/resolve:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/modules/esm/module_map:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/fs/promises:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/crypto/hkdf:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/crypto/cipher:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:internal/blocklist:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:dns:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:_tls_wrap:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:_http_server:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1    1.2%          Eval: ~<anonymous> node:_http_outgoing:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+     14   14.3%        LazyCompile: ~compileForPublicLoader node:internal/bootstrap/loaders:246:25
+     14  100.0%          LazyCompile: ~loadNativeModule node:internal/modules/cjs/helpers:35:26
+     14  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+     85    3.4%      /root/.nvm/versions/node/v16.3.0/bin/node
+     16   18.8%        LazyCompile: ~allocate /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:1:12662
+     16  100.0%          LazyCompile: ~callMain /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:15:4964
+     16  100.0%            LazyCompile: ~doRun /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:15:5868
+      4    4.7%        LazyCompile: ~Module node:internal/modules/cjs/loader:168:16
+      4  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      3   75.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1   25.0%            LazyCompile: *Module.require node:internal/modules/cjs/loader:1005:36
+      4    4.7%        LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
+      4  100.0%          LazyCompile: ~Contract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:1053:22
+      3   75.0%            LazyCompile: ~fetchPairData /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:1553:49
+      1   25.0%            LazyCompile: ~AccountsDbClient /root/defi-bot/lib/AccountsDbClient.js:20:14
+      4    4.7%        LazyCompile: *getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
       4  100.0%          LazyCompile: ~getAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:67:20
-      2   50.0%            LazyCompile: ~Formatter.address /root/defi-bot/node_modules/@ethersproject/providers/lib/formatter.js:191:44
+      3   75.0%            LazyCompile: ~Formatter.address /root/defi-bot/node_modules/@ethersproject/providers/lib/formatter.js:191:44
       1   25.0%            LazyCompile: ~validateAndParseAddress /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:285:33
-      1   25.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:88:43
-      3    2.3%        LazyCompile: ~processTicksAndRejections node:internal/process/task_queues:68:35
-      3    2.3%        LazyCompile: ~prepareStackTrace node:internal/errors:86:27
-      3  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-      3  100.0%            LazyCompile: ~get /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:113:12
-      3    2.3%        LazyCompile: ~isHexString /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:135:21
-      1   33.3%          LazyCompile: ~hexDataSlice /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:221:22
-      1  100.0%            LazyCompile: ~Interface.getSighash /root/defi-bot/node_modules/@ethersproject/abi/lib/interface.js:173:37
-      1   33.3%          LazyCompile: ~getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
-      1  100.0%            LazyCompile: ~getAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:67:20
-      1   33.3%          LazyCompile: ~arrayify /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:50:18
-      1  100.0%            LazyCompile: ~getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
-      3    2.3%        LazyCompile: ~FastBuffer node:internal/buffer:958:14
+      3    3.5%        LazyCompile: ~readPackage node:internal/modules/cjs/loader:286:21
+      3  100.0%          LazyCompile: ~readPackageScope node:internal/modules/cjs/loader:317:26
+      2   66.7%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+      1   33.3%            LazyCompile: ~trySelf node:internal/modules/cjs/loader:437:17
+      3    3.5%        LazyCompile: ~FastBuffer node:internal/buffer:958:14
       3  100.0%          LazyCompile: ~createUnsafeBuffer node:internal/buffer:1059:28
       2   66.7%            LazyCompile: ~allocate node:buffer:395:18
       1   33.3%            LazyCompile: ~createPool node:buffer:148:20
-      3    2.3%        LazyCompile: *bigDecToFloat /root/defi-bot/lib/Utils.js:47:47
-      2   66.7%          LazyCompile: ~<anonymous> /root/defi-bot/lib/FindShortfallPositions.js:127:47
-      2  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      1   33.3%          LazyCompile: ~<anonymous> /root/defi-bot/lib/FindShortfallPositions.js:176:7
+      2    2.4%        LazyCompile: ~prepareStackTrace node:internal/errors:86:27
+      2  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      2  100.0%            LazyCompile: ~get /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:113:12
+      2    2.4%        LazyCompile: ~bigDecToFloat /root/defi-bot/lib/Utils.js:47:47
+      1   50.0%          LazyCompile: ~<anonymous> /root/defi-bot/lib/FindShortfallPositions.js:184:7
       1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      2    1.5%        LazyCompile: ~_fetchData /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:78:20
-      2  100.0%          LazyCompile: ~fetchJson /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:333:19
-      2  100.0%            LazyCompile: ~JsonRpcProvider.send /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:564:47
-      2    1.5%        LazyCompile: ~_addHeaderLine node:_http_incoming:337:24
-      2  100.0%          LazyCompile: ~get node:_http_incoming:108:16
-      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/web/lib/geturl.js:54:43
-      2    1.5%        LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1   50.0%          LazyCompile: ~<anonymous> /root/defi-bot/lib/FindShortfallPositions.js:129:47
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      2    2.4%        LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
       2  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
       2  100.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
-      2    1.5%        /root/.nvm/versions/node/v16.3.0/bin/node
-      1   50.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/index.js:14:44
-      1  100.0%            LazyCompile: ~getRealTarget /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:78:27
-      1   50.0%          LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-    106    3.0%      LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-     89   84.0%        LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
-     11   12.4%          Eval: ~<anonymous> node:crypto:1:1
-     11  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      7    7.9%          Eval: ~<anonymous> node:tls:1:1
-      7  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      7    7.9%          Eval: ~<anonymous> node:http:1:1
-      7  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      6    6.7%          Eval: ~<anonymous> node:tty:1:1
-      6  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      5    5.6%          LazyCompile: ~initializeCJSLoader node:internal/bootstrap/pre_execution:414:29
-      5  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
-      5    5.6%          Eval: ~<anonymous> node:internal/modules/esm/loader:1:1
-      5  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      4    4.5%          Eval: ~<anonymous> node:_http_client:1:1
-      4  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:internal/process/esm_loader:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:internal/modules/esm/get_source:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:internal/http:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:internal/child_process:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:child_process:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      3    3.4%          Eval: ~<anonymous> node:assert:1:1
-      3  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      2    2.2%          LazyCompile: ~lookupAndConnect node:net:969:26
-      2  100.0%            LazyCompile: ~Socket.connect node:net:911:36
-      2    2.2%          Eval: ~<anonymous> node:internal/source_map/source_map_cache:1:1
-      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      2    2.2%          Eval: ~<anonymous> node:internal/modules/cjs/loader:1:1
-      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      2    2.2%          Eval: ~<anonymous> node:internal/crypto/random:1:1
-      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      2    2.2%          Eval: ~<anonymous> node:internal/crypto/hkdf:1:1
-      2  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          LazyCompile: ~lazyRequire node:internal/crypto/util:66:21
-      1  100.0%            LazyCompile: ~get node:crypto:287:8
-      1    1.1%          LazyCompile: ~lazyLoadStreams node:fs:2795:25
-      1  100.0%            LazyCompile: ~get ReadStream node:fs:2936:17
-      1    1.1%          LazyCompile: ~initializeReport node:internal/bootstrap/pre_execution:180:26
-      1  100.0%            LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
-      1    1.1%          LazyCompile: ~get node:timers:166:6
-      1  100.0%            LazyCompile: ~promisify node:internal/util:302:19
-      1    1.1%          LazyCompile: ~get BlockList node:net:1746:16
+      2    2.4%        LazyCompile: *realpathSync node:fs:2398:22
+      2  100.0%          LazyCompile: ~toRealPath node:internal/modules/cjs/loader:389:20
+      2  100.0%            LazyCompile: ~tryFile node:internal/modules/cjs/loader:380:17
+      1    1.2%        LazyCompile: ~uncompressSourcemaps /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:15:30
+      1  100.0%          LazyCompile: ~decodeInstructions /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:69:28
+      1  100.0%            LazyCompile: ~decodeEvmBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/compiler-to-model.js:174:27
+      1    1.2%        LazyCompile: ~stat node:internal/modules/cjs/loader:147:14
+      1  100.0%          LazyCompile: ~tryFile node:internal/modules/cjs/loader:380:17
+      1  100.0%            LazyCompile: ~tryPackage node:internal/modules/cjs/loader:334:20
+      1    1.2%        LazyCompile: ~socketOnData node:_http_client:480:22
+      1  100.0%          LazyCompile: ~emit node:events:343:44
+      1  100.0%            LazyCompile: ~addChunk node:internal/streams/readable:302:18
+      1    1.2%        LazyCompile: ~processTicksAndRejections node:internal/process/task_queues:68:35
+      1    1.2%        LazyCompile: ~parse node:url:168:37
+      1  100.0%          LazyCompile: ~urlParse node:url:152:18
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/web/lib/geturl.js:102:43
+      1    1.2%        LazyCompile: ~paramNameToCLA /root/defi-bot/node_modules/hardhat/internal/cli/ArgumentsParser.js:7:26
+      1  100.0%          LazyCompile: ~paramNameToEnvVariable /root/defi-bot/node_modules/hardhat/internal/core/params/env-variables.js:9:32
+      1  100.0%            LazyCompile: ~getEnvHardhatArguments /root/defi-bot/node_modules/hardhat/internal/core/params/env-variables.js:29:32
+      1    1.2%        LazyCompile: ~isURLInstance node:internal/url:1445:23
+      1  100.0%          LazyCompile: ~fileURLToPath node:internal/url:1366:23
+      1  100.0%            LazyCompile: ~finalizeEsmResolution node:internal/modules/cjs/loader:947:31
+      1    1.2%        LazyCompile: ~isHexString /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:135:21
+      1  100.0%          LazyCompile: ~arrayify /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:50:18
+      1  100.0%            LazyCompile: ~getChecksumAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:11:28
+      1    1.2%        LazyCompile: ~isForced.normalize /root/defi-bot/node_modules/core-js-pure/internals/is-forced.js:14:47
+      1  100.0%          LazyCompile: ~isForced /root/defi-bot/node_modules/core-js-pure/internals/is-forced.js:6:25
+      1  100.0%            LazyCompile: ~module.exports /root/defi-bot/node_modules/core-js-pure/internals/export.js:42:27
+      1    1.2%        LazyCompile: ~globUnescape /root/defi-bot/node_modules/minimatch/minimatch.js:941:23
+      1  100.0%          LazyCompile: ~parse /root/defi-bot/node_modules/minimatch/minimatch.js:296:16
       1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      1    1.1%          Eval: ~<anonymous> node:net:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:internal/modules/esm/translators:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:internal/modules/esm/resolve:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:internal/main/run_main_module:1:1
-      1    1.1%          Eval: ~<anonymous> node:internal/fs/promises:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:internal/crypto/cipher:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:internal/bootstrap/pre_execution:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:https:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:dns:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:_tls_wrap:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-      1    1.1%          Eval: ~<anonymous> node:_http_common:1:1
-      1  100.0%            LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
-     17   16.0%        LazyCompile: ~compileForPublicLoader node:internal/bootstrap/loaders:246:25
-     17  100.0%          LazyCompile: ~loadNativeModule node:internal/modules/cjs/helpers:35:26
-     17  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
-     85    2.4%      LazyCompile: ~handleWriteReq node:internal/stream_base_commons:45:24
-     85  100.0%        LazyCompile: ~writeGeneric node:internal/stream_base_commons:147:22
-     85  100.0%          LazyCompile: ~Socket._writeGeneric node:net:743:42
-     85  100.0%            LazyCompile: ~Socket._write node:net:780:35
-     52    1.5%      LazyCompile: ~getStoredCompoundAccounts /root/defi-bot/lib/AccountsDbClient.js:237:34
-     52  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
-     52  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-     37   71.2%            LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     15   28.8%            LazyCompile: ~processTicksAndRejections node:internal/process/task_queues:68:35
-     52    1.5%      LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     44    1.2%      LazyCompile: ~internalConnect node:net:849:25
-     44  100.0%        LazyCompile: ~defaultTriggerAsyncIdScope node:internal/async_hooks:422:36
-     44  100.0%          LazyCompile: ~emitLookup node:net:1028:46
-     44  100.0%            LazyCompile: ~onlookup node:dns:67:18
-     38    1.1%      LazyCompile: ~mulTo /root/defi-bot/node_modules/bn.js/lib/bn.js:1673:39
-     38  100.0%        LazyCompile: ~mul /root/defi-bot/node_modules/bn.js/lib/bn.js:1886:35
-     37   97.4%          LazyCompile: ~mul /root/defi-bot/node_modules/bn.js/lib/bn.js:3228:36
-     36   97.3%            LazyCompile: ~redMul /root/defi-bot/node_modules/bn.js/lib/bn.js:2893:41
-      1    2.7%            LazyCompile: ~sqr /root/defi-bot/node_modules/bn.js/lib/bn.js:3237:36
-      1    2.6%          LazyCompile: ~BigNumber.mul /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:71:40
-      1  100.0%            LazyCompile: ~getLiquidationTxInfo /root/defi-bot/lib/FindShortfallPositions.js:115:29
-     72    1.1%    LazyCompile: *clearBuffer node:internal/streams/writable:529:21
-     32   44.4%      LazyCompile: *runMicrotask node:internal/process/task_queues:137:22
-     32  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
-     32  100.0%          LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     27   37.5%      LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-     21   77.8%        LazyCompile: *runMicrotask node:internal/process/task_queues:137:22
-     21  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-     21  100.0%            LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-      3   11.1%        LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-      3  100.0%          LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      3  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      3   11.1%        LazyCompile: *<anonymous> node:internal/process/task_queues:138:24
-      2   66.7%          LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      2  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      1   33.3%          LazyCompile: *runInAsyncScope node:async_hooks:193:18
-      1  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      8   11.1%      LazyCompile: ~Writable.uncork node:internal/streams/writable:341:37
-      8  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-      8  100.0%          LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-      8  100.0%            LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      3    4.2%      LazyCompile: *Writable.uncork node:internal/streams/writable:341:37
-      3  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-      3  100.0%          LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-      3  100.0%            LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      2    2.8%      LazyCompile: *<anonymous> node:internal/process/task_queues:138:24
-      1   50.0%        LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      1  100.0%          LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      1   50.0%        LazyCompile: *runInAsyncScope node:async_hooks:193:18
-      1  100.0%          LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-     68    1.0%    LazyCompile: *slice node:buffer:591:12
-     51   75.0%      LazyCompile: *execute /root/defi-bot/node_modules/redis-parser/lib/parser.js:491:11
-     47   92.2%        LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:336:21
-     38   80.9%          LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:189:29
-     35   92.1%            LazyCompile: *readableAddChunk node:internal/streams/readable:234:26
-      2    5.3%            LazyCompile: *emit node:events:343:44
-      1    2.6%            LazyCompile: *addChunk node:internal/streams/readable:302:18
-      9   19.1%          LazyCompile: *emit node:events:343:44
-      9  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:189:29
-      4    7.8%        LazyCompile: *parseResponse /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:192:18
-      4  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:336:21
-      4  100.0%            LazyCompile: *emit node:events:343:44
-      9   13.2%      LazyCompile: *parseBulkString /root/defi-bot/node_modules/redis-parser/lib/parser.js:145:26
-      9  100.0%        LazyCompile: ~parseType /root/defi-bot/node_modules/redis-parser/lib/parser.js:291:20
-      7   77.8%          LazyCompile: ~execute /root/defi-bot/node_modules/redis-parser/lib/parser.js:491:11
-      7  100.0%            LazyCompile: ~parseResponse /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:192:18
-      2   22.2%          LazyCompile: ~parseArrayElements /root/defi-bot/node_modules/redis-parser/lib/parser.js:255:29
-      2  100.0%            LazyCompile: ~parseArrayChunks /root/defi-bot/node_modules/redis-parser/lib/parser.js:234:27
-      3    4.4%      LazyCompile: *toString node:buffer:780:46
-      2   66.7%        LazyCompile: ~stripBom /root/defi-bot/node_modules/jsonfile/index.js:120:19
-      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/jsonfile/index.js:26:39
-      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/graceful-fs/graceful-fs.js:118:50
-      1   33.3%        LazyCompile: ~parseBulkString /root/defi-bot/node_modules/redis-parser/lib/parser.js:145:26
-      1  100.0%          LazyCompile: ~parseType /root/defi-bot/node_modules/redis-parser/lib/parser.js:291:20
-      1  100.0%            LazyCompile: ~parseArrayElements /root/defi-bot/node_modules/redis-parser/lib/parser.js:255:29
-      3    4.4%      LazyCompile: *parseType /root/defi-bot/node_modules/redis-parser/lib/parser.js:291:20
-      3  100.0%        LazyCompile: ~execute /root/defi-bot/node_modules/redis-parser/lib/parser.js:491:11
-      3  100.0%          LazyCompile: *parseResponse /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:192:18
-      3  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:336:21
-      2    2.9%      LazyCompile: *parseArrayElements /root/defi-bot/node_modules/redis-parser/lib/parser.js:255:29
-      2  100.0%        LazyCompile: ~parseArrayChunks /root/defi-bot/node_modules/redis-parser/lib/parser.js:234:27
-      2  100.0%          LazyCompile: ~execute /root/defi-bot/node_modules/redis-parser/lib/parser.js:491:11
-      2  100.0%            LazyCompile: ~parseResponse /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/commands-queue.js:192:18
-
-    702    3.2%  __write
-    424   60.4%    /root/.nvm/versions/node/v16.3.0/bin/node
-     31    7.3%      /root/.nvm/versions/node/v16.3.0/bin/node
-      2    6.5%        LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-      1    3.2%        LazyCompile: ~unpack /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/array.js:84:16
-      1  100.0%          LazyCompile: ~TupleCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/tuple.js:73:44
-      1  100.0%            LazyCompile: ~AbiCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/abi-coder.js:96:42
-      1    3.2%        LazyCompile: ~strEscape /root/defi-bot/node_modules/safe-stable-stringify/index.js:55:20
-      1  100.0%          LazyCompile: ~stringifyFnReplacer /root/defi-bot/node_modules/safe-stable-stringify/index.js:203:32
-      1  100.0%            LazyCompile: ~stringify /root/defi-bot/node_modules/safe-stable-stringify/index.js:594:22
-      1    3.2%        LazyCompile: ~resolve /root/defi-bot/node_modules/node-gyp-build/index.js:62:20
-      1  100.0%          LazyCompile: ~load.path /root/defi-bot/node_modules/node-gyp-build/index.js:25:22
-      1  100.0%            LazyCompile: ~load /root/defi-bot/node_modules/node-gyp-build/index.js:21:15
-      1    3.2%        LazyCompile: ~populateStatusesMap /root/defi-bot/node_modules/statuses/index.js:60:30
-      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/statuses/index.js:1:1
+      1    1.2%        LazyCompile: ~getset /root/defi-bot/node_modules/color/index.js:431:16
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/color/index.js:1:1
       1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1    3.2%        LazyCompile: ~mixin /root/defi-bot/node_modules/immutable/dist/immutable.js:4278:17
-      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/immutable/dist/immutable.js:28:19
-      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/immutable/dist/immutable.js:24:11
-      1    3.2%        LazyCompile: ~make /root/defi-bot/node_modules/minimatch/minimatch.js:160:15
-      1  100.0%          LazyCompile: ~Minimatch /root/defi-bot/node_modules/minimatch/minimatch.js:128:20
-      1  100.0%            LazyCompile: ~setopts /root/defi-bot/node_modules/glob/common.js:48:18
-      1    3.2%        LazyCompile: ~main /root/defi-bot/test/profile.js:21:20
-      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      1    3.2%        LazyCompile: ~loadConfigAndTasks /root/defi-bot/node_modules/hardhat/internal/core/config/config-loading.js:39:28
-      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/lib/hardhat-lib.js:1:1
-      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1    3.2%        LazyCompile: ~getSolidityTypes /root/defi-bot/node_modules/@metamask/eth-sig-util/dist/sign-typed-data.js:52:26
+      1    1.2%        LazyCompile: ~getSolidityTypes /root/defi-bot/node_modules/@metamask/eth-sig-util/dist/sign-typed-data.js:52:26
       1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/@metamask/eth-sig-util/dist/sign-typed-data.js:1:1
       1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1    3.2%        LazyCompile: ~getOwn node:internal/bootstrap/loaders:180:16
-      1  100.0%          LazyCompile: ~syncExports node:internal/bootstrap/loaders:287:14
-      1  100.0%            LazyCompile: ~<anonymous> node:internal/bootstrap/loaders:273:15
-      1    3.2%        LazyCompile: ~getLiquidationTxInfo /root/defi-bot/lib/FindShortfallPositions.js:115:29
-      1  100.0%          LazyCompile: ~getLiquidationTxsInfo /root/defi-bot/lib/FindShortfallPositions.js:95:30
+      1    1.2%        LazyCompile: ~getRequireCachedFiles /root/defi-bot/node_modules/hardhat/internal/util/platform.js:4:31
+      1  100.0%          LazyCompile: ~setConfigLoadingAsFinished /root/defi-bot/node_modules/hardhat/internal/context.js:58:31
+      1  100.0%            LazyCompile: ~loadConfigAndTasks /root/defi-bot/node_modules/hardhat/internal/core/config/config-loading.js:39:28
+      1    1.2%        LazyCompile: ~getOpcodesForHF /root/defi-bot/node_modules/@ethereumjs/vm/dist/evm/opcodes/codes.js:258:25
+      1  100.0%          LazyCompile: ~getActiveOpcodes /root/defi-bot/node_modules/@ethereumjs/vm/dist/index.js:285:21
+      1  100.0%            LazyCompile: ~VM /root/defi-bot/node_modules/@ethereumjs/vm/dist/index.js:63:16
+      1    1.2%        LazyCompile: ~extendWithModulesAndScripts /root/defi-bot/node_modules/@node-redis/client/dist/lib/commander.js:13:37
+      1  100.0%          LazyCompile: ~extend /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/multi-command.js:40:18
+      1  100.0%            LazyCompile: ~extend /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/index.js:95:18
+      1    1.2%        LazyCompile: ~createToken /root/defi-bot/node_modules/bull/node_modules/semver/internal/re.js:11:21
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/bull/node_modules/semver/internal/re.js:1:1
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    1.2%        LazyCompile: ~createRangeTable /root/defi-bot/node_modules/@ethersproject/strings/lib/idna.js:28:26
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/strings/lib/idna.js:1:1
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    1.2%        LazyCompile: ~consume /root/defi-bot/node_modules/undici/lib/api/readable.js:173:24
+      1  100.0%          LazyCompile: ~text /root/defi-bot/node_modules/undici/lib/api/readable.js:104:14
+      1  100.0%            LazyCompile: ~_fetchJsonRpcResponse /root/defi-bot/node_modules/hardhat/internal/core/providers/http.js:101:32
+      1    1.2%        LazyCompile: ~compileFunction node:vm:309:25
+      1  100.0%          LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1025:18
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    1.2%        LazyCompile: ~checkEnv /root/defi-bot/node_modules/ci-info/index.js:61:19
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/ci-info/index.js:17:34
       1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      1    3.2%        LazyCompile: ~fromEntries /root/defi-bot/node_modules/hardhat/internal/util/lang.js:4:21
-      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/core/config/config-validation.js:1:1
-      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1    3.2%        LazyCompile: ~forProperties /root/defi-bot/node_modules/winston/lib/winston/common.js:52:16
-      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/winston/lib/winston.js:1:1
-      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1    3.2%        LazyCompile: ~containsNamespace /root/defi-bot/node_modules/depd/index.js:31:28
-      1  100.0%          LazyCompile: ~istraced /root/defi-bot/node_modules/depd/index.js:152:19
-      1  100.0%            LazyCompile: ~depd /root/defi-bot/node_modules/depd/index.js:105:15
-      1    3.2%        LazyCompile: ~adopt /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:18:19
-      1  100.0%          LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:22:22
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:19:46
-      1    3.2%        LazyCompile: ~__awaiter /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:17:54
-      1  100.0%          LazyCompile: ~resolveName /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:85:21
-      1  100.0%            LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
-      1    3.2%        LazyCompile: ~JsonRpcProvider.hexlifyTransaction /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:754:51
-      1  100.0%          LazyCompile: ~JsonRpcProvider.prepareRequest /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:609:57
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:658:47
-      1    3.2%        LazyCompile: ~Interface /root/defi-bot/node_modules/@ethersproject/abi/lib/interface.js:90:23
-      1  100.0%          LazyCompile: ~BaseContract.getInterface /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:761:42
-      1  100.0%            LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
-      1    3.2%        LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
-      1  100.0%          LazyCompile: ~Contract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:1053:22
-      1  100.0%            LazyCompile: ~fetchPairData /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:1553:49
-      1    3.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/core-js-pure/internals/descriptors.js:4:34
-      1  100.0%          LazyCompile: ~module.exports /root/defi-bot/node_modules/core-js-pure/internals/fails.js:1:27
-      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/core-js-pure/internals/descriptors.js:1:1
-      1    3.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/web/lib/geturl.js:54:43
-      1  100.0%          LazyCompile: ~onceWrapper node:events:508:21
-      1  100.0%            LazyCompile: ~emit node:events:343:44
-      1    3.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:1727:47
-      1  100.0%          LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:30:18
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:29:40
-      1    3.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:68:43
-      1  100.0%          LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:15:18
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:14:40
-      1    3.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/undici/lib/llhttp/constants.js:1:1
+      1    1.2%        LazyCompile: ~calculateServerName node:_http_agent:346:29
+      1  100.0%          LazyCompile: ~addRequest node:_http_agent:242:49
+      1  100.0%            LazyCompile: ~ClientRequest node:_http_client:106:23
+      1    1.2%        LazyCompile: ~arrayify /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:50:18
+      1  100.0%          LazyCompile: ~toUtf8Bytes /root/defi-bot/node_modules/@ethersproject/strings/lib/utf8.js:172:21
+      1  100.0%            LazyCompile: ~fetchJson /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:333:19
+      1    1.2%        LazyCompile: ~add /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/contracts-identifier.js:25:8
+      1  100.0%          LazyCompile: ~addBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/contracts-identifier.js:75:16
+      1  100.0%            LazyCompile: ~addBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/vm-trace-decoder.js:15:16
+      1    1.2%        LazyCompile: ~_validateCannotExceedMaxInteger /root/defi-bot/node_modules/@ethereumjs/tx/dist/baseTransaction.js:290:36
+      1  100.0%          LazyCompile: ~FeeMarketEIP1559Transaction /root/defi-bot/node_modules/@ethereumjs/tx/dist/eip1559Transaction.js:23:16
+      1  100.0%            LazyCompile: ~ReadOnlyValidEIP1559Transaction /root/defi-bot/node_modules/hardhat/internal/hardhat-network/provider/transactions/ReadOnlyValidEIP1559Transaction.js:17:16
+      1    1.2%        LazyCompile: ~_addHeaderLine node:_http_incoming:337:24
+      1  100.0%          LazyCompile: ~get node:_http_incoming:108:16
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/web/lib/geturl.js:54:43
+      1    1.2%        LazyCompile: ~Reader.coerce /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:130:30
+      1  100.0%          LazyCompile: ~Reader.coerce /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:137:40
+      1  100.0%            LazyCompile: ~NumberCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/number.js:54:45
+      1    1.2%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1    1.2%        LazyCompile: ~HDKey.fromMasterSeed /root/defi-bot/node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:187:33
+      1  100.0%          LazyCompile: ~deriveKeyFromMnemonicAndPath /root/defi-bot/node_modules/hardhat/internal/util/keys-derivation.js:4:38
+      1  100.0%            LazyCompile: ~derivePrivateKeys /root/defi-bot/node_modules/hardhat/internal/core/providers/util.js:9:27
+      1    1.2%        LazyCompile: ~FunctionFragment.fromString /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:741:44
+      1  100.0%          LazyCompile: ~Fragment.fromString /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:385:36
+      1  100.0%            LazyCompile: ~Fragment.from /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:356:30
+      1    1.2%        LazyCompile: ~FunctionFragment.fromObject /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:721:44
+      1  100.0%          LazyCompile: ~Fragment.fromObject /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:365:36
+      1  100.0%            LazyCompile: ~Fragment.from /root/defi-bot/node_modules/@ethersproject/abi/lib/fragments.js:356:30
+      1    1.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/minimatch/minimatch.js:196:26
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            LazyCompile: ~make /root/defi-bot/node_modules/minimatch/minimatch.js:160:15
+      1    1.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/io-ts/lib/index.js:514:137
+      1  100.0%          LazyCompile: ~Right.fold /root/defi-bot/node_modules/fp-ts/lib/Either.js:225:37
+      1  100.0%            LazyCompile: ~_loop_2 /root/defi-bot/node_modules/io-ts/lib/index.js:504:36
+      1    1.2%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/index.js:14:44
+      1  100.0%          LazyCompile: ~getRealTarget /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:78:27
+      1  100.0%            LazyCompile: ~get /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:113:12
+      1    1.2%        LazyCompile: *uncompressSourcemaps /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:15:30
+      1  100.0%          LazyCompile: ~decodeInstructions /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:69:28
+      1  100.0%            LazyCompile: ~decodeEvmBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/compiler-to-model.js:174:27
+      1    1.2%        LazyCompile: *decodeInstructions /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/source-maps.js:69:28
+      1  100.0%          LazyCompile: ~decodeEvmBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/compiler-to-model.js:174:27
+      1  100.0%            LazyCompile: ~decodeBytecodes /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/compiler-to-model.js:146:25
+      1    1.2%        LazyCompile: *add /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/contracts-identifier.js:25:8
+      1  100.0%          LazyCompile: ~addBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/contracts-identifier.js:75:16
+      1  100.0%            LazyCompile: ~addBytecode /root/defi-bot/node_modules/hardhat/internal/hardhat-network/stack-traces/vm-trace-decoder.js:15:16
+      1    1.2%        LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1    1.2%        Eval: ~runInContext /root/defi-bot/node_modules/lodash/lodash.js:1448:44
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:9:11
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:1:1
+      1    1.2%        Eval: ~<anonymous> node:internal/crypto/keys:1:1
+      1  100.0%          LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%            LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1    1.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/redis-commands/index.js:1:1
       1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
       1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-      1    3.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/signal-exit/index.js:1:1
+      1    1.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/ioredis/built/cluster/index.js:1:1
       1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
       1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-      1    3.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/shelljs/shell.js:1:1
+      1    1.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/node_modules/color-convert/conversions.js:1:1
       1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
       1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-      1    3.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/fs-extra/lib/fs/index.js:1:1
-      1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-      1    3.2%        Eval: ~<anonymous> /root/defi-bot/node_modules/color/index.js:1:1
-      1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
-      1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
-     18    4.2%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      3   16.7%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:11489:42
-      3  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      3  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:15861:33
-      2   11.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+      1    1.2%        /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%          LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
+     39    1.6%      LazyCompile: ~pbkdf2Sync node:internal/crypto/pbkdf2:65:20
+     39  100.0%        LazyCompile: ~nativePBKDF2Sync /root/defi-bot/node_modules/pbkdf2/index.js:21:27
+     39  100.0%          LazyCompile: ~mnemonicToSeedSync /root/defi-bot/node_modules/ethereum-cryptography/vendor/bip39-without-wordlists.js:59:28
+     39  100.0%            LazyCompile: ~mnemonicToSeedSync /root/defi-bot/node_modules/ethereum-cryptography/bip39/index.js:66:28
+     34    1.4%      LazyCompile: ~mulTo /root/defi-bot/node_modules/bn.js/lib/bn.js:1673:39
+     34  100.0%        LazyCompile: ~mul /root/defi-bot/node_modules/bn.js/lib/bn.js:1886:35
+     34  100.0%          LazyCompile: ~mul /root/defi-bot/node_modules/bn.js/lib/bn.js:3228:36
+     33   97.1%            LazyCompile: ~redMul /root/defi-bot/node_modules/bn.js/lib/bn.js:2893:41
+      1    2.9%            LazyCompile: ~sqr /root/defi-bot/node_modules/bn.js/lib/bn.js:3237:36
+     32    1.3%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      5   15.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+      5  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      5  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1:1
+      5   15.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:11489:42
+      5  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      5  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:15861:33
+      2    6.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:6400:44
       2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      2  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1:1
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9586:45
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:6936:32
+      2    6.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5286:30
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5908:30
+      2    6.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23559:30
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:25058:33
+      2    6.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16877:44
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+      2    6.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16504:47
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16877:44
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9248:44
       1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:11489:42
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:592:52
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9586:45
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9102:38
       1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:640:41
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5444:39
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5908:30
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:25058:33
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1:1
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22663:46
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23559:30
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:21767:36
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:21835:40
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:21362:33
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:21944:45
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:2071:38
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:2257:45
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20509:43
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23559:30
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:18671:37
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20058:39
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16504:47
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16877:44
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1479:46
-      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
-      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1544:51
-      1    5.6%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:12980:38
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9248:44
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:85:43
       1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
       1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5077:40
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5286:30
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:3246:36
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:4104:39
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:25058:33
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1:1
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22663:46
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23559:30
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20509:43
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23559:30
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20058:39
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20174:31
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16452:47
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16504:47
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:15861:33
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16452:47
+      1    3.1%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:12980:38
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+     29    1.2%      LazyCompile: ~stat node:internal/modules/cjs/loader:147:14
+     17   58.6%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+     17  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+     17  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+     12   41.4%        LazyCompile: ~tryFile node:internal/modules/cjs/loader:380:17
+      6   50.0%          LazyCompile: ~tryExtensions node:internal/modules/cjs/loader:396:23
+      6  100.0%            LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      5   41.7%          LazyCompile: ~tryPackage node:internal/modules/cjs/loader:334:20
+      3   60.0%            LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      2   40.0%            LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1    8.3%          LazyCompile: ~finalizeEsmResolution node:internal/modules/cjs/loader:947:31
+      1  100.0%            LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
 
-    689    3.1%  __libc_write
-    657   95.4%    LazyCompile: *clearBuffer node:internal/streams/writable:529:21
-    290   44.1%      LazyCompile: *<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-    200   69.0%        LazyCompile: *runMicrotask node:internal/process/task_queues:137:22
-    200  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
-    200  100.0%            LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     48   16.6%        LazyCompile: *<anonymous> node:internal/process/task_queues:138:24
-     37   77.1%          LazyCompile: *runInAsyncScope node:async_hooks:193:18
-     37  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-     11   22.9%          LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-     11  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-     42   14.5%        LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-     42  100.0%          LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-     42  100.0%            LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-    253   38.5%      LazyCompile: *runMicrotask node:internal/process/task_queues:137:22
-    253  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
-    253  100.0%          LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
-     62    9.4%      LazyCompile: ~Writable.uncork node:internal/streams/writable:341:37
-     62  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-     62  100.0%          LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-     62  100.0%            LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-     39    5.9%      LazyCompile: *<anonymous> node:internal/process/task_queues:138:24
-     31   79.5%        LazyCompile: *runInAsyncScope node:async_hooks:193:18
-     31  100.0%          LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-     31  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-      8   20.5%        LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-      8  100.0%          LazyCompile: ~runMicrotask node:internal/process/task_queues:137:22
-      8  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
-     13    2.0%      LazyCompile: *Writable.uncork node:internal/streams/writable:341:37
-     13  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:85:24
-     13  100.0%          LazyCompile: ~<anonymous> node:internal/process/task_queues:138:24
-     13  100.0%            LazyCompile: ~runInAsyncScope node:async_hooks:193:18
-     21    3.0%    LazyCompile: *writeGeneric node:internal/stream_base_commons:147:22
-     21  100.0%      LazyCompile: ~Socket._writeGeneric node:net:743:42
-     21  100.0%        LazyCompile: ~Socket._write node:net:780:35
-     21  100.0%          LazyCompile: ~doWrite node:internal/streams/writable:398:17
-     21  100.0%            LazyCompile: ~clearBuffer node:internal/streams/writable:529:21
+    558   11.2%  epoll_pwait
 
-    659    3.0%  __lll_lock_wait
+    384    7.7%  __write
+    285   74.2%    /root/.nvm/versions/node/v16.3.0/bin/node
+     21    7.4%      /root/.nvm/versions/node/v16.3.0/bin/node
+      2    9.5%        LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
+      1    4.8%        LazyCompile: ~unpack /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/array.js:84:16
+      1  100.0%          LazyCompile: ~TupleCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/tuple.js:73:44
+      1  100.0%            LazyCompile: ~AbiCoder.decode /root/defi-bot/node_modules/@ethersproject/abi/lib/abi-coder.js:96:42
+      1    4.8%        LazyCompile: ~resolveFile /root/defi-bot/node_modules/node-gyp-build-optional-packages/index.js:74:24
+      1  100.0%          LazyCompile: ~load.path /root/defi-bot/node_modules/node-gyp-build-optional-packages/index.js:24:22
+      1  100.0%            LazyCompile: ~load /root/defi-bot/node_modules/node-gyp-build-optional-packages/index.js:20:15
+      1    4.8%        LazyCompile: ~resolve /root/defi-bot/node_modules/node-gyp-build/index.js:62:20
+      1  100.0%          LazyCompile: ~load.path /root/defi-bot/node_modules/node-gyp-build/index.js:25:22
+      1  100.0%            LazyCompile: ~load /root/defi-bot/node_modules/node-gyp-build/index.js:21:15
+      1    4.8%        LazyCompile: ~hexConcat /root/defi-bot/node_modules/@ethersproject/bytes/lib/index.js:235:19
+      1  100.0%          LazyCompile: ~get /root/defi-bot/node_modules/@ethersproject/abi/lib/coders/abstract-coder.js:54:23
+      1  100.0%            LazyCompile: ~AbiCoder.encode /root/defi-bot/node_modules/@ethersproject/abi/lib/abi-coder.js:82:42
+      1    4.8%        LazyCompile: ~getLiquidationTxInfo /root/defi-bot/lib/FindShortfallPositions.js:123:29
+      1  100.0%          LazyCompile: ~getLiquidationTxsInfo /root/defi-bot/lib/FindShortfallPositions.js:103:30
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    4.8%        LazyCompile: ~getESMFacade node:internal/bootstrap/loaders:264:15
+      1  100.0%          LazyCompile: ~compileForPublicLoader node:internal/bootstrap/loaders:246:25
+      1  100.0%            LazyCompile: ~loadNativeModule node:internal/modules/cjs/helpers:35:26
+      1    4.8%        LazyCompile: ~fromEntries /root/defi-bot/node_modules/hardhat/internal/util/lang.js:4:21
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/core/config/config-validation.js:1:1
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    4.8%        LazyCompile: ~formatFixed /root/defi-bot/node_modules/@ethersproject/bignumber/lib/fixednumber.js:37:21
+      1  100.0%          LazyCompile: ~formatUnits /root/defi-bot/node_modules/@ethersproject/units/lib/index.js:60:21
+      1  100.0%            LazyCompile: ~formatEther /root/defi-bot/node_modules/@ethersproject/units/lib/index.js:83:21
+      1    4.8%        LazyCompile: ~exports.type /root/defi-bot/node_modules/io-ts/lib/index.js:484:25
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/core/config/config-validation.js:1:1
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    4.8%        LazyCompile: ~enumToMap /root/defi-bot/node_modules/undici/lib/llhttp/utils.js:4:19
+      1  100.0%          Eval: ~<anonymous> /root/defi-bot/node_modules/undici/lib/llhttp/constants.js:1:1
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    4.8%        LazyCompile: ~compileFunction node:vm:309:25
+      1  100.0%          LazyCompile: ~wrapSafe node:internal/modules/cjs/loader:1025:18
+      1  100.0%            LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1    4.8%        LazyCompile: ~comb10MulTo /root/defi-bot/node_modules/bn.js/lib/bn.js:1049:42
+      1  100.0%          LazyCompile: ~mulTo /root/defi-bot/node_modules/bn.js/lib/bn.js:1673:39
+      1  100.0%            LazyCompile: ~mul /root/defi-bot/node_modules/bn.js/lib/bn.js:1886:35
+      1    4.8%        LazyCompile: ~addColors /root/defi-bot/node_modules/logform/colorize.js:36:19
+      1  100.0%          LazyCompile: ~module.exports /root/defi-bot/node_modules/logform/levels.js:9:18
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/winston/lib/winston/config/index.js:1:1
+      1    4.8%        LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1  100.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1    4.8%        LazyCompile: ~<anonymous> /root/defi-bot/test/profileQworker.js:15:30
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    4.8%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:170:36
+      1  100.0%          LazyCompile: ~_fetchData /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:78:20
+      1  100.0%            LazyCompile: ~fetchJson /root/defi-bot/node_modules/@ethersproject/web/lib/index.js:333:19
+      1    4.8%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:68:43
+      1  100.0%          LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:15:18
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/properties/lib/index.js:14:40
+      1    4.8%        LazyCompile: *getOwn node:internal/bootstrap/loaders:180:16
+      1  100.0%          LazyCompile: ~syncExports node:internal/bootstrap/loaders:287:14
+      1  100.0%            LazyCompile: ~<anonymous> node:internal/bootstrap/loaders:273:15
+      1    4.8%        Eval: ~<anonymous> /root/defi-bot/node_modules/fs-extra/lib/fs/index.js:1:1
+      1  100.0%          LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1  100.0%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+     19    6.7%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      3   15.8%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:11489:42
+      3  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      3  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:15861:33
+      2   10.5%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5741:38
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5908:30
+      2   10.5%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1479:46
+      2  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      2  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1544:51
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:9586:45
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:11489:42
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:7219:38
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16504:47
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:640:41
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1076:42
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:6400:44
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:6936:32
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5542:43
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5741:38
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:25058:33
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:1:1
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:24589:45
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:25058:33
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23685:31
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:23776:30
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20058:39
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20174:31
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:18671:37
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:20058:39
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:15861:33
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:16452:47
+      1    5.3%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:12980:38
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:17580:35
+      4    1.4%      LazyCompile: ~prepareMainThreadExecution node:internal/bootstrap/pre_execution:22:36
+      4  100.0%        Eval: ~<anonymous> node:internal/main/run_main_module:1:1
+      3    1.1%      LazyCompile: ~emit node:events:343:44
+      1   33.3%        LazyCompile: ~emitErrorNT node:internal/streams/destroy:178:21
+      1  100.0%          LazyCompile: ~emitErrorCloseNT node:internal/streams/destroy:157:26
+      1  100.0%            LazyCompile: *processTicksAndRejections node:internal/process/task_queues:68:35
+      1   33.3%        LazyCompile: ~_RedisSocket_connect /root/defi-bot/node_modules/@node-redis/client/dist/lib/client/socket.js:109:62
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1   33.3%        LazyCompile: ~<anonymous> node:net:659:24
+
+     72    1.4%  /usr/lib/x86_64-linux-gnu/libc-2.31.so
+     55   76.4%    /root/.nvm/versions/node/v16.3.0/bin/node
+      4    7.3%      /root/.nvm/versions/node/v16.3.0/bin/node
+      1   25.0%        LazyCompile: ~initPromise /root/defi-bot/node_modules/ioredis/built/command.js:90:16
+      1  100.0%          LazyCompile: ~Command /root/defi-bot/node_modules/ioredis/built/command.js:44:16
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/ioredis/built/commander.js:103:21
+      1   25.0%        LazyCompile: ~getLiquidationTxInfo /root/defi-bot/lib/FindShortfallPositions.js:123:29
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1   25.0%        LazyCompile: ~FastBuffer node:internal/buffer:958:14
+      1  100.0%          LazyCompile: ~createUnsafeBuffer node:internal/buffer:1059:28
+      1  100.0%            LazyCompile: ~createPool node:buffer:148:20
+      1   25.0%        LazyCompile: ~<anonymous> node:internal/fs/utils:356:35
+      1  100.0%          LazyCompile: ~<anonymous> node:internal/fs/utils:667:38
+      1  100.0%            LazyCompile: ~<anonymous> node:internal/fs/utils:679:42
+      3    5.5%      LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      2   66.7%        LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      2  100.0%          LazyCompile: ~require node:internal/modules/cjs/helpers:92:31
+      1   50.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/glob/sync.js:1:1
+      1   50.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@node-redis/search/dist/commands/SUGGET_WITHSCORES.js:1:1
+      1   33.3%        LazyCompile: *Module.require node:internal/modules/cjs/loader:1005:36
+      1  100.0%          LazyCompile: ~require node:internal/modules/cjs/helpers:92:31
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/hardhat-network/provider/node.js:1:1
+      2    3.6%      LazyCompile: *realpathSync node:fs:2398:22
+      2  100.0%        LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      2  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      2  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      2    3.6%      Function: *Od
+      2  100.0%        Function: *Tb
+      2  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      2  100.0%            LazyCompile: ~callMain /root/defi-bot/node_modules/rustbn.js/lib/index.asm.js:15:4964
+      1    1.8%      LazyCompile: ~value node:internal/console/constructor:324:20
+      1  100.0%        LazyCompile: ~log node:internal/console/constructor:362:6
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/test/profileQworker.js:15:30
+      1    1.8%      LazyCompile: ~urlParse node:url:152:18
+      1  100.0%        LazyCompile: ~redisOptsFromUrl /root/defi-bot/node_modules/bull/lib/queue.js:317:26
+      1  100.0%          LazyCompile: ~Queue /root/defi-bot/node_modules/bull/lib/queue.js:85:29
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/test/profileQworker.js:1:1
+      1    1.8%      LazyCompile: ~tryParseAsDataURI /root/defi-bot/node_modules/mcl-wasm/src/mcl_c.js:615:27
+      1  100.0%        LazyCompile: ~getBinary /root/defi-bot/node_modules/mcl-wasm/src/mcl_c.js:409:19
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%            LazyCompile: ~processTicksAndRejections node:internal/process/task_queues:68:35
+      1    1.8%      LazyCompile: ~toHex /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:250:15
+      1  100.0%        LazyCompile: ~BigNumber.from /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:190:31
+      1  100.0%          LazyCompile: ~BigNumber.from /root/defi-bot/node_modules/@ethersproject/bignumber/lib/bignumber.js:190:31
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/bignumber/lib/fixednumber.js:1:1
+      1    1.8%      LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:30:18
+      1  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:29:40
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:19:46
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.8%      LazyCompile: ~resolveExports node:internal/modules/cjs/loader:468:24
+      1  100.0%        LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1    1.8%      LazyCompile: ~realpathSync node:fs:2398:22
+      1  100.0%        LazyCompile: ~toRealPath node:internal/modules/cjs/loader:389:20
+      1  100.0%          LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%            LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1    1.8%      LazyCompile: ~readPackage node:internal/modules/cjs/loader:286:21
+      1  100.0%        LazyCompile: ~resolveExports node:internal/modules/cjs/loader:468:24
+      1  100.0%          LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%            LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1    1.8%      LazyCompile: ~processTicksAndRejections node:internal/process/task_queues:68:35
+      1    1.8%      LazyCompile: ~makeOptions /root/defi-bot/node_modules/prr/prr.js:25:30
+      1  100.0%        LazyCompile: ~prr /root/defi-bot/node_modules/prr/prr.js:44:22
+      1  100.0%          LazyCompile: ~init /root/defi-bot/node_modules/errno/custom.js:3:15
+      1  100.0%            LazyCompile: ~CustomError /root/defi-bot/node_modules/errno/custom.js:17:22
+      1    1.8%      LazyCompile: ~isImmutable /root/defi-bot/node_modules/immutable/dist/immutable.js:199:23
+      1  100.0%        LazyCompile: ~throwOnInvalidDefaultValues /root/defi-bot/node_modules/immutable/dist/immutable.js:5491:39
+      1  100.0%          LazyCompile: ~Record /root/defi-bot/node_modules/immutable/dist/immutable.js:5511:31
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/hardhat/internal/hardhat-network/provider/fork/AccountState.js:1:1
+      1    1.8%      LazyCompile: ~inflight /root/defi-bot/node_modules/inflight/inflight.js:7:19
+      1  100.0%        LazyCompile: ~wrapper /root/defi-bot/node_modules/wrappy/wrappy.js:19:19
+      1  100.0%          LazyCompile: ~Glob._readdir /root/defi-bot/node_modules/glob/glob.js:522:36
+      1  100.0%            LazyCompile: ~Glob._processGlobStar /root/defi-bot/node_modules/glob/glob.js:620:44
+      1    1.8%      LazyCompile: ~getCheckedFunction node:os:63:28
+      1  100.0%        Eval: ~<anonymous> node:os:1:1
+      1  100.0%          LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%            LazyCompile: ~compileForPublicLoader node:internal/bootstrap/loaders:246:25
+      1    1.8%      LazyCompile: ~getAddress /root/defi-bot/node_modules/@ethersproject/address/lib/index.js:67:20
+      1  100.0%        LazyCompile: ~Formatter.address /root/defi-bot/node_modules/@ethersproject/providers/lib/formatter.js:191:44
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:2321:47
+      1  100.0%            LazyCompile: ~step /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:30:18
+      1    1.8%      LazyCompile: ~findLongestRegisteredExtension node:internal/modules/cjs/loader:409:40
+      1  100.0%        LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1  100.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1    1.8%      LazyCompile: ~exponentiate /root/defi-bot/node_modules/jsbi/dist/jsbi-cjs.js:1:2119
+      1  100.0%        LazyCompile: ~CurrencyAmount /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:570:26
+      1  100.0%          LazyCompile: ~TokenAmount /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:651:23
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js:1558:121
+      1    1.8%      LazyCompile: ~_putAccount /root/defi-bot/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js:286:16
+      1  100.0%        LazyCompile: ~initializeGenesisAccounts /root/defi-bot/node_modules/hardhat/internal/hardhat-network/provider/fork/ForkStateManager.js:38:36
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.8%      LazyCompile: ~_loop_2 /root/defi-bot/node_modules/io-ts/lib/index.js:504:36
+      1  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/io-ts/lib/index.js:501:68
+      1  100.0%          LazyCompile: ~Right.chain /root/defi-bot/node_modules/fp-ts/lib/Either.js:207:38
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/io-ts/lib/index.js:500:17
+      1    1.8%      LazyCompile: ~__iterate /root/defi-bot/node_modules/immutable/dist/immutable.js:532:56
+      1  100.0%        LazyCompile: ~forEach /root/defi-bot/node_modules/immutable/dist/immutable.js:4856:30
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/immutable/dist/immutable.js:5556:52
+      1  100.0%            LazyCompile: ~withMutations /root/defi-bot/node_modules/immutable/dist/immutable.js:2351:25
+      1    1.8%      LazyCompile: ~Socket node:net:272:16
+      1  100.0%        LazyCompile: ~WriteStream node:tty:85:21
+      1  100.0%          LazyCompile: ~createWritableStdioStream node:internal/bootstrap/switches/is_main_thread:41:35
+      1  100.0%            LazyCompile: ~getStderr node:internal/bootstrap/switches/is_main_thread:132:19
+      1    1.8%      LazyCompile: ~SenderProvider /root/defi-bot/node_modules/hardhat/internal/core/providers/accounts.js:209:1
+      1  100.0%        LazyCompile: ~AutomaticSenderProvider /root/defi-bot/node_modules/hardhat/internal/core/providers/accounts.js:231:1
+      1  100.0%          LazyCompile: ~applyProviderWrappers /root/defi-bot/node_modules/hardhat/internal/core/providers/construction.js:55:31
+      1  100.0%            LazyCompile: ~createProvider /root/defi-bot/node_modules/hardhat/internal/core/providers/construction.js:24:24
+      1    1.8%      LazyCompile: ~PresetCurve /root/defi-bot/node_modules/elliptic/lib/elliptic/curves.js:11:21
+      1  100.0%        LazyCompile: ~get /root/defi-bot/node_modules/elliptic/lib/elliptic/curves.js:31:18
+      1  100.0%          LazyCompile: ~EC /root/defi-bot/node_modules/elliptic/lib/elliptic/ec/index.js:13:12
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/ethereumjs-abi/node_modules/ethereumjs-util/dist/secp256k1v3-lib/index.js:1:1
+      1    1.8%      LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%        LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1  100.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1    1.8%      LazyCompile: ~Keccak.finalize /root/defi-bot/node_modules/js-sha3/src/sha3.js:333:40
+      1  100.0%        LazyCompile: ~Keccak.toString.Keccak.hex /root/defi-bot/node_modules/js-sha3/src/sha3.js:353:63
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/js-sha3/src/sha3.js:62:21
+      1  100.0%            LazyCompile: ~keccak256 /root/defi-bot/node_modules/@ethersproject/keccak256/lib/index.js:9:19
+      1    1.8%      LazyCompile: ~Interface /root/defi-bot/node_modules/@ethersproject/abi/lib/interface.js:90:23
+      1  100.0%        LazyCompile: ~BaseContract.getInterface /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:761:42
+      1  100.0%          LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
+      1  100.0%            LazyCompile: ~Contract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:1053:22
+      1    1.8%      LazyCompile: ~FileHandle node:internal/fs/promises:104:14
+      1  100.0%        LazyCompile: ~open node:internal/fs/promises:397:20
+      1  100.0%          /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.8%      LazyCompile: ~EthersProviderWrapper /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/ethers-provider-wrapper.js:6:16
+      1  100.0%        LazyCompile: ~createProviderProxy /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/provider-proxy.js:14:29
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/index.js:14:44
+      1  100.0%            LazyCompile: ~getRealTarget /root/defi-bot/node_modules/hardhat/internal/util/lazy.js:78:27
+      1    1.8%      LazyCompile: ~BaseProvider._ready /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:780:46
+      1  100.0%        LazyCompile: ~BaseProvider /root/defi-bot/node_modules/@ethersproject/providers/lib/base-provider.js:739:26
+      1  100.0%          LazyCompile: ~JsonRpcProvider /root/defi-bot/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:445:29
+      1  100.0%            LazyCompile: ~EthersProviderWrapper /root/defi-bot/node_modules/@nomiclabs/hardhat-ethers/internal/ethers-provider-wrapper.js:6:16
+      1    1.8%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/memdown/node_modules/abstract-leveldown/abstract-leveldown.js:35:32
+      1  100.0%        LazyCompile: ~callNext /root/defi-bot/node_modules/memdown/memdown.js:173:34
+      1  100.0%          LazyCompile: ~processImmediate node:internal/timers:421:28
+      1    1.8%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:6751:22
+      1  100.0%        LazyCompile: ~baseRest /root/defi-bot/node_modules/lodash/lodash.js:3982:22
+      1  100.0%          Eval: ~runInContext /root/defi-bot/node_modules/lodash/lodash.js:1448:44
+      1  100.0%            Eval: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:9:11
+      1    1.8%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:4897:31
+      1  100.0%        LazyCompile: ~apply /root/defi-bot/node_modules/lodash/lodash.js:485:17
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/lodash/lodash.js:6612:22
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/bull/lib/queue.js:286:20
+      1    1.8%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/color/node_modules/color-convert/index.js:70:31
+      1  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/color/node_modules/color-convert/index.js:61:25
+      1  100.0%            /root/.nvm/versions/node/v16.3.0/bin/node
+      1    1.8%      LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%        LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:4104:39
+      1  100.0%          LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:22:31
+      1  100.0%            LazyCompile: ~<anonymous> /root/defi-bot/node_modules/@solidity-parser/parser/dist/index.cjs.js:5286:30
+      1    1.8%      LazyCompile: *readPackageScope node:internal/modules/cjs/loader:317:26
+      1  100.0%        LazyCompile: ~trySelf node:internal/modules/cjs/loader:437:17
+      1  100.0%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1    1.8%      LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%        LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%          LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1  100.0%            LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1    1.8%      LazyCompile: *FastBuffer node:internal/buffer:958:14
+      1  100.0%        LazyCompile: ~createUnsafeBuffer node:internal/buffer:1059:28
+      1  100.0%          LazyCompile: ~createPool node:buffer:148:20
+      1  100.0%            LazyCompile: *allocate node:buffer:395:18
+      1    1.8%      LazyCompile: *<anonymous> /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:728:51
+      1  100.0%        /root/.nvm/versions/node/v16.3.0/bin/node
+      1  100.0%          LazyCompile: ~BaseContract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:611:26
+      1  100.0%            LazyCompile: ~Contract /root/defi-bot/node_modules/@ethersproject/contracts/lib/index.js:1053:22
+      1    1.8%      Eval: ~<anonymous> node:internal/fs/rimraf:1:1
+      1  100.0%        LazyCompile: ~compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1  100.0%          LazyCompile: ~nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1  100.0%            Eval: ~<anonymous> node:internal/fs/promises:1:1
+      1    1.8%      Eval: ~<anonymous> /root/defi-bot/node_modules/uuid/dist/index.js:1:1
+      1  100.0%        LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1  100.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+      1  100.0%            LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1    1.8%      Eval: ~<anonymous> /root/defi-bot/node_modules/core-js-pure/internals/native-weak-map.js:1:1
+      1  100.0%        LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1  100.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+      1  100.0%            LazyCompile: *Module._load node:internal/modules/cjs/loader:753:24
+      1    1.8%      Eval: ~<anonymous> /root/defi-bot/node_modules/@openzeppelin/upgrades-core/dist/scripts/migrate-oz-cli-project.js:1:1
+      1  100.0%        LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1  100.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+      1  100.0%            LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1    1.8%      Eval: ~<anonymous> /root/defi-bot/node_modules/@ethersproject/strings/lib/idna.js:1:1
+      1  100.0%        LazyCompile: ~Module._compile node:internal/modules/cjs/loader:1063:37
+      1  100.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1118:37
+      1  100.0%            LazyCompile: ~Module.load node:internal/modules/cjs/loader:977:33
+      1    1.4%    LazyCompile: *realpathSync node:fs:2398:22
+      1  100.0%      LazyCompile: ~toRealPath node:internal/modules/cjs/loader:389:20
+      1  100.0%        LazyCompile: ~tryFile node:internal/modules/cjs/loader:380:17
+      1  100.0%          LazyCompile: ~tryExtensions node:internal/modules/cjs/loader:396:23
+      1  100.0%            LazyCompile: ~Module._findPath node:internal/modules/cjs/loader:490:28
+      1    1.4%    LazyCompile: *Module._findPath node:internal/modules/cjs/loader:490:28
+      1  100.0%      LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:856:35
+      1  100.0%        LazyCompile: ~Module._load node:internal/modules/cjs/loader:753:24
+      1  100.0%          LazyCompile: ~Module.require node:internal/modules/cjs/loader:1005:36
+      1  100.0%            LazyCompile: ~require node:internal/modules/cjs/helpers:92:31
+
+     68    1.4%  __pthread_cond_wait
 

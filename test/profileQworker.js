@@ -21,10 +21,10 @@ taskQ.process(async function (job, done) {
   const store = new AccountsDbClient(db);
   await store.init();
   
-  console.log(new Date(), process.pid);
+  console.log('fetch accs', new Date(), process.pid);
   const accounts = await store.getStoredCompoundAccounts(job.data.chunkIndex,
     job.data.splitFactor);
-  console.log(new Date(), process.pid);
+  console.log('done fetch acc', new Date(), process.pid);
   
   console.log(`# of sick accounts: ${accounts.length}`, process.pid);
   const params = await store.getStoredCompoundParams();
@@ -37,10 +37,15 @@ taskQ.process(async function (job, done) {
   );
   finder.chainId = 1337;
   finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
-  console.log(new Date(), process.pid);
+  //
+  const scale = 1e8;
+  const newPrice = BigNumber.from(500 * scale);
+  finder.setParam("price", { ticker: "ETH", value: newPrice });
+  bidPricer.ethPrice = Utils.bigNumToFloat(newPrice, 8);
+  //
+  console.log('process', new Date(), process.pid);
   const arr = await finder.getLiquidationTxsInfo();
-  console.log(new Date(), process.pid);
-  console.log('done', process.pid);
+  console.log('process done', new Date(), process.pid);
   // job.data contains the custom data passed when the job was created
   // job.id contains id of this job.
   // job.progress(42);

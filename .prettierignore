@@ -1,0 +1,14 @@
+# Ignore artifacts:
+node_modules
+built
+artifacts
+cache
+coverage
+analysis-etc
+slither
+data
+
+# npx prettier --write .
+# for CI to make sure commits have been prettified
+# npx prettier --check .
+# prettier git hooks

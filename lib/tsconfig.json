@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-      "outDir": "./built",
-      "allowJs": true
-    },
-    "include": ["./**/*"]
-  }

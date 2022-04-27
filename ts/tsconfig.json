@@ -1,0 +1,16 @@
+// npm install -S @types/lodash
+
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "allowJs": true,
+    "noImplicitReturns": true,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    // use ! if sure a possibly null type is fine to access like foo!.length
+    // where declare var foo: stringp[] | null
+    "strictNullChecks": true,
+    "noImplicitThis": true
+  },
+  "include": ["./**/*"]
+}

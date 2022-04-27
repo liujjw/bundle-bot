@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   bot:
@@ -10,10 +10,10 @@ services:
       - REDIS_PORT=6379
       - REDIS_TEST_PORT=6380
       # - BOT_ADDR=0x0
-      - PROVIDER_ENDPOINT=http://localhost:8545 
+      - PROVIDER_ENDPOINT=http://localhost:8545
       - RUNNER_ENDPOINT=http://localhost:8080
       - RUNNER_PORT=8080
-      - NODE_ENV=development
+      - NODE_ENV=production
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546
     depends_on:
@@ -25,24 +25,23 @@ services:
       - "6379:6379"
     volumes:
       - /d/redis_live:/data
-    # docker-compose exec redis redis-cli monitor for logs 
+    # docker-compose exec redis redis-cli monitor for logs
     # docker run -it --network some-network --rm redis redis-cli -h some-redis
     # docker run -v /myredis/conf:/usr/local/etc/redis --name myredis redis redis-server /usr/local/etc/redis/redis.conf
   mempool:
     image: ethereum/client-go
-    command: 
+    command:
       - --txpool.globalslots=30000
       - --maxpeers=250
-      - --ws 
+      - --ws
       - --ws.api="eth,txpool,net,web3"
-      - --http 
+      - --http
       - --http.port=8547
       - --http.api="eth,txpool,net,web3"
-    volumes: 
+    volumes:
       - d/ethereum:/root
     ports:
-      - "8546:8546" 
+      - "8546:8546"
       - "8547:8547"
       - "30303:30303"
     # docker run --name eth_node -d -p 8547:8547 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --ws --ws.api "eth,txpool,net,web3" --http --http.port 8547 --http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000
-
