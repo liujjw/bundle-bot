@@ -73,7 +73,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.0",
+        version: "0.8.13",
         settings: {
           optimizer: {
             enabled: true,
@@ -106,7 +106,7 @@ module.exports = {
     hardhat: {
       forking: {
         blockNumber: Number.parseInt(
-          process.env.FORK_BLOCKNUMBER ?? TestConstants.FORK_5.blockNumber
+          process.env.FORK_BLOCKNUMBER ?? TestConstants.FORKS.blockNum2Prev + 10
         ),
         url: ENDPOINTS.ALCHEMY,
       },

@@ -1,0 +1,5 @@
+TODO
+new estimates foe upper bounds liquidation gas amount 
+instead of return null, also logger log as wel
+maybe less tip 
+find out how and when liqable

@@ -33,19 +33,20 @@ taskQ.process(async function (job, done) {
     accounts,
     params,
     lowTestingGasPrice,
-    provider
+    provider,
+    1337
   );
-  finder.chainId = 1337;
   finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
   //
   const scale = 1e8;
-  const newPrice = BigNumber.from(500 * scale);
+  const newPrice = BigNumber.from(2000 * scale);
   finder.setParam("price", { ticker: "ETH", value: newPrice });
-  bidPricer.ethPrice = Utils.bigNumToFloat(newPrice, 8);
+  // bidPricer.ethPrice = Utils.bigNumToFloat(newPrice, 8);
   //
   console.log('process', new Date(), process.pid);
   const arr = await finder.getLiquidationTxsInfo();
   console.log('process done', new Date(), process.pid);
+  console.log('found', arr.length);
   // job.data contains the custom data passed when the job was created
   // job.id contains id of this job.
   // job.progress(42);

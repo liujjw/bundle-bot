@@ -36,10 +36,10 @@ describe.only("Data", function () {
     }
 
     hardhatNode = shell.exec(
-      `FORK_BLOCKNUMBER=${FORKS.blockNum1} npx -c 'hardhat node'`,
+      `FORK_BLOCKNUMBER=${FORKS.blockNum2Prev} npx -c 'hardhat node'`,
       { async: true, silent: true },
       (code, stdout, stderr) => {
-        // TODO log
+        console.log(code, stdout, stderr);
       }
     );
     await sleep(TEST_PARAMS.NODE_STARTUP_TIME_MS);
@@ -55,7 +55,7 @@ describe.only("Data", function () {
     const store = new AccountsDbClient(db, provider);
     await store.init();
     if (process.env.DB_READY === "false") {
-      await store.setCompoundAccounts(FORKS.blockNum1);
+      await store.setCompoundAccounts(FORKS.blockNum2Prev);
       await store.setCompoundParams();
       console.log("db has been set");
     }
@@ -72,7 +72,7 @@ describe.only("Data", function () {
     hardhatNode.kill("SIGKILL");
   });
 
-  test.only(`fetches the current most recent data about compound accounts and 
+  test(`fetches the current most recent data about compound accounts and 
   params with the store`, async function () {
     console.log(`sick accounts n=${sickCompoundAccounts.length}: \n`, 
       sickCompoundAccounts);
@@ -95,9 +95,12 @@ describe.only("Data", function () {
       accounts,
       params,
       lowTestingGasPrice,
-      provider
+      provider,
+      1337
     );
-    finder.chainId = 1337;
+    // const scale = 1e8;
+    // const newPrice = BigNumber.from(1500 * scale);
+    // finder.setParam("price", { ticker: "ETH", value: newPrice });
     finder.minProfit = 15;
 
     const bot = new ethers.Contract(
@@ -158,37 +161,38 @@ describe.only("Data", function () {
 
   // TODO backtest on mediumDatasetOfLiquidations
   test(`finds a known liquidation at 
-  ${FORKS.blockNum1} by borrower ${FORKS.blockNum1Borrower}`, async function () {
+  ${FORKS.blockNum2Prev} by borrower ${FORKS.blockNum2Borrower}`, async function () {
     const provider = new ethers.providers.JsonRpcProvider(
       ENDPOINTS.RPC_PROVIDER
     );
     let accounts = sickCompoundAccounts;
     const params = compoundParams;
     const predicate = (val) =>
-      val.id.toLowerCase() === FORKS.blockNum1Borrower.toLowerCase();
+      val.id.toLowerCase() === FORKS.blockNum2Borrower.toLowerCase();
     expect(accounts.find(predicate)).not.toBe(undefined);
 
     accounts = accounts.filter(predicate);
-    const lowTestingGasPrice = BigNumber.from(FORKS.blockNum1BaseFee);
+    const lowTestingGasPrice = BigNumber.from(FORKS.blockNum2BaseFee);
     const finder = new FindShortfallPositions(
       accounts,
       params,
       lowTestingGasPrice,
-      provider
+      provider,
+      1337
     );
-    finder.chainId = 1337;
     finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
 
     const arr = await finder.getLiquidationTxsInfo();
     const arb = arr.find(
       (arb) =>
-        arb.borrower.toLowerCase() === FORKS.blockNum1Borrower.toLowerCase()
+        arb.borrower.toLowerCase() === FORKS.blockNum2Borrower.toLowerCase()
     );
     expect(arb).not.toBe(undefined);
+    expect(arb.netProfitFromLiquidationGivenGasPrice).toBeGreaterThan(1000);
     console.log(arb);
   });
 
-  test("liquidates known liquidation", async function () {
+  test.only("liquidates known liquidation", async function () {
     shell.exec("forge test -vvvvv --fork-url http://localhost:8545");
   });
 

@@ -5,22 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/lib/db.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node"
-    },
-    {
       "type": "pwa-node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch profileQ",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/test/profileQueue.js"
+      "program": "${workspaceFolder}/test/profileQ.js",
+      "runtimeExecutable": "/root/.nvm/versions/node/v16.3.0/bin/node"
     }
   ]
 }

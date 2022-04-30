@@ -1,20 +1,11 @@
-pragma solidity 0.6.12;
+pragma solidity 0.8.13;
 import { ILendingPool } from "../contracts/ILendingPool.sol";
 import { ILendingPoolAddressesProvider } from "../contracts/ILendingPoolAddressesProvider.sol";
-import 'ds-test/test.sol';
 import '../contracts/CompoundV5.sol';
+import "forge-std/Test.sol";
 
-// deploy addr 0xb4c79daB8f259C7Aee6E5b2Aa729821864227e84
-// forge test -vvvv --match-test testFailIncrementAsNotOwner
-interface CheatCodes {
-    // function prank(address) external;
-    // function expectRevert(bytes4) external;
-}
-
-contract CompoundTest is DSTest {
+contract CompoundTest is Test {
     CompoundV5 compoundBot;
-    // CompoundV6 compoundBot2;
-    CheatCodes constant cheats = CheatCodes(HEVM_ADDRESS);
     ILendingPoolAddressesProvider public ADDRESSES_PROVIDER;
     ILendingPool public LENDING_POOL;
 
@@ -29,19 +20,20 @@ contract CompoundTest is DSTest {
     }
 
     function testLiquidate() public {
-        require(block.number == 14047243 - 1, "invalid blocknumber in forked node");
+        require(block.number == 14053711 - 1, "invalid blocknumber in forked node");
+        // vm.chainId(1337);
         bytes memory params;
         {
             address c_TOKEN_BORROWED = 0x39AA39c021dfbaE8faC545936693aC917d5E7563;
-            address c_TOKEN_COLLATERAL = 0xC11b1268C1A384e55C48c2391d8d480264A3A7F4;
-            address TOKEN_COLLATERAL = 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599;
-            address BORROWER = 0x1A0d5ec1273Ce0fcf82Aae5E9FC2e1BB475e1E16;
-            uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH = 0x27af9b9a;
+            address c_TOKEN_COLLATERAL = 0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5;
+            address TOKEN_COLLATERAL = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+            address BORROWER = 0x086DBCF9d25b476AAbA8Ae02ceA177870D27B64C;
+            uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH = 42871931848053079888;
             params = abi.encode(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, 
                 BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
         }
         address tokenBorrowed = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
-        uint repayAmount = 0x338360e8e2;
+        uint repayAmount = 105982521309;
         uint16 referralCode = 0;
 
         address receiverAddress = address(compoundBot);
@@ -57,15 +49,17 @@ contract CompoundTest is DSTest {
         // maybe try flash swaps from uniswap or use the foundry debugger or equalizer for cheaper flashloans
         // adai (not proxy) has 400 million dai, so why would it fail when we ask for 90k?
         // SafeERC20 fails flashloan -> proxy -> adai -> proxy -> dai?
-        LENDING_POOL.flashLoan(
-            receiverAddress,
-            assets,
-            amounts,
-            modes,
-            onBehalfOf,
-            params,
-            referralCode
-        );
+        // vm.chainId(2);
+        emit log_uint(block.chainid);
+        // LENDING_POOL.flashLoan(
+        //     receiverAddress,
+        //     assets,
+        //     amounts,
+        //     modes,
+        //     onBehalfOf,
+        //     params,
+        //     referralCode
+        // );
         // assertEq(testNumber, 42);
     }
 

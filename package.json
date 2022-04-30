@@ -9,7 +9,7 @@
   },
   "scripts": {
     "testi": "read -p \"DB_READY?\" -n 1 -r \n if [[ $REPLY =~ ^[Yy]$ ]] \n then \n REDIS_STARTED=true DB_READY=true jest \n else \n REDIS_STARTED=true DB_READY=false jest \n fi",
-    "test": "REDIS_STARTED=true DB_READY=false jest"
+    "test": "REDIS_STARTED=true DB_READY=true jest"
   },
   "repository": {
     "type": "git",

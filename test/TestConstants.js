@@ -1,11 +1,14 @@
 exports.FORKS = {
-  blockNum1: 14047243 - 1,
+  blockNum1Prev: 14047243 - 1,
   blockNum1Borrower: "0x360c770ff59b4e9ac2d61d943f92dc7b6db3a48e",
-  blockNum1BaseFee: "91048842955",
+  blockNum1BaseFee: "97380424050",
   blockNum1Description: `No transmit call in its block, i.e. no price update 
   seemed to have caused the liquidation within the same block (Etherscan). 
   Flashbots also doesn't show it, so it didn't go through flashbots.
-  It's health factor was around 0.96 at the start of the block already.`,
+  It's health factor was around 0.96 at the start of the block already. 
+  Finder does not work on this, even seeming without a backrun tx needed. 
+  There seems to be a Uniswap issue.`,
+  blockNum1FlashbotsDataFound: false,
   blockNum1IndexedData: {
     blockNumber: 14047243,
     underlyingRepayAmount: "1518.136849739710498544",
@@ -17,6 +20,33 @@ exports.FORKS = {
     amount: "28.51792745",
     id: "0x006d998295087111da5ae75dd44f69b9414bfb294ebe046f1f04debf594ab518-83",
   },
+  blockNum2Prev: 14053711 - 1,
+  blockNum2BaseFee: "132628475535",
+  blockNum2FlashbotsDataFound: false,
+  blockNum2Borrower: "0x086DBCF9d25b476AAbA8Ae02ceA177870D27B64C",
+  blockNum2IndexedData: {
+    "blockNumber": 14053711,
+    "underlyingRepayAmount": "105994.181664",
+    "underlyingSymbol": "USDC",
+    "cTokenSymbol": "cETH",
+    "blockTime": 1642831509,
+    "from": "0x086dbcf9d25b476aaba8ae02cea177870d27b64c",
+    "to": "0x33334570f7e1df34a09377c7f327feb65e2b3faf",
+    "amount": "2284.83252312",
+    "id": "0x0073462f84bb56250aa41ae910240f4a2cce727b29faa2723848c9a721f408b3-238"
+  },
+  blockNum2Arb: {
+    cTokenBorrowed: '0x39aa39c021dfbae8fac545936693ac917d5e7563',
+    cTokenCollateral: '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5',
+    tokenBorrowed: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    tokenCollateral: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    borrower: '0x086dbcf9d25b476aaba8ae02cea177870d27b64c',
+    repayAmount: 'BigNumber { value: "105982521309" }',
+    maxSeizeTokens: 'BigNumber { value: "42871931848053079888" }',
+    gasLimit: 'BigNumber { value: "1300000" }',
+    gasPrice: 'BigNumber { value: "132628475535" }',
+    netProfitFromLiquidationGivenGasPrice: 3905.4985829225184
+  }
 };
 
 exports.FORK_4 = {
@@ -26,6 +56,7 @@ exports.FORK_4 = {
 };
 
 exports.FORK_5 = {
+  // THIS BLOCKNUM, FLASH LOANS DO NOT WORK
   blockNumber: 14574363,
   // TODO dai SafeErc20 transfer failed
   sampleLiquidation: {
@@ -427,7 +458,7 @@ exports.ENDPOINTS = {
   REDIS_HOST: "localhost",
   REDIS_PORT: 6379,
   REDIS_PORT_Q: 6380,
-  RPC_PROVIDER: "http://localhost:8545",
+  RPC_PROVIDER: "http://localhost:8545/",
   DEFAULT_BOT_ADDRESS: "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
   DEFAULT_SENDER_ADDRESS: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
   RUNNER_ENDPOINT: "http://localhost:8080",

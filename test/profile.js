@@ -37,9 +37,9 @@ async function main() {
     accounts,
     params,
     lowTestingGasPrice,
-    provider
+    provider,
+    1337
   );
-  finder.chainId = 1337;
   finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
   console.log(new Date());
   const arr = await finder.getLiquidationTxsInfo();
