@@ -37,8 +37,7 @@ async function main() {
     accounts,
     params,
     lowTestingGasPrice,
-    provider,
-    1337
+    provider
   );
   finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
   console.log(new Date());

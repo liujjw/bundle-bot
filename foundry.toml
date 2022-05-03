@@ -1,4 +1,9 @@
 [default]
 src = 'contracts'
-lib = 'lib'
+lib = 'lib_dev'
 test = 'test'
+remappings = [
+  'ds-test/=lib_dev/ds-test/src/',
+  'slither/=lib_dev/slither/',
+  'forge-std/=lib_dev/forge-std/src/'
+]

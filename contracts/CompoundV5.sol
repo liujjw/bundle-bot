@@ -61,8 +61,8 @@ contract CompoundV5 is IFlashLoanReceiver {
         }
     }
 
-    constructor() public {
-        OWNER = msg.sender;
+    constructor() {
+        OWNER = payable(msg.sender);
         
         ADDRESSES["uniswapRouter"] = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
         ADDRESSES["compoundComptroller"] = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B;          

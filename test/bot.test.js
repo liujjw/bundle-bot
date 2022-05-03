@@ -1,7 +1,7 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require("../lib/AccountsDbClient");
 const { ENDPOINTS, FORKS, FORK_5, TEST_PARAMS } = require("./TestConstants");
-const { ABIS, PARAMS } = require("../lib/Constants");
+const { ABIS, PARAMS, ADDRS } = require("../lib/Constants");
 
 const shell = require("shelljs");
 const { BigNumber } = require("ethers");
@@ -80,7 +80,7 @@ describe.only("Data", function () {
   });
 
   // TODO failing
-  test(`finder finds compound arbs given a low gas price and 
+  test.only(`finder finds compound arbs given a low gas price (no backruns) and 
   contract liquidates a majority of arbs at one blockheight and 
   eth balance of sender grows`, async function () {
     const provider = new ethers.providers.JsonRpcProvider(
@@ -95,19 +95,17 @@ describe.only("Data", function () {
       accounts,
       params,
       lowTestingGasPrice,
-      provider,
-      1337
+      provider
     );
     // const scale = 1e8;
     // const newPrice = BigNumber.from(1500 * scale);
     // finder.setParam("price", { ticker: "ETH", value: newPrice });
     finder.minProfit = 15;
-
-    const bot = new ethers.Contract(
-      ENDPOINTS.DEFAULT_BOT_ADDRESS,
-      ABIS["BOT"],
+    const lendingPool = new ethers.Contract(
+      ADDRS["AAVE_V2_LENDING_POOL"],
+      ABIS["AAVE_V2_LENDING_POOL"],
       provider.getSigner(ENDPOINTS.DEFAULT_SENDER_ADDRESS)
-    );
+    )
     const initialEth = await provider.getBalance(
       ENDPOINTS.DEFAULT_SENDER_ADDRESS
     );
@@ -122,20 +120,26 @@ describe.only("Data", function () {
     for (const elem of arr) {
       console.log("arb:\n", elem);
       try {
-        const response = await bot.liquidate(
-          elem.cTokenBorrowed,
-          elem.tokenBorrowed,
-          elem.cTokenCollateral,
-          elem.tokenCollateral,
-          elem.borrower,
-          elem.repayAmount,
-          elem.maxSeizeTokens,
+        const coder = new ethers.utils.AbiCoder();
+        const params = coder.encode([
+          'address', 'address', 'address', 'address', 'uint256'
+        ], [
+          elem.cTokenBorrowed, elem.cTokenCollateral, elem.tokenCollateral,
+          elem.borrower, elem.maxSeizeTokens
+        ]);
+
+        const response = await lendingPool.flashLoan(
+          ENDPOINTS.DEFAULT_BOT_ADDRESS,
+          [elem.tokenBorrowed],
+          [elem.repayAmount],
+          [0],
+          ENDPOINTS.DEFAULT_BOT_ADDRESS,
+          params, 
+          0,
           {
-            gasLimit: BigNumber.from(PARAMS.LIQUIDATION_GAS_UPPER_BOUND),
-            gasPrice: elem.gasPrice,
+            gasLimit: BigNumber.from(PARAMS.LIQUIDATION_GAS_UPPER_BOUND)
           }
         );
-
         const receipt = await response.wait();
         totalEthUsedForGas.add(
           receipt.effectiveGasPrice.mul(receipt.cumulativeGasUsed)
@@ -145,7 +149,7 @@ describe.only("Data", function () {
           countSuccesses += 1;
         }
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
     const finalEth = await provider.getBalance(
@@ -177,8 +181,7 @@ describe.only("Data", function () {
       accounts,
       params,
       lowTestingGasPrice,
-      provider,
-      1337
+      provider
     );
     finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
 
@@ -192,7 +195,7 @@ describe.only("Data", function () {
     console.log(arb);
   });
 
-  test.only("liquidates known liquidation", async function () {
+  test("liquidates known liquidations", async function () {
     shell.exec("forge test -vvvvv --fork-url http://localhost:8545");
   });
 

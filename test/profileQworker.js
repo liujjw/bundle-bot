@@ -13,6 +13,7 @@ const taskQ = new Queue("task q", "http://127.0.0.1:6379", {
 });
 
 taskQ.process(async function (job, done) {
+
   const provider = new ethers.providers.JsonRpcProvider(ENDPOINTS.RPC_PROVIDER);
   const db = {
     host: ENDPOINTS.REDIS_HOST,
@@ -33,8 +34,7 @@ taskQ.process(async function (job, done) {
     accounts,
     params,
     lowTestingGasPrice,
-    provider,
-    1337
+    provider
   );
   finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
   //

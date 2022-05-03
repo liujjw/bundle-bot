@@ -56,7 +56,7 @@ contract CompoundV2Impl is IFlashLoanReceiver, Initializable {
     // constructor() public {
         // BaseContract.initialize();
         // console.log('ensuring init is called');
-        OWNER = msg.sender;
+        OWNER = payable(msg.sender);
         MAX_INT = 2**256 - 1;
         
         ADDRESSES["aaveLendingPoolAddressesProvider"] = 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5;

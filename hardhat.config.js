@@ -5,33 +5,8 @@ const { assert } = require("chai");
 const { BigNumber } = require("ethers");
 const { task } = require("hardhat/config");
 const shell = require("shelljs");
-const { createLogger, format, transports } = require("winston");
 require("dotenv").config();
 
-const logger = createLogger({
-  level: "info",
-  format: format.combine(
-    format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss",
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: `${__filename}` },
-  transports: [
-    new transports.File({ filename: "error.log", level: "error" }),
-    new transports.File({ filename: "combined.log" }),
-  ],
-});
-
-if (process.env.NODE_ENV !== "production") {
-  logger.add(
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    })
-  );
-}
 const { ENDPOINTS } = require("./lib/Constants");
 const TestConstants = require("./test/TestConstants");
 
@@ -46,7 +21,7 @@ task("deploy", "", async () => {
   });
   const receipt = await bot.deployTransaction.wait();
   assert(receipt.status != 0, "deploy failed");
-  logger.info(`deployed bot at ${receipt.contractAddress}`);
+  console.log(`deployed bot at ${receipt.contractAddress}`);
   // shell.env["BOT_ADDR"] = `${receipt.contractAddress}}`;
 });
 
@@ -109,7 +84,9 @@ module.exports = {
           process.env.FORK_BLOCKNUMBER ?? TestConstants.FORKS.blockNum2Prev + 10
         ),
         url: ENDPOINTS.ALCHEMY,
+        enabled: true
       },
+      chainId: 1
     },
   },
   paths: {

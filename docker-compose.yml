@@ -2,8 +2,7 @@ version: "3"
 
 services:
   bot:
-    image: bot:0.1
-    build: .
+    image: liujjw/bot:0.1
     environment:
       - REDIS_ENDPOINT=redis://redis:6379/
       - REDIS_HOST=localhost
@@ -13,9 +12,12 @@ services:
       - PROVIDER_ENDPOINT=http://localhost:8545
       - RUNNER_ENDPOINT=http://localhost:8080
       - RUNNER_PORT=8080
-      - NODE_ENV=production
+      - NODE_ENV=sans_onchain
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546
+      - DB_NUMBER_FOR_JOBS=1
+      - DB_NUMBER_FOR_DATA=0
+      - NUM_WORKERS=5
     depends_on:
       - redis
       - mempool
@@ -39,9 +41,9 @@ services:
       - --http.port=8547
       - --http.api="eth,txpool,net,web3"
     volumes:
-      - d/ethereum:/root
+      - /d/ethereum:/root
     ports:
       - "8546:8546"
       - "8547:8547"
       - "30303:30303"
-    # docker run --name eth_node -d -p 8547:8547 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --ws --ws.api "eth,txpool,net,web3" --http --http.port 8547 --http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000
+    # docker run --name eth_node -d -p 8547:8547 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --http --http.port 8547 --http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000

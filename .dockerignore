@@ -1,0 +1,6 @@
+.git
+.env 
+artifacts
+cache
+node_modules
+test

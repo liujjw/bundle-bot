@@ -46,6 +46,19 @@ exports.FORKS = {
     gasLimit: 'BigNumber { value: "1300000" }',
     gasPrice: 'BigNumber { value: "132628475535" }',
     netProfitFromLiquidationGivenGasPrice: 3905.4985829225184
+  },
+  noBackrun: {
+    blockNum: 14053711 - 1,
+    cTokenBorrowed: '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643',
+    cTokenCollateral: '0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5',
+    tokenBorrowed: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    tokenCollateral: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    borrower: '0x00726d1346296312D44c45f77403D6fA970eC296',
+    repayAmount: 'BigNumber { value: "36056954471424240000000" }',
+    maxSeizeTokens: 'BigNumber { value: "14623208136727129938" }',
+    gasLimit: 'BigNumber { value: "1300000" }',
+    gasPrice: 'BigNumber { value: "3000000000" }',
+    netProfitFromLiquidationGivenGasPrice: 1379.7859663142797
   }
 };
 

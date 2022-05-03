@@ -1,10 +1,11 @@
 const { fork } = require("child_process");
 const { ethers } = require("ethers");
+const schedule = require("node-schedule");
 
+const { sleep } = require("../lib/Utils");
 const AccountsDbClient = require("../lib/AccountsDbClient");
-const { ABIS, ADDRS, PARAMS } = require("../lib/Constants");
+const { PARAMS } = require("../lib/Constants");
 const { createLogger, format, transports } = require("winston");
-// TODO use only one logger and throw exceptions to the top level program logger
 const logger = createLogger({
   level: "info",
   format: format.combine(
@@ -17,8 +18,8 @@ const logger = createLogger({
   ),
   defaultMeta: { service: `${__filename}` },
   transports: [
-    new transports.File({ filename: "error.log", level: "error" }),
-    new transports.File({ filename: "combined.log" }),
+    new transports.File({ filename: "../logs/error.log", level: "error" }),
+    new transports.File({ filename: "../logs/combined.log" }),
   ],
 });
 
@@ -30,41 +31,9 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
-require("dotenv").config({ path: __dirname + "/../.env" });
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-let store;
-
-async function updateAccounts() {
-  while (true) {
-    const blockNumber = await store.fetchLatestSyncedBlockNumber();
-    try {
-      await store.setCompoundAccounts();
-    } catch (e) {
-      logger.error(`erorr updating db with error ${e}`);
-      continue;
-    }
-    logger.info(`updated db accounts around ${blockNumber}`);
-    await sleep(PARAMS.DB_UPDATE_ACCOUNTS_SLEEP_MS);
-  }
-}
-
-async function updateParams() {
-  while (true) {
-    try {
-      await store.setCompoundParams();
-    } catch (e) {
-      logger.error(`error updating db params with error ${e}`);
-      continue;
-    }
-    await sleep(PARAMS.DB_UPDATE_PARAMS_SLEEP_MS);
-    logger.info(`updated db params`);
-  }
-}
-
+/**
+ * Starts a cluster of services. 
+ */
 async function main() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.PROVIDER_ENDPOINT
@@ -72,14 +41,76 @@ async function main() {
   const db = {
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
+    database: process.env.DB_NUMBER_FOR_DATA
   };
-  store = new AccountsDbClient(db, provider);
+  const store = new AccountsDbClient(db, provider);
   await store.init();
-  updateParams();
-  updateAccounts();
+
+  const paramJob = schedule.scheduleJob(PARAMS.DB_UPDATE_PARAMS_SCHEDULE, 
+    async function() {
+      try {
+        await store.setCompoundParams();
+      } catch (e) {
+        throw e;
+      }
+  });
+  paramJob.on("success", (date) => {
+    logger.info(`updated db params`);
+  });
+  paramJob.on("error", (e) => {
+    logger.error(`error updating db params with error ${e}`);
+  });
+  const accJob = schedule.scheduleJob(PARAMS.DB_UPDATE_ACCOUNTS_SCHEDULE, 
+    async function() {
+      try {
+        await store.setCompoundAccounts();
+      } catch (e) {
+        throw e;
+      }
+  });
+  accJob.on("success", (date) => {
+    logger.info(`updated db accounts around ${date}`);
+  });
+  accJob.on("error", (e) => {
+    logger.error(`erorr updating db with error ${e}`);
+  });
+
   await sleep(PARAMS.WAIT_TIME_FOR_DB_TO_INIT_MS);
-  fork(__dirname + "/runner.js");
-  fork(__dirname + "/stalker.js");
+
+  const runnerFilename = "runner.js";
+  const runner = fork(__dirname + `/${runnerFilename}`);
+  runner.on("spawn", () => {
+    logger.info(`started ${runnerFilename}`);
+  })
+  runner.on("error", (err) => {
+    logger.error(err);
+  });
+  runner.on("message", (message, sendHandle) => {
+    logger.info(message);
+  })
+
+  const stalkerFilename = "stalker.js";
+  const stalker = fork(__dirname + `/${stalkerFilename}`);
+  stalker.on("spawn", () => {
+    logger.info(`started ${runnerFilename}`);
+  })
+  stalker.on("error", (err) => {
+    logger.error(err);
+  });
+  stalker.on("message", (message, sendHandle) => {
+    logger.info(message);
+  });
+
+  const workersFilename = "runnerWorkers.js";
+  const workers = fork(__dirname + `/${workersFilename}`);
+  workers.on("spawn", () => {
+    logger.info(`started ${workersFilename}`);
+  })
+
+  process.on('SIGINT', function () { 
+    schedule.gracefulShutdown()
+    .then(() => process.exit(0))
+  });
 }
 
 logger.info(`started ${__filename} ${process.pid}`);

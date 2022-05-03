@@ -1,4 +1,4 @@
-const { ADDRS, ABIS } = require("./Constants");
+const { ADDRS, ABIS } = require("../lib/Constants");
 const { BigNumber, ethers } = require("ethers");
 
 const provider = new ethers.getDefaultProvider();

@@ -4,3 +4,4 @@ artifacts
 cache
 *.log
 .clinic
+.env
