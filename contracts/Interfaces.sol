@@ -23,6 +23,25 @@ abstract contract Initializable {
     }
 }
 
+interface IEqualizer {
+    function flashLoan(
+        address receiver, 
+        address token,
+        uint256 amount,
+        bytes calldata data
+    ) external;
+}
+
+interface IERC3156FlashBorrower {
+    function onFlashLoan(
+        address initiator,
+        address token,
+        uint256 amount, 
+        uint256 fee,
+        bytes calldata data
+    ) external returns (bytes32);
+}
+
 interface CToken {}
 
 interface ComptrollerInterface {
@@ -76,6 +95,7 @@ interface UniswapV2Router02 {
 interface WETHInterface is Erc20Interface {
     function deposit() payable external;
     function withdraw(uint wad) external;
+    function transfer(address dst, uint wad) external returns (bool);
 }
 
 interface WETHGateway {

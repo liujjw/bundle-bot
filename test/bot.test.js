@@ -80,7 +80,7 @@ describe.only("Data", function () {
   });
 
   // TODO failing
-  test.only(`finder finds compound arbs given a low gas price (no backruns) and 
+  test(`finder finds compound arbs given a low gas price (no backruns) and 
   contract liquidates a majority of arbs at one blockheight and 
   eth balance of sender grows`, async function () {
     const provider = new ethers.providers.JsonRpcProvider(
@@ -97,6 +97,9 @@ describe.only("Data", function () {
       lowTestingGasPrice,
       provider
     );
+    finder.on("error", err => {
+      console.error(err);
+    })
     // const scale = 1e8;
     // const newPrice = BigNumber.from(1500 * scale);
     // finder.setParam("price", { ticker: "ETH", value: newPrice });
@@ -164,7 +167,7 @@ describe.only("Data", function () {
   });
 
   // TODO backtest on mediumDatasetOfLiquidations
-  test(`finds a known liquidation at 
+  test(`finds a known liquidation (#2) at 
   ${FORKS.blockNum2Prev} by borrower ${FORKS.blockNum2Borrower}`, async function () {
     const provider = new ethers.providers.JsonRpcProvider(
       ENDPOINTS.RPC_PROVIDER
@@ -195,7 +198,7 @@ describe.only("Data", function () {
     console.log(arb);
   });
 
-  test("liquidates known liquidations", async function () {
+  test.only("liquidates known liquidation (noArb)", async function () {
     shell.exec("forge test -vvvvv --fork-url http://localhost:8545");
   });
 

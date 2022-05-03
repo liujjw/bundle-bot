@@ -1,10 +1,21 @@
 // //SPDX-License-Identifier: Unlicense
-// pragma solidity 0.6.12;
+// pragma solidity =0.7.6;
+// pragma abicoder v2;
 
 // import { SafeERC20 } from './SafeERC20.sol';
 // import { IERC20 } from './IERC20.sol';
 
 // import { SafeMath } from './SafeMath.sol';
+
+// import '@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol';
+// import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
+// import '@uniswap/v3-periphery/contracts/libraries/CallbackValidation.sol';
+// import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
+// import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
+// import "@uniswap/v3-periphery/contracts/base/PeripheryPayments.sol"
+
+// import '@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3FlashCallback.sol';
+// import '@uniswap/v3-core/contracts/libraries/LowGasSafeMath.sol';
 
 // import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface, 
 //             CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface
@@ -17,7 +28,7 @@
 //     using SafeMath for uint256;
 //     using SafeERC20 for IERC20;
 
-//     ISwapRouter public swapRouter;
+//     ISwapRouter public Immutable swapRouter;
 
 //     struct LiquidationParameters {
 //         address c_TOKEN_BORROWED;
@@ -56,7 +67,13 @@
 //         }
 //     }
 
-//     constructor() public {
+//     constructor(
+//       ISwapRouter _swapRouter,
+//       address _factory,
+//       address _WETH9
+//     ) PeripheryImmutableState(_factory, _WETH9) {
+//         swapRouter = _swapRouter;
+
 //         OWNER = msg.sender;
         
 //         ADDRESSES["uniswapRouter"] = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
@@ -98,6 +115,24 @@
 //     }
 
 //     receive() external payable {} 
+
+//     function uniswapV3FlashCallback(
+//         uint256 fee0,
+//         uint256 fee1,
+//         bytes calldata data
+//     ) external override {
+//         FlashCallbackData memory decoded = abi.decode(data, (FlashCallbackData));
+//         CallbackValidation.verifyCallback(factory, decoded.poolKey);
+
+//         address token0 = decoded.poolKey.token0;
+//         address token1 = decoded.poolKey.token1;
+
+//         TransferHelper.safeApprove(token0, address(swapRouter), decoded.amount0);
+//         TransferHelper.safeApprove(token1, address(swapRouter), decoded.amount1);
+
+//         uint256 amount1Min = LowGasSafeMath.add(decoded.amount1, fee1);
+//         uint256 amount0Min = LowGasSafeMath.add(decoded.amount0, fee0);
+//     }
 
 //     function executeOperation(
 //         address[] calldata assets,

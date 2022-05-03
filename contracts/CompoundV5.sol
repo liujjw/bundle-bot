@@ -12,10 +12,11 @@ import { IERC20 } from './IERC20.sol';
 import { SafeMath } from './SafeMath.sol';
 
 import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface, 
-            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface
+            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface,
+            IERC3156FlashBorrower
         } from './Interfaces.sol';
 
-contract CompoundV5 is IFlashLoanReceiver {
+contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
 
     struct LiquidationParameters {
         address c_TOKEN_BORROWED;
@@ -103,6 +104,16 @@ contract CompoundV5 is IFlashLoanReceiver {
     }
 
     receive() external payable {} 
+
+    function onFlashLoan(
+        address initiator,
+        address token,
+        uint256 amount, 
+        uint256 fee,
+        bytes calldata data
+    ) external returns (bytes32) {
+        return keccak256('ERC3156FlashBorrower.onFlashLoan');
+    }
 
     function executeOperation(
         address[] calldata assets,

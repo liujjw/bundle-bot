@@ -3,20 +3,23 @@ import { ILendingPool } from "../contracts/ILendingPool.sol";
 import { ILendingPoolAddressesProvider } from "../contracts/ILendingPoolAddressesProvider.sol";
 import '../contracts/CompoundV5.sol';
 import "forge-std/Test.sol";
+import { WETHInterface, IEqualizer, Erc20Interface } from "../contracts/Interfaces.sol";
 
 contract CompoundTest is Test {
     CompoundV5 compoundBot;
     ILendingPoolAddressesProvider public ADDRESSES_PROVIDER;
     ILendingPool public LENDING_POOL;
+    IEqualizer EQUALIZER;
 
     function setUp() public {
         // TODO require
         compoundBot = new CompoundV5();
-        // compoundBot2 = new CompoundV6();
+        // compoundBot = new CompoundV6();
         ADDRESSES_PROVIDER = 
             ILendingPoolAddressesProvider(0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5);
         LENDING_POOL = 
             ILendingPool(ADDRESSES_PROVIDER.getLendingPool());
+        EQUALIZER = IEqualizer(0xBbe4Ed8F4d9A36F70870D479708C1D8179AF892E);
     }
 
     // function testLiquidate() public {
@@ -70,7 +73,13 @@ contract CompoundTest is Test {
 
     function testLiquidate2() public {
         require(block.number == 14053711 - 1, "invalid blocknumber in forked node");
+        WETHInterface weth = WETHInterface(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
+        weth.deposit{value: 1000 ether}();
+        weth.transfer(address(compoundBot), 1000 ether);
 
+        vm.prank(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+        Erc20Interface(0x6B175474E89094C44Da98b954EedeAC495271d0F).transfer(address(compoundBot), 100000 ether);
+        
         bytes memory params;
         {
             address c_TOKEN_BORROWED = 0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643;
@@ -82,7 +91,10 @@ contract CompoundTest is Test {
                 BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
         }
         address tokenBorrowed = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+        // address tokenBorrowed = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+        // address tokenBorrowed = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
         uint repayAmount = 36056954471424240000000;
+        // uint256 repayAmount = 1000000000000000000000;
         uint16 referralCode = 0;
 
         address receiverAddress = address(compoundBot);
@@ -94,15 +106,26 @@ contract CompoundTest is Test {
         uint256[] memory modes = new uint256[](1);
         modes[0] = 0;
 
-        LENDING_POOL.flashLoan(
-            receiverAddress,
-            assets,
-            amounts,
-            modes,
-            onBehalfOf,
-            params,
-            referralCode
-        );
+        // uint256[] memory premiums = new uint256[](1);
+        // premiums[0] = 0;
+        // compoundBot.executeOperation(assets, amounts, premiums, address(this), params);
+        
+        // EQUALIZER.flashLoan(
+        //     receiverAddress,
+        //     tokenBorrowed,
+        //     repayAmount,
+        //     params
+        // );
+
+        // LENDING_POOL.flashLoan(
+        //     receiverAddress,
+        //     assets,
+        //     amounts,
+        //     modes,
+        //     onBehalfOf,
+        //     params,
+        //     referralCode
+        // );
     }
 
     // function testFailUnderflow() public {

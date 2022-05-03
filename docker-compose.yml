@@ -15,8 +15,8 @@ services:
       - NODE_ENV=sans_onchain
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546
-      - DB_NUMBER_FOR_JOBS=1
-      - DB_NUMBER_FOR_DATA=0
+      - DB_NUMBER_FOR_JOBS=15
+      - DB_NUMBER_FOR_DATA=14
       - NUM_WORKERS=5
     depends_on:
       - redis
