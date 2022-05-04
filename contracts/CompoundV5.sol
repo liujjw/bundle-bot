@@ -12,13 +12,12 @@ import { IERC20 } from './IERC20.sol';
 import { SafeMath } from './SafeMath.sol';
 
 import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface, 
-            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface,
-            IERC3156FlashBorrower
+            CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface
         } from './Interfaces.sol';
 
-import "hardhat/console.sol";
+import "forge-std/console.sol";
 
-contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
+contract CompoundV5 is IFlashLoanReceiver { 
 
     struct LiquidationParameters {
         address c_TOKEN_BORROWED;
@@ -107,16 +106,6 @@ contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
 
     receive() external payable {} 
 
-    function onFlashLoan(
-        address initiator,
-        address token,
-        uint256 amount, 
-        uint256 fee,
-        bytes calldata data
-    ) override external returns (bytes32) {
-        return keccak256('ERC3156FlashBorrower.onFlashLoan');
-    }
-
     function executeOperation(
         address[] calldata assets,
         uint256[] calldata amounts,
@@ -125,6 +114,7 @@ contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
         bytes calldata params
     ) override external returns (bool) {
         LiquidationParameters memory liqParams;
+
         {
             (   
                 address c_TOKEN_BORROWED,
@@ -135,15 +125,11 @@ contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
             ) = abi.decode(params, (address, address, address, address, uint256));
             liqParams = LiquidationParameters(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
         }
-        
+
         if (assets[0] == ADDRESSES["WETH"]) {
-            console.log(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL);
-            return true;
             WETH.withdraw(amounts[0]);
             CEtherInterface(liqParams.c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(liqParams.BORROWER, liqParams.c_TOKEN_COLLATERAL);
         } else {
-            console.log(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL);
-            return true;
             require(CErc20Interface(liqParams.c_TOKEN_BORROWED).liquidateBorrow(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
         }
         

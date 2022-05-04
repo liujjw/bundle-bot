@@ -77,8 +77,8 @@ contract CompoundTest is Test {
         // weth.deposit{value: 1000 ether}();
         // weth.transfer(address(compoundBot), 1000 ether);
 
-        // vm.prank(0x6B175474E89094C44Da98b954EedeAC495271d0F);
-        // Erc20Interface(0x6B175474E89094C44Da98b954EedeAC495271d0F).transfer(address(compoundBot), 100000 ether);
+        vm.prank(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+        Erc20Interface(0x6B175474E89094C44Da98b954EedeAC495271d0F).transfer(address(compoundBot), 100000 ether);
         
         bytes memory params;
         {

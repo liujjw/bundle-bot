@@ -10,13 +10,13 @@ switch to makerdao flashmints
 quallity of life stuff for main.js around error handling
 
 
-
+use a real netowkr and spend some money nah 300$ contract deploy lol
 
 
 so my theory is it was help in the mempool for a while 
 then block + 1 only occurred a second later so some funny biz going on
 
-so i made it go 100 blocks back for my fork
+so i made it go 15 blocks back for my fork
 
-cast --abi-decode --input "borrowBalanceStored(address)" \
-  0x5f53c507c8b88c5a000000000000000000000000000000000000000004020200000000050000000000000000000000003b5ef98925ba985e0b3bd9c53d868931530c89e3000000000000000000000000000000000000000000000000000000277c648874000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000001000000005738d5ae68c5005f7bfb89db2d7217c57c3ad3d4b55826efd17dc2e9
+go flashloans only wokr on the ganache
+i have to test everything piecemeale, only the swapping part is left to test

@@ -68,6 +68,10 @@ module.exports = {
     ],
   },
   networks: {
+    kovan: {
+      url: "https://eth-kovan.alchemyapi.io/v2/WR64BFS9HYEIdw3Vxx4Ecx6UqXjyxL9d",
+      accounts: [process.env.KOVAN_PK]
+    },
     main_alchemy: {
       url: ENDPOINTS.ALCHEMY,
       accounts: [process.env.MM0A5_PK],
