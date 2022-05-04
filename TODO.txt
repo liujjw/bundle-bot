@@ -20,3 +20,13 @@ so i made it go 15 blocks back for my fork
 
 go flashloans only wokr on the ganache
 i have to test everything piecemeale, only the swapping part is left to test
+
+
+
+MAIN TODOES
+1. unit test the shit out of the compound v5 contract so i can deploy, note that 
+we need better mempool access so we can get the price update 
+2. QOL stuff for the main.js part
+
+unit vs integration testing
+might wanna look into the delegatecall strat so i dont have to make so many approves

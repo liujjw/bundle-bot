@@ -207,7 +207,7 @@ describe.only("Data", function () {
         // BigNumber.from("100000000000000000000"), params);
         // process.exit();
 
-        // use ganache to test this
+        // use ganache to test this (and with foundry bc foundry does not like hardhat)
         // const response = await lendingPool.flashLoan(
         //   ENDPOINTS.DEFAULT_BOT_ADDRESS,
         //   [elem.tokenBorrowed],
