@@ -57,7 +57,7 @@ module.exports = {
         },
       },
       {
-        version: "0.6.12",
+        version: "0.7.5",
         settings: {
           optimizer: {
             enabled: true,
@@ -85,8 +85,7 @@ module.exports = {
         ),
         url: ENDPOINTS.ALCHEMY,
         enabled: true
-      },
-      chainId: 1
+      }
     },
   },
   paths: {

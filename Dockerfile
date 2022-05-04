@@ -1,7 +1,9 @@
 FROM node:16.3.0
-WORKDIR $HOME/defi-bot
+WORKDIR $HOME
 COPY package.json .
-COPY lib .
-COPY app .
+COPY lib ./lib
+COPY app ./app
 
-CMD ["echo", "remember to seed .env file", "&&", "npm", "install", "&&" ,"node", "app/main.js"]
+RUN npm install --production
+
+CMD ["node", "app/main.js"]

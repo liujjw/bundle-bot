@@ -3,7 +3,6 @@ src = 'contracts'
 lib = 'lib_dev'
 test = 'test'
 remappings = [
-  'ds-test/=lib_dev/ds-test/src/',
   'slither/=lib_dev/slither/',
-  'forge-std/=lib_dev/forge-std/src/'
+  'forge-std/=lib/forge-std/src/'
 ]

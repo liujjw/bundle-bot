@@ -1,18 +1,12 @@
 const fetch = require("node-fetch");
 const Web3 = require("web3");
 const net = require("net");
-const { ADDRS } = require("../lib/Constants");
+const { ADDRS, PARAMS } = require("../lib/Constants");
+const schedule = require("node-schedule");
 
-// let web3 =
-// new Web3(new Web3.providers.IpcProvider(
-// process.env.IPC_PROVIDER_ENDPOINT, net));
 const web3 = new Web3(
-  new Web3.providers.IpcProvider("/d/ethereum/.ethereum/geth.ipc", net)
+  new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
 );
-// let web3 =
-// new Web3(new Web3.providers.WebsocketProvider(
-// process.env.WS_PROVIDER_ENDPOINT));
-// let web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:8546"));
 
 // TODO stalk base fee/price drops so that previously unprofitable
 // positions now are profitable
@@ -47,6 +41,24 @@ async function main() {
         });
       }
     });
+
+    const checkJob = schedule.scheduleJob(PARAMS.CHECK_SCHEDULE, 
+      async function() {
+        fetch(`${process.env.RUNNER_ENDPOINT}/check`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: "",
+        });
+      }
+    );
+    checkJob.on("success", () => {
+      process.send(`checked`);
+    });
+    checkJob.on("error", (e) => {
+      process.send(`erorr checking with ${e}`);
+    });
 }
 
-main().then();
+main().then().catch(err => {
+
+});

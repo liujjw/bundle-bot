@@ -1,4 +1,4 @@
-// pragma solidity 0.6.12;
+// pragma solidity 0.7.5;
 
 // import { IFlashLoanReceiver } from "./IFlashLoanReceiver.sol";
 // import { Erc20Interface, UniswapV2Router02, ILendingPool, ILendingPoolAddressesProvider, Erc20InterfaceUSDT } from "./Interfaces.sol";

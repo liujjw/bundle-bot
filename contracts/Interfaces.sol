@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.13;
+pragma solidity 0.7.5;
 
 abstract contract Initializable {
     bool private _initialized;
@@ -95,7 +95,6 @@ interface UniswapV2Router02 {
 interface WETHInterface is Erc20Interface {
     function deposit() payable external;
     function withdraw(uint wad) external;
-    function transfer(address dst, uint wad) external returns (bool);
 }
 
 interface WETHGateway {

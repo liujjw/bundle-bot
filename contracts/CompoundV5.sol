@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity 0.8.13;
+pragma solidity 0.7.5;
 
 // not importing from @ modules, since this way pramga solidity version gets version controlled
 import { ILendingPool } from "./ILendingPool.sol";
@@ -111,7 +111,7 @@ contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
         uint256 amount, 
         uint256 fee,
         bytes calldata data
-    ) external returns (bytes32) {
+    ) override external returns (bytes32) {
         return keccak256('ERC3156FlashBorrower.onFlashLoan');
     }
 

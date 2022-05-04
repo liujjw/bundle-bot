@@ -68,14 +68,16 @@ async function main() {
         throw e;
       }
   });
-  accJob.on("success", (date) => {
-    logger.info(`updated db accounts around ${date}`);
+  accJob.on("success", () => {
+    logger.info(`updated db accounts`);
   });
   accJob.on("error", (e) => {
     logger.error(`erorr updating db with error ${e}`);
   });
 
-  await sleep(PARAMS.WAIT_TIME_FOR_DB_TO_INIT_MS);
+  if (process.env.DB_READY === "false") {
+    await sleep(PARAMS.WAIT_TIME_FOR_DB_TO_INIT_MS);
+  }
 
   const runnerFilename = "runner.js";
   const runner = fork(__dirname + `/${runnerFilename}`);
@@ -92,7 +94,7 @@ async function main() {
   const stalkerFilename = "stalker.js";
   const stalker = fork(__dirname + `/${stalkerFilename}`);
   stalker.on("spawn", () => {
-    logger.info(`started ${runnerFilename}`);
+    logger.info(`started ${stalkerFilename}`);
   })
   stalker.on("error", (err) => {
     logger.error(err);

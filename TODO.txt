@@ -1,3 +1,7 @@
 TODO
 new estimates foe upper bounds liquidation gas amount 
 megabundles
+
+hardhat node/forking is bugged 
+liquidateBorrow does not seem to be working 
+flashloans seem to be sorta working, if only for being reliable with eth

@@ -3,7 +3,7 @@ const cluster = require('cluster');
 const RunnerWorker = require("../lib/RunnerWorker");
 
 const numWorkers = process.env.NUM_WORKERS;
-const taskQueue = new Queue("Task queue", process.env.URL_FOR_REDIS_QUEUE, {
+const taskQueue = new Queue("Task queue", process.env.REDIS_ENDPOINT, {
   redis: {
     db: Number.parseInt(process.env.DB_NUMBER_FOR_JOBS)
   }

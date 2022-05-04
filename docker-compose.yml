@@ -7,17 +7,16 @@ services:
       - REDIS_ENDPOINT=redis://redis:6379/
       - REDIS_HOST=localhost
       - REDIS_PORT=6379
-      - REDIS_TEST_PORT=6380
-      # - BOT_ADDR=0x0
       - PROVIDER_ENDPOINT=http://localhost:8545
       - RUNNER_ENDPOINT=http://localhost:8080
       - RUNNER_PORT=8080
-      - NODE_ENV=sans_onchain
+      - NODE_ENV=staging
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546
       - DB_NUMBER_FOR_JOBS=15
       - DB_NUMBER_FOR_DATA=14
       - NUM_WORKERS=5
+      - DB_READY=false
     depends_on:
       - redis
       - mempool
@@ -35,15 +34,14 @@ services:
     command:
       - --txpool.globalslots=30000
       - --maxpeers=250
-      - --ws
-      - --ws.api="eth,txpool,net,web3"
       - --http
       - --http.port=8547
       - --http.api="eth,txpool,net,web3"
     volumes:
       - /d/ethereum:/root
     ports:
-      - "8546:8546"
       - "8547:8547"
       - "30303:30303"
-    # docker run --name eth_node -d -p 8547:8547 -p 8546:8546 -v /d/ethereum:/root ethereum/client-go --http --http.port 8547 --http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000
+    # docker run --name eth_node -d -p 8547:8547 -v /d/ethereum:/root \
+    # ethereum/client-go --http --http.port 8547 \
+    #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000

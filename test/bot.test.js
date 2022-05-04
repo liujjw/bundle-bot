@@ -51,6 +51,7 @@ describe.only("Data", function () {
     const db = {
       host: ENDPOINTS.REDIS_HOST,
       port: ENDPOINTS.REDIS_PORT,
+      database: 0
     };
     const store = new AccountsDbClient(db, provider);
     await store.init();
@@ -199,12 +200,14 @@ describe.only("Data", function () {
   });
 
   test.only("liquidates known liquidation (noArb)", async function () {
-    shell.exec("forge test -vvvvv --fork-url http://localhost:8545");
+    shell.exec(
+      `forge test -vvvvv --fork-url http://localhost:8545`
+      );
   });
 
-  xtest("debug aave flashloan safetransfer failing fork_5", async function () {
+  test("debug aave flashloan safetransfer failing fork_5", async function () {
     shell.exec(
-      'forge test --debug "testLiquidate" --fork-url http://localhost:8545'
+      'forge test --debug "testLiquidate2" --fork-url http://localhost:8545 --etherscan-api-key WTWMA5MXRQMZZUYPF3JQQGIAXE84VH3KBI'
     );
   });
 });
