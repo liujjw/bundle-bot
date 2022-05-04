@@ -84,8 +84,9 @@ module.exports = {
           process.env.FORK_BLOCKNUMBER ?? TestConstants.FORKS.blockNum2Prev + 10
         ),
         url: ENDPOINTS.ALCHEMY,
-        enabled: true
-      }
+        enabled: true,
+        // initialDate: new Date()
+      },
     },
   },
   paths: {

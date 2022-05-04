@@ -2,7 +2,7 @@ const Queue = require("bull");
 const { ENDPOINTS, FORKS, FORK_5, TEST_PARAMS } = require("./TestConstants");
 const { ABIS, PARAMS } = require("../lib/Constants");
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
-const { ethers } = require("hardhat");
+const ethers  = require("ethers");
 const { BigNumber } = require("ethers");
 const AccountsDbClient = require("../lib/AccountsDbClient");
 

@@ -16,6 +16,8 @@ import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface,
             IERC3156FlashBorrower
         } from './Interfaces.sol';
 
+import "hardhat/console.sol";
+
 contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
 
     struct LiquidationParameters {
@@ -135,9 +137,13 @@ contract CompoundV5 is IFlashLoanReceiver, IERC3156FlashBorrower {
         }
         
         if (assets[0] == ADDRESSES["WETH"]) {
+            console.log(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL);
+            return true;
             WETH.withdraw(amounts[0]);
             CEtherInterface(liqParams.c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(liqParams.BORROWER, liqParams.c_TOKEN_COLLATERAL);
         } else {
+            console.log(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL);
+            return true;
             require(CErc20Interface(liqParams.c_TOKEN_BORROWED).liquidateBorrow(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
         }
         

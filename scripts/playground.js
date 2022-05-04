@@ -1,7 +1,7 @@
 // const AccountsDbClient = require("../lib/AccountsDbClient");
 
 const { AbiCoder } = require("@ethersproject/abi");
-const { ethers } = require("hardhat");
+const { ethers } = require("ethers");
 const { ADDRS, ABIS, ENDPOINTS } = require("./lib/Constants");
 const Uniswap = require("@uniswap/sdk");
 const { Token, TokenAmount } = require("@uniswap/sdk");

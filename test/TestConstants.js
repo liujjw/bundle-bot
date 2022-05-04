@@ -1,3 +1,5 @@
+const { BigNumber } = require("ethers");
+
 exports.FORKS = {
   blockNum1Prev: 14047243 - 1,
   blockNum1Borrower: "0x360c770ff59b4e9ac2d61d943f92dc7b6db3a48e",
@@ -20,7 +22,7 @@ exports.FORKS = {
     amount: "28.51792745",
     id: "0x006d998295087111da5ae75dd44f69b9414bfb294ebe046f1f04debf594ab518-83",
   },
-  blockNum2Prev: 14053711 - 1,
+  blockNum2Prev: 14053711 - 15,
   blockNum2BaseFee: "132628475535",
   blockNum2FlashbotsDataFound: false,
   blockNum2Borrower: "0x086DBCF9d25b476AAbA8Ae02ceA177870D27B64C",
@@ -54,10 +56,10 @@ exports.FORKS = {
     tokenBorrowed: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
     tokenCollateral: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     borrower: '0x00726d1346296312D44c45f77403D6fA970eC296',
-    repayAmount: 'BigNumber { value: "36056954471424240000000" }',
-    maxSeizeTokens: 'BigNumber { value: "14623208136727129938" }',
-    gasLimit: 'BigNumber { value: "1300000" }',
-    gasPrice: 'BigNumber { value: "3000000000" }',
+    repayAmount: BigNumber.from("36056954471424240000000") ,
+    maxSeizeTokens: BigNumber.from("14623208136727129938"),
+    gasLimit: BigNumber.from("1300000"),
+    gasPrice: BigNumber.from("3000000000"),
     netProfitFromLiquidationGivenGasPrice: 1379.7859663142797
   }
 };
@@ -460,7 +462,7 @@ exports.FORK_3 = {
 
 exports.getBlockNumberOnDate = async function (date) {
   const EthDater = require("ethereum-block-by-date");
-  const { ethers } = require("ethers");
+  const ethers = require("ethers");
   const provider = new ethers.providers.CloudflareProvider();
 
   const dater = new EthDater(provider);
