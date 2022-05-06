@@ -137,29 +137,31 @@ contract CompoundTest is Test {
         // TODO create a shell contract that has enough to pay for premiums of flash loan
     }
 
-    function testSwap() public {
-        // borrowed DAI, collateral is WETH
+    function testEthCollateralSwap() public {
+        // borrowed DAI + premiums, collateral is WETH
         // thus get weth to convert to DAI and pocket
         uint numWeth = 100 ether;
-        uint numDai = 100 gwei;
-        uint slippage = 1000;
+        uint slippage = 10 ether;
+        uint numDai = 1000000000000;
 
         vm.prank(WETH_ADDR);
-        Erc20Interface(WETH_ADDR).transfer(address(compoundBot), numWeth);
-        assertEq(Erc20Interface(WETH_ADDR).balanceOf(address(compoundBot)), numWeth);
+        Erc20Interface(WETH_ADDR).transfer(address(compoundBot), numWeth + slippage);
+        assertEq(Erc20Interface(WETH_ADDR).balanceOf(address(compoundBot)), numWeth + slippage);
 
         vm.prank(address(compoundBot));
         WETHInterface(WETH_ADDR).withdraw(numWeth);
         
         address[] memory assets = new address[](1);
         assets[0] = DAI_ADDR;
-        compoundBot.swap(assets, numDai, 
+        compoundBot.swap(
+            assets, 
+            numDai, 
             Constants.LiquidationParameters(
                 cDAI_ADDR,
                 cETH_ADDR,
                 WETH_ADDR,
                 address(0),
-                numDai + slippage
+                numWeth + slippage
         ));
     }
 

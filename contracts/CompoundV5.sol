@@ -100,6 +100,9 @@ contract CompoundV5 is IFlashLoanReceiver {
 
     receive() external payable {} 
 
+    /**
+     * @notice Flashloans give WETH?, but redeeming cEther gives Ether.
+     */
     function executeOperation(
         address[] calldata assets,
         uint256[] calldata amounts,
@@ -135,21 +138,43 @@ contract CompoundV5 is IFlashLoanReceiver {
                 liqParams.c_TOKEN_COLLATERAL
             );
         } else {
-            require(CErc20Interface(liqParams.c_TOKEN_BORROWED).liquidateBorrow(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
+            require(
+                CErc20Interface(liqParams.c_TOKEN_BORROWED)
+                .liquidateBorrow(
+                    liqParams.BORROWER, 
+                    amounts[0], 
+                    liqParams.c_TOKEN_COLLATERAL
+                ) == 0, 
+            "liquidateBorrow failed");
         }
         
         if (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]) {
-            // we redeem to get eth back, NOT WETH 
-            require(CEtherInterface(liqParams.c_TOKEN_COLLATERAL).redeem(CEtherInterface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
+            // we get ceth, redeem to get eth back, NOT WETH 
+            require(
+                CEtherInterface(liqParams.c_TOKEN_COLLATERAL)
+                .redeem(CEtherInterface(liqParams.c_TOKEN_COLLATERAL)
+                    .balanceOf(address(this))) == 0, 
+            "redeem cether failed");
         } else {
-            require(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
-            require(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).redeem(CErc20Interface(liqParams.c_TOKEN_COLLATERAL).balanceOf(address(this))) == 0, "redeem failed");
-            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
+            require(
+                CErc20Interface(liqParams.c_TOKEN_COLLATERAL)
+                    .redeem(CErc20Interface(liqParams.c_TOKEN_COLLATERAL)
+                        .balanceOf(address(this))) == 0, 
+            "redeem ctoken failed");
         }
 
         return swap(assets, amounts[0].add(premiums[0]), liqParams);
     }  
 
+    /**
+    * @notice Three cases:
+    *           1) eth collateral: pay eth to liq, redeemed cether, got ether 
+    *           2) eth borrowed: we liq to get arbitrary ctoken, redeemed, got erc20
+    *           3) eth borrowed: liq to get cether, redeemed cether, got ether; 
+    *               in this case no swap necessary
+    *           4) eth not involved: liq to ctoken, redeem cerc20, get erc20
+    *         Now, swap final product for what was borrowed to liqudate.
+     */
     function swap(
         address[] memory assets,
         uint256 amountOwed,
@@ -158,16 +183,15 @@ contract CompoundV5 is IFlashLoanReceiver {
         UniswapV2Router02 uniRouter = UniswapV2Router02(ADDRESSES["uniswapRouter"]);   
         
         bool isEthCollateral = (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]);
-        bool isEthBorrow = (assets[0] == ADDRESSES["WETH"]);
-        if (isEthCollateral || isEthBorrow) {
+        bool isEthBorrowAndNotEthCollateral = (
+            assets[0] == ADDRESSES["WETH"] 
+            && liqParams.TOKEN_COLLATERAL != ADDRESSES["WETH"]
+        );
+
+        if (isEthCollateral) {
             address[] memory path = new address[](2);
-            if (isEthCollateral) {
-                path[0] = ADDRESSES["WETH"];
-                path[1] = assets[0];
-            } else {
-                path[0] = assets[0];
-                path[1] = ADDRESSES["WETH"];
-            }
+            path[0] = ADDRESSES["WETH"];
+            path[1] = assets[0];
 
             uint[] memory swapAmounts = 
                 uniRouter.swapETHForExactTokens{value: liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
@@ -182,6 +206,11 @@ contract CompoundV5 is IFlashLoanReceiver {
             }
 
             OWNER.transfer(address(this).balance);
+        } else if (isEthBorrowAndNotEthCollateral) {
+            address[] memory path = new address[](2);
+            path[0] = assets[0];
+            path[1] = ADDRESSES["WETH"];
+            require(false, "not implemented");
         } else {
             address[] memory path = new address[](3);
             path[0] = liqParams.TOKEN_COLLATERAL;
