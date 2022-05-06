@@ -1,7 +1,7 @@
 const shell = require("shelljs");
 
 shell.exec(
-  `REDIS_ENDPOINT=redis://redis:6379/ \
+  `REDIS_ENDPOINT=http://localhost:6379/ \
   REDIS_HOST=localhost \
   REDIS_PORT=6379 \
   PROVIDER_ENDPOINT=https://mainnet.infura.io/v3/e8b3009ed18d4b3c9a05fdb4bf5f2bc2 \

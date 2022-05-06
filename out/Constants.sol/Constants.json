@@ -1,0 +1,207 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212202194dc57b2e8222a797ca27eb94f1b3a3ebd0dc306f9efdac0eb2c3b8a02757664736f6c63430008090033",
+    "sourceMap": "24:243:2:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;24:243:2;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212202194dc57b2e8222a797ca27eb94f1b3a3ebd0dc306f9efdac0eb2c3b8a02757664736f6c63430008090033",
+    "sourceMap": "24:243:2:-:0;;;;;;;;",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "/root/defi-bot/contracts/Constants.sol",
+    "id": 921,
+    "exportedSymbols": {
+      "Constants": [
+        920
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "0:267:2",
+    "nodes": [
+      {
+        "id": 908,
+        "nodeType": "PragmaDirective",
+        "src": "0:22:2",
+        "literals": [
+          "solidity",
+          "0.8",
+          ".9"
+        ]
+      },
+      {
+        "id": 920,
+        "nodeType": "ContractDefinition",
+        "src": "24:243:2",
+        "nodes": [
+          {
+            "id": 919,
+            "nodeType": "StructDefinition",
+            "src": "47:213:2",
+            "canonicalName": "Constants.LiquidationParameters",
+            "members": [
+              {
+                "constant": false,
+                "id": 910,
+                "mutability": "mutable",
+                "name": "c_TOKEN_BORROWED",
+                "nameLocation": "94:16:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 919,
+                "src": "86:24:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 909,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "86:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 912,
+                "mutability": "mutable",
+                "name": "c_TOKEN_COLLATERAL",
+                "nameLocation": "128:18:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 919,
+                "src": "120:26:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 911,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "120:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 914,
+                "mutability": "mutable",
+                "name": "TOKEN_COLLATERAL",
+                "nameLocation": "164:16:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 919,
+                "src": "156:24:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 913,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "156:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 916,
+                "mutability": "mutable",
+                "name": "BORROWER",
+                "nameLocation": "198:8:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 919,
+                "src": "190:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 915,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "190:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 918,
+                "mutability": "mutable",
+                "name": "MAX_SEIZE_TOKENS_TO_SWAP_WITH",
+                "nameLocation": "224:29:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 919,
+                "src": "216:37:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 917,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "216:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "LiquidationParameters",
+            "nameLocation": "54:21:2",
+            "scope": 920,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Constants",
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          920
+        ],
+        "name": "Constants",
+        "nameLocation": "32:9:2",
+        "scope": 921,
+        "usedErrors": []
+      }
+    ]
+  }
+}

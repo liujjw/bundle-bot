@@ -21,7 +21,7 @@ if (cluster.isMaster) {
     process.send(message);
   })
   cluster.on('exit', function (worker, code, signal) {
-    console.log('worker ' + worker.process.pid + ' died');
+    process.send('worker ' + worker.process.pid + ' died');
   });
 } else {
   taskQueue.process(async function (job, jobDone) {

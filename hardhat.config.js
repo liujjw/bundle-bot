@@ -1,13 +1,10 @@
-const {
-  getProxyAdminFactory,
-} = require("@openzeppelin/hardhat-upgrades/dist/utils");
 const { assert } = require("chai");
 const { BigNumber } = require("ethers");
 const { task } = require("hardhat/config");
 const shell = require("shelljs");
 require("dotenv").config();
 
-const { ENDPOINTS } = require("./lib/Constants");
+const { ENDPOINTS, PARAMS } = require("./lib/Constants");
 const TestConstants = require("./test/TestConstants");
 
 require("@openzeppelin/hardhat-upgrades");
@@ -17,28 +14,13 @@ require("@nomiclabs/hardhat-ethers");
 task("deploy", "", async () => {
   const factory = await ethers.getContractFactory("CompoundV5");
   const bot = await factory.deploy({
-    gasLimit: BigNumber.from(3500000),
+    gasLimit: BigNumber.from(PARAMS.DEPLOY_GAS_LIMIT),
   });
   const receipt = await bot.deployTransaction.wait();
   assert(receipt.status != 0, "deploy failed");
   console.log(`deployed bot at ${receipt.contractAddress}`);
+  console.log(receipt);
   // shell.env["BOT_ADDR"] = `${receipt.contractAddress}}`;
-});
-
-task("deploy-proxied", "", async () => {
-  const bot = await ethers.getContractFactory("CompoundImpl");
-  // deploys a proxy for the impl, as well as a proxy admin
-  const instance = await upgrades.deployProxy(bot, {
-    gasLimit: BigNumber.from(3500000),
-  });
-  console.log(await instance.deployed());
-});
-
-task("proxy-change", "", async () => {
-  // TODO accept an arg for this address or set manually
-  const proxyAddress = "";
-  const diffImpl = await ethers.getContractFactory("Aave");
-  const upgraded = await upgrades.upgradeProxy(proxyAddress, diffImpl);
 });
 
 /**
@@ -48,7 +30,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.13",
+        version: "0.8.9",
         settings: {
           optimizer: {
             enabled: true,
@@ -85,7 +67,7 @@ module.exports = {
     hardhat: {
       forking: {
         blockNumber: Number.parseInt(
-          process.env.FORK_BLOCKNUMBER ?? TestConstants.FORKS.blockNum2Prev + 10
+          process.env.FORK_BLOCKNUMBER ?? TestConstants.FORK_2.blockNumPrev + 10
         ),
         url: ENDPOINTS.ALCHEMY,
         enabled: true,

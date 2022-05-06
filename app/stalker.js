@@ -51,9 +51,6 @@ async function main() {
         });
       }
     );
-    checkJob.on("success", () => {
-      process.send(`checked`);
-    });
     checkJob.on("error", (e) => {
       process.send(`erorr checking with ${e}`);
     });

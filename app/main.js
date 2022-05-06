@@ -108,6 +108,9 @@ async function main() {
   workers.on("spawn", () => {
     logger.info(`started ${workersFilename}`);
   })
+  workers.on("message", (message) => {
+    logger.info(`message`);
+  })
 
   process.on('SIGINT', function () { 
     schedule.gracefulShutdown()

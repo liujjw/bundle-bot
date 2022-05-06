@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity 0.7.5;
+pragma solidity 0.8.9;
 
 // not importing from @ modules, since this way pramga solidity version gets version controlled
 import { ILendingPool } from "./ILendingPool.sol";
@@ -15,19 +15,13 @@ import {    CToken, ComptrollerInterface, Erc20Interface, CTokenInterface,
             CErc20Interface, CEtherInterface, UniswapV2Router02, WETHInterface
         } from './Interfaces.sol';
 
-import "forge-std/console.sol";
+import { Constants } from './Constants.sol';
+
+// import "forge-std/console.sol";
 
 contract CompoundV5 is IFlashLoanReceiver { 
-
-    struct LiquidationParameters {
-        address c_TOKEN_BORROWED;
-        address c_TOKEN_COLLATERAL;
-        address TOKEN_COLLATERAL;
-        address BORROWER;
-        uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH;
-    }
     mapping(string => address) ADDRESSES;
-    address payable private OWNER;
+    address payable OWNER;
     WETHInterface WETH;
     
     // required by IFlashLoanReceiver 
@@ -113,7 +107,7 @@ contract CompoundV5 is IFlashLoanReceiver {
         address initiator,
         bytes calldata params
     ) override external returns (bool) {
-        LiquidationParameters memory liqParams;
+        Constants.LiquidationParameters memory liqParams;
 
         {
             (   
@@ -123,12 +117,23 @@ contract CompoundV5 is IFlashLoanReceiver {
                 address BORROWER,
                 uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH
             ) = abi.decode(params, (address, address, address, address, uint256));
-            liqParams = LiquidationParameters(c_TOKEN_BORROWED, c_TOKEN_COLLATERAL, TOKEN_COLLATERAL, BORROWER, MAX_SEIZE_TOKENS_TO_SWAP_WITH);
+            liqParams = Constants.LiquidationParameters(
+                c_TOKEN_BORROWED, 
+                c_TOKEN_COLLATERAL, 
+                TOKEN_COLLATERAL, 
+                BORROWER, 
+                MAX_SEIZE_TOKENS_TO_SWAP_WITH
+            );
         }
 
         if (assets[0] == ADDRESSES["WETH"]) {
             WETH.withdraw(amounts[0]);
-            CEtherInterface(liqParams.c_TOKEN_BORROWED).liquidateBorrow{value: amounts[0]}(liqParams.BORROWER, liqParams.c_TOKEN_COLLATERAL);
+
+            CEtherInterface(liqParams.c_TOKEN_BORROWED)
+            .liquidateBorrow{value: amounts[0]}(
+                liqParams.BORROWER, 
+                liqParams.c_TOKEN_COLLATERAL
+            );
         } else {
             require(CErc20Interface(liqParams.c_TOKEN_BORROWED).liquidateBorrow(liqParams.BORROWER, amounts[0], liqParams.c_TOKEN_COLLATERAL) == 0, "liquidateBorrow failed");
         }
@@ -142,7 +147,14 @@ contract CompoundV5 is IFlashLoanReceiver {
             require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
         }
 
-        uint amountOwed = amounts[0].add(premiums[0]);
+        return swap(assets, amounts[0].add(premiums[0]), liqParams);
+    }  
+
+    function swap(
+        address[] memory assets,
+        uint256 amountOwed,
+        Constants.LiquidationParameters memory liqParams 
+    ) public returns (bool) {
         UniswapV2Router02 uniRouter = UniswapV2Router02(ADDRESSES["uniswapRouter"]);   
         
         bool isEthCollateral = (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]);
@@ -210,6 +222,6 @@ contract CompoundV5 is IFlashLoanReceiver {
             }
         }
         return true;
-    }  
+    }
 }
  

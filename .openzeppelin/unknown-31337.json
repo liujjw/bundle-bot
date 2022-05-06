@@ -1,0 +1,117 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x1f10F3Ba7ACB61b2F50B9d6DdCf91a6f787C0E82",
+    "txHash": "0x30e41f9ac083d57aa71018570566d56ee276eb2d054755266548ab0300cdd1e6"
+  },
+  "proxies": [
+    {
+      "address": "0x457cCf29090fe5A24c19c1bc95F492168C0EaFdb",
+      "txHash": "0x18dfa3d7cf191cc94242f252867a28ea938d433134d09e1f41fcbe7b26f9ab93",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "eb19ab789efc591026b5a17fa1910f4cab312772e12a013639b6dde490c6ce4d": {
+      "address": "0xE3011A37A904aB90C8881a99BD1F6E21401f1522",
+      "txHash": "0xf0757ab70bcd82b2dbf89e522f5434451c92c03e4243c09bf222853bb080b360",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:39"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:44"
+          },
+          {
+            "label": "ADDRESSES",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "CompoundV5",
+            "src": "contracts/CompoundV5.sol:30"
+          },
+          {
+            "label": "OWNER",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address_payable",
+            "contract": "CompoundV5",
+            "src": "contracts/CompoundV5.sol:31"
+          },
+          {
+            "label": "WETH",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_contract(WETHInterface)2952",
+            "contract": "CompoundV5",
+            "src": "contracts/CompoundV5.sol:32"
+          },
+          {
+            "label": "ADDRESSES_PROVIDER",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_contract(ILendingPoolAddressesProvider)2706",
+            "contract": "CompoundV5",
+            "src": "contracts/CompoundV5.sol:35"
+          },
+          {
+            "label": "LENDING_POOL",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_contract(ILendingPool)2555",
+            "contract": "CompoundV5",
+            "src": "contracts/CompoundV5.sol:36"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(ILendingPool)2555": {
+            "label": "contract ILendingPool",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ILendingPoolAddressesProvider)2706": {
+            "label": "contract ILendingPoolAddressesProvider",
+            "numberOfBytes": "20"
+          },
+          "t_contract(WETHInterface)2952": {
+            "label": "contract WETHInterface",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string"
+          }
+        }
+      }
+    }
+  }
+}

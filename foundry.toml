@@ -2,7 +2,3 @@
 src = 'contracts'
 lib = 'lib_dev'
 test = 'test'
-remappings = [
-  'slither/=lib_dev/slither/',
-  'forge-std/=lib/forge-std/src/'
-]

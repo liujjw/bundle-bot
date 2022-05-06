@@ -1,0 +1,3 @@
+'slither/=lib_dev/slither/',
+'forge-std/=lib/forge-std/src/'
+'@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol=node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol'

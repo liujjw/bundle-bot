@@ -1,5 +1,5 @@
 const Queue = require("bull");
-const { ENDPOINTS, FORKS, FORK_5, TEST_PARAMS } = require("./TestConstants");
+const { ENDPOINTS, FORK_2, FORK_5, TEST_PARAMS } = require("./TestConstants");
 const { ABIS, PARAMS } = require("../lib/Constants");
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const ethers  = require("ethers");
