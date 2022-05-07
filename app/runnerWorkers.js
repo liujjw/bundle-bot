@@ -26,9 +26,9 @@ if (cluster.isMaster) {
 } else {
   taskQueue.process(async function (job, jobDone) {
     const runnerWorker = new RunnerWorker();
-    runnerWorker.process(job.data);
+    await runnerWorker.process(job.data);
     runnerWorker.on("error", err => {
-      throw err;
+      process.send(err);
     })
     runnerWorker.on("info", message => {
       process.send(message);

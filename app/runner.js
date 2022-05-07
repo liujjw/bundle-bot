@@ -6,7 +6,7 @@ const Runner = require("../lib/Runner");
 async function main() {
   const runner = new Runner();
   runner.on("error", err => {
-    throw err;
+    process.send(err);
   })
   runner.on("info", message => {
     process.send(message);
@@ -14,6 +14,6 @@ async function main() {
 }
 
 main().catch((e) => {
-  throw e;
+  process.send(e);
 });
 

@@ -16,7 +16,7 @@ const logger = createLogger({
     format.splat(),
     format.json()
   ),
-  defaultMeta: { service: `${__filename}` },
+
   transports: [
     new transports.File({ filename: "../logs/error.log", level: "error" }),
     new transports.File({ filename: "../logs/combined.log" }),
@@ -51,11 +51,8 @@ async function main() {
       try {
         await store.setCompoundParams();
       } catch (e) {
-        throw e;
+        this.emit("error", e);
       }
-  });
-  paramJob.on("success", (date) => {
-    logger.info(`updated db params`);
   });
   paramJob.on("error", (e) => {
     logger.error(`error updating db params with error ${e}`);
@@ -65,11 +62,8 @@ async function main() {
       try {
         await store.setCompoundAccounts();
       } catch (e) {
-        throw e;
+        this.emit("error", e);
       }
-  });
-  accJob.on("success", () => {
-    logger.info(`updated db accounts`);
   });
   accJob.on("error", (e) => {
     logger.error(`erorr updating db with error ${e}`);
@@ -88,7 +82,7 @@ async function main() {
     logger.error(err);
   });
   runner.on("message", (message, sendHandle) => {
-    logger.info(message);
+    logger.info(JSON.stringify(message, null, 4));
   })
 
   const stalkerFilename = "stalker.js";
@@ -100,7 +94,7 @@ async function main() {
     logger.error(err);
   });
   stalker.on("message", (message, sendHandle) => {
-    logger.info(message);
+    logger.info(JSON.stringify(message, null, 4));
   });
 
   const workersFilename = "runnerWorkers.js";
@@ -108,9 +102,9 @@ async function main() {
   workers.on("spawn", () => {
     logger.info(`started ${workersFilename}`);
   })
-  workers.on("message", (message) => {
-    logger.info(`message`);
-  })
+  // workers.on("message", (message) => {
+  //   logger.info(JSON.stringify(message, null, 4));
+  // })
 
   process.on('SIGINT', function () { 
     schedule.gracefulShutdown()

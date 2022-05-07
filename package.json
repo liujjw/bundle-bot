@@ -9,7 +9,8 @@
   },
   "scripts": {
     "testi": "read -p \"DB_READY?\" -n 1 -r \n if [[ $REPLY =~ ^[Yy]$ ]] \n then \n REDIS_STARTED=true DB_READY=true jest \n else \n REDIS_STARTED=true DB_READY=false jest \n fi",
-    "test": "REDIS_STARTED=true DB_READY=true jest"
+    "test": "REDIS_STARTED=true DB_READY=true jest",
+    "build": "npx tsc -p ./ts"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,8 @@
     "hardhat": "^2.9.3",
     "jest": "^27.5.1",
     "prettier": "2.6.2",
-    "typescript": "^4.6.3"
+    "typechain": "^3.0.0",
+    "typescript": "^4.6.4"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.3",

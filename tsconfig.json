@@ -2,15 +2,17 @@
 
 {
   "compilerOptions": {
-    "outDir": "./built",
+    "outDir": "./generated",
     "allowJs": true,
     "noImplicitReturns": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
     // use ! if sure a possibly null type is fine to access like foo!.length
-    // where declare var foo: stringp[] | null
+    // where declare var foo: string[] | null
     "strictNullChecks": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "target": "ES6"
   },
   "include": ["./**/*"]
 }

@@ -1,8 +1,10 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require("../lib/AccountsDbClient");
+const AuctionBidPricer = require("../lib/AuctionBidPricer");
 const { ENDPOINTS, FORK_2, FORK_5, TEST_PARAMS } = require("./TestConstants");
 const { ABIS, PARAMS, ADDRS } = require("../lib/Constants");
 const { sleep } = require("../lib/Utils");
+const Utils = require("../lib/Utils");
 
 const shell = require("shelljs");
 const { BigNumber } = require("ethers");
@@ -23,6 +25,7 @@ let store;
 let lendingPool;
 let cUSDC;
 let flashmint;
+let bidPricer;
 
 beforeAll(async () => {
   if (process.env.REDIS_STARTED === "false") {
@@ -74,6 +77,9 @@ beforeAll(async () => {
   }
   sickCompoundAccounts = await store.getStoredCompoundAccounts();
   compoundParams = await store.getStoredCompoundParams();
+  bidPricer = new AuctionBidPricer(
+    Utils.bigNumToFloat(compoundParams.prices["ETH"], 6)
+  );
 
   expect(shell.exec(`npx hardhat compile && npx hardhat deploy`).code).toBe(0);
   console.log("bot contract deployed");
@@ -104,7 +110,7 @@ afterAll(() => {
   hardhatNode.kill("SIGKILL");
 });
 
-describe.only("Contract", function () {
+describe("Contract", function () {
   test('backrun transmit post price for liq #2', async function() {
       await hre.network.provider.request({
         method: "hardhat_impersonateAccount",
@@ -137,12 +143,6 @@ describe.only("Contract", function () {
       expect(receipt.status).toBe(1);
   });
 
-  test(`validate flashloan`, async function() {
-    // makerdao flashmints
-    // await flashmint.flashLoan(ENDPOINTS.DEFAULT_BOT_ADDRESS, ADDRS["DAI"], 
-    // BigNumber.from("100000000000000000000"), params);
-  });
-
   test(`validate liq #2 liquidateBorrow`, async function() {
     const response = await cUSDC.liquidateBorrow(
       FORK_2.arb.borrower, 
@@ -150,10 +150,6 @@ describe.only("Contract", function () {
       FORK_2.arb.cTokenCollateral);
     const receipt = await response.wait();
     expect(receipt.status).toBe(1);
-  });
-  
-  test(`validate liq 2 swap`, async function() {
-    
   });
 
   test("forge test", async function() {
@@ -166,8 +162,8 @@ describe.only("Contract", function () {
   });
 });
 
-describe("Infra", function() {
-  test(`finds a known liquidation (#2) at 
+describe.only("Infra", function() {
+  test.only(`finds a known liquidation (#2) at 
   ${FORK_2.blockNumPrev} by borrower ${FORK_2.borrower}`, async function () {
     const predicate = (val) =>
       val.id.toLowerCase() === FORK_2.borrower.toLowerCase();
@@ -189,7 +185,7 @@ describe("Infra", function() {
         arb.borrower.toLowerCase() === FORK_2.borrower.toLowerCase()
     );
     expect(arb).not.toBe(undefined);
-    expect(arb.netProfitFromLiquidationGivenGasPrice).toBeGreaterThan(1000);
+    expect(arb.netProfitGivenBaseFee).toBeGreaterThan(1000);
     // console.log(arb);
   });
 
@@ -255,6 +251,7 @@ describe("Integrations", function() {
     const scale = 1e8;
     const newPrice = BigNumber.from(2000 * scale);
     finder.setParam("price", { ticker: "ETH", value: newPrice });
+    bidPricer.ethPrice = 2000;
     finder.minProfit = 200;
     const arr = await finder.getLiquidationTxsInfo();
     let countSuccesses = 0;
@@ -265,13 +262,16 @@ describe("Integrations", function() {
     const totalEthUsedForGas = BigNumber.from(0);
     for (const elem of arr) {
       try {
-        const coder = new ethers.utils.AbiCoder();
-        const params = coder.encode([
-          'address', 'address', 'address', 'address', 'uint256'
-        ], [
-          elem.cTokenBorrowed, elem.cTokenCollateral, elem.tokenCollateral,
-          elem.borrower, elem.maxSeizeTokens
-        ]);
+        const mevInfo = bidPricer.getTip();
+        const params = ABIS.botEncode(
+          elem.cTokenBorrowed,
+          elem.cTokenCollateral,
+          elem.tokenCollateral,
+          elem.borrower,
+          elem.maxSeizeTokens,
+          mevInfo.weiTip,
+          mevInfo.weiTip.add(PARAMS.MIN_LIQ_PROFIT_IN_ETH)
+        );
 
         const response = await lendingPool.flashLoan(
           ENDPOINTS.DEFAULT_BOT_ADDRESS,

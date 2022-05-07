@@ -6,3 +6,4 @@ cache
 .clinic
 .env
 out
+generated

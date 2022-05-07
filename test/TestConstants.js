@@ -1,5 +1,8 @@
 const { BigNumber } = require("ethers");
 
+// Mostly borrowed USDC/DAI to go long ETH/WBTC collateral. 
+// Some collateral USDC to borrowed DAI. 
+
 exports.FORK_2 = {
   blockNumPrev: 14053711 - 15,
   baseFee: "132628475535",
@@ -18,7 +21,8 @@ exports.FORK_2 = {
   arb: {
     blockNum: 14053711 - 1,
     cTokenBorrowed: '0x39aa39c021dfbae8fac545936693ac917d5e7563',
-    cTokenCollateral: '0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5',
+    cTokenCollateral: '0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5',
+    // USDC-WETH
     tokenBorrowed: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     tokenCollateral: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     borrower: '0x086dbcf9d25b476aaba8ae02cea177870d27b64c',
@@ -26,20 +30,21 @@ exports.FORK_2 = {
     maxSeizeTokens: BigNumber.from("42871931848053079888"),
     gasLimit: BigNumber.from("1300000"),
     gasPrice: BigNumber.from("132628475535"),
-    netProfitFromLiquidationGivenGasPrice: 3905.4985829225184
+    netProfitGivenBaseFee: 3905.4985829225184
   },
   noBackrunArb: {
     blockNum: 14053711 - 1,
     cTokenBorrowed: '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643',
     cTokenCollateral: '0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5',
+    // DAI-WETH
     tokenBorrowed: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
     tokenCollateral: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     borrower: '0x00726d1346296312D44c45f77403D6fA970eC296',
     repayAmount: BigNumber.from("36056954471424240000000") ,
     maxSeizeTokens: BigNumber.from("14623208136727129938"),
     gasLimit: BigNumber.from("1300000"),
-    gasPrice: BigNumber.from("3000000000"),
-    netProfitFromLiquidationGivenGasPrice: 1379.7859663142797
+    baseFee: BigNumber.from("3000000000"),
+    netProfitGivenBaseFee: 1379.7859663142797
   }
 };
 
@@ -73,6 +78,7 @@ exports.FORKS = {
   sampleLiquidation: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
     cTokenCollateral: "0x39aa39c021dfbae8fac545936693ac917d5e7563",
+    // DAI-USDC
     tokenBorrowed: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     tokenCollateral: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     borrower: "0xd6b5986a966d084580226bed115d9c30c4fdedaa",
@@ -88,15 +94,16 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 9636036.908778217,
+    netProfitGivenBaseFee: 9636036.908778217,
   },
   sampleLiquidation2: {
     cTokenBorrowed: "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
     cTokenCollateral: "0xC11b1268C1A384e55C48c2391d8d480264A3A7F4",
+    // USDC-WBTC
     tokenBorrowed: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     tokenCollateral: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
     borrower: "0x1A0d5ec1273Ce0fcf82Aae5E9FC2e1BB475e1E16",
@@ -112,11 +119,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 15169.674211092199,
+    netProfitGivenBaseFee: 15169.674211092199,
   },
   sampleLiquidation3: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
@@ -136,11 +143,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 7858.394366427714,
+    netProfitGivenBaseFee: 7858.394366427714,
   },
   sampleLiquidation4: {
     cTokenBorrowed: "0x39aa39c021dfbae8fac545936693ac917d5e7563",
@@ -160,11 +167,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 7774.889924154085,
+    netProfitGivenBaseFee: 7774.889924154085,
   },
   sampleLiquidation5: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
@@ -184,11 +191,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 1130890.7395863656,
+    netProfitGivenBaseFee: 1130890.7395863656,
   },
   sampleLiquidation6: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
@@ -208,11 +215,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 1811545.3452327037,
+    netProfitGivenBaseFee: 1811545.3452327037,
   },
   sampleLiquidation7: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
@@ -232,11 +239,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 706.9663775589081,
+    netProfitGivenBaseFee: 706.9663775589081,
   },
   sampleLiquidation8: {
     cTokenBorrowed: "0x39aa39c021dfbae8fac545936693ac917d5e7563",
@@ -256,11 +263,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 17647.558983082316,
+    netProfitGivenBaseFee: 17647.558983082316,
   },
   sampleLiquidation9: {
     cTokenBorrowed: "0x39aa39c021dfbae8fac545936693ac917d5e7563",
@@ -280,11 +287,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 2591.7688826220106,
+    netProfitGivenBaseFee: 2591.7688826220106,
   },
   sampleLiquidation10: {
     cTokenBorrowed: "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
@@ -304,11 +311,11 @@ exports.FORKS = {
       type: "BigNumber",
       hex: "0x13d620",
     },
-    gasPrice: {
+    baseFee: {
       type: "BigNumber",
       hex: "0x0a",
     },
-    netProfitFromLiquidationGivenGasPrice: 142745754.10408154,
+    netProfitGivenBaseFee: 142745754.10408154,
   },
   ETH_OFFCHAIN_AGG_TRANSMIT_CALL: {
     accessList: [],

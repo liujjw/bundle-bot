@@ -12,7 +12,7 @@ const web3 = new Web3(
 // positions now are profitable
 
 /**
- *
+ * @notice DO NOT await fetch calls
  */
 async function main() {
   web3.eth
@@ -24,20 +24,24 @@ async function main() {
     .on("data", async function (txHash) {
       const tx = await web3.eth.getTransaction(txHash);
       if (tx === null) return;
-      // perhaps process.env is not set
+      // 
       if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
-        process.send("found a tx to frontrun sent to offchain agg");
+        process.send("found a price update to backrun sent to offchain agg");
         fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(tx),
+        }).catch(e => {
+          process.send(e);
         });
       } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
-        process.send("found a tx to frontrun sent to comptroller");
+        process.send("found a param update to backrun sent to comptroller");
         fetch(`${process.env.RUNNER_ENDPOINT}/paramUpdate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(tx),
+        }).catch(e => {
+          process.send(e)
         });
       }
     });
@@ -48,6 +52,8 @@ async function main() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: "",
+        }).catch(e => {
+          process.send(e);
         });
       }
     );
@@ -56,6 +62,4 @@ async function main() {
     });
 }
 
-main().then().catch(err => {
-
-});
+main().then().catch(err => process.send(err));

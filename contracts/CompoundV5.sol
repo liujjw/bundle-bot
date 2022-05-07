@@ -23,6 +23,9 @@ contract CompoundV5 is IFlashLoanReceiver {
     mapping(string => address) ADDRESSES;
     address payable OWNER;
     WETHInterface WETH;
+    event SwapAmount(uint256 indexed swapAmount);
+    event PaidMiner(uint256 indexed amount);
+    event PaidOwner(uint256 indexed amount);
     
     // required by IFlashLoanReceiver 
     ILendingPoolAddressesProvider public override ADDRESSES_PROVIDER;
@@ -101,7 +104,7 @@ contract CompoundV5 is IFlashLoanReceiver {
     receive() external payable {} 
 
     /**
-     * @notice Flashloans give WETH?, but redeeming cEther gives Ether.
+     * @notice Flashloans give WETH, but redeeming cEther gives ETH.
      */
     function executeOperation(
         address[] calldata assets,
@@ -118,14 +121,21 @@ contract CompoundV5 is IFlashLoanReceiver {
                 address c_TOKEN_COLLATERAL,
                 address TOKEN_COLLATERAL,
                 address BORROWER,
-                uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH
-            ) = abi.decode(params, (address, address, address, address, uint256));
+                uint256 MAX_SEIZE_TOKENS_TO_SWAP_WITH,
+                uint256 MINER_PAYMENT,
+                uint256 MIN_ETH_TO_SWAP_FOR
+            ) = abi.decode(
+                params, 
+                (address, address, address, address, uint256, uint256, uint256)
+            );
             liqParams = Constants.LiquidationParameters(
                 c_TOKEN_BORROWED, 
                 c_TOKEN_COLLATERAL, 
                 TOKEN_COLLATERAL, 
                 BORROWER, 
-                MAX_SEIZE_TOKENS_TO_SWAP_WITH
+                MAX_SEIZE_TOKENS_TO_SWAP_WITH,
+                MINER_PAYMENT,
+                MIN_ETH_TO_SWAP_FOR
             );
         }
 
@@ -149,7 +159,7 @@ contract CompoundV5 is IFlashLoanReceiver {
         }
         
         if (liqParams.TOKEN_COLLATERAL == ADDRESSES["WETH"]) {
-            // we get ceth, redeem to get eth back, NOT WETH 
+            // we get ceth, redeem to get eth back, no withdraw
             require(
                 CEtherInterface(liqParams.c_TOKEN_COLLATERAL)
                 .redeem(CEtherInterface(liqParams.c_TOKEN_COLLATERAL)
@@ -163,7 +173,15 @@ contract CompoundV5 is IFlashLoanReceiver {
             "redeem ctoken failed");
         }
 
-        return swap(assets, amounts[0].add(premiums[0]), liqParams);
+        require(swap(assets, amounts[0].add(premiums[0]), liqParams), 
+            "swap failed");
+
+        (block.coinbase).transfer(liqParams.MINER_PAYMENT);
+        emit PaidMiner(liqParams.MINER_PAYMENT);
+        
+        uint256 botBalance = address(this).balance;
+        OWNER.transfer(botBalance);
+        emit PaidOwner(botBalance);
     }  
 
     /**
@@ -193,35 +211,35 @@ contract CompoundV5 is IFlashLoanReceiver {
             path[0] = ADDRESSES["WETH"];
             path[1] = assets[0];
 
+            uint256 amountOut = amountOwed;
             uint[] memory swapAmounts = 
-                uniRouter.swapETHForExactTokens{value: liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
-                    amountOwed, 
-                    path, 
-                    address(this), 
-                    block.timestamp
+                uniRouter
+                    .swapETHForExactTokens{value: liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH}(
+                        amountOut, 
+                        path, 
+                        address(this), 
+                        block.timestamp
                 );
             
             for(uint i = 0; i < swapAmounts.length; i++) {
-                require(swapAmounts[i] != 0);
+                emit SwapAmount(swapAmounts[i]);
             }
-
-            OWNER.transfer(address(this).balance);
         } else if (isEthBorrowAndNotEthCollateral) {
             address[] memory path = new address[](2);
             path[0] = assets[0];
             path[1] = ADDRESSES["WETH"];
             require(false, "not implemented");
         } else {
-            address[] memory path = new address[](3);
+            address[] memory path;
+            path = new address[](3);
             path[0] = liqParams.TOKEN_COLLATERAL;
             path[1] = ADDRESSES["WETH"];
             path[2] = assets[0]; 
-
-            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
-
+            
+            uint256 amountOut = amountOwed;
             uint[] memory swapAmounts = 
                 uniRouter.swapTokensForExactTokens(
-                    amountOwed, 
+                    amountOut, 
                     liqParams.MAX_SEIZE_TOKENS_TO_SWAP_WITH, 
                     path, 
                     address(this), 
@@ -229,25 +247,31 @@ contract CompoundV5 is IFlashLoanReceiver {
                 );
 
             for(uint i = 0; i < swapAmounts.length; i++) {
-                require(swapAmounts[i] != 0);
+                emit SwapAmount(swapAmounts[i]);
             }
-            require(Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)) != 0);
 
+            // can hold wbtc if dont have to swap to pay miner
             path = new address[](2);
             path[0] = liqParams.TOKEN_COLLATERAL;
             path[1] = ADDRESSES["WETH"];
-            // TODO make 2**256 - 1 safer by computing minimum eth received offchain
+
+            uint256 tokenCollateralBalance = 
+                Erc20Interface(liqParams.TOKEN_COLLATERAL)
+                    .balanceOf(address(this));
+            uint256 amountIn = tokenCollateralBalance;
+            uint256 amountOutMin = liqParams.MIN_ETH_TO_SWAP_FOR; 
+
             swapAmounts = 
                 uniRouter.swapExactTokensForETH(
-                    Erc20Interface(liqParams.TOKEN_COLLATERAL).balanceOf(address(this)), 
-                    2**256 - 1,
+                    amountIn, 
+                    amountOutMin,
                     path, 
-                    OWNER, 
+                    address(this), 
                     block.timestamp
                 );
             
             for(uint i = 0; i < swapAmounts.length; i++) {
-                require(swapAmounts[i] != 0);
+                emit SwapAmount(swapAmounts[i]);
             }
         }
         return true;

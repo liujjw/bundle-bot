@@ -1,28 +1,28 @@
 {
   "abi": [],
   "bytecode": {
-    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212202194dc57b2e8222a797ca27eb94f1b3a3ebd0dc306f9efdac0eb2c3b8a02757664736f6c63430008090033",
-    "sourceMap": "24:243:2:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;24:243:2;;;;;;;;;;;;;;;;;",
+    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209d2b8e40946b6a083b28b972d67f9fd5aa85b8a187f64ee1357fbd156305458964736f6c63430008090033",
+    "sourceMap": "24:386:2:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;24:386:2;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212202194dc57b2e8222a797ca27eb94f1b3a3ebd0dc306f9efdac0eb2c3b8a02757664736f6c63430008090033",
-    "sourceMap": "24:243:2:-:0;;;;;;;;",
+    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212209d2b8e40946b6a083b28b972d67f9fd5aa85b8a187f64ee1357fbd156305458964736f6c63430008090033",
+    "sourceMap": "24:386:2:-:0;;;;;;;;",
     "linkReferences": {}
   },
   "ast": {
     "absolutePath": "/root/defi-bot/contracts/Constants.sol",
-    "id": 921,
+    "id": 954,
     "exportedSymbols": {
       "Constants": [
-        920
+        953
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "0:267:2",
+    "src": "0:410:2",
     "nodes": [
       {
-        "id": 908,
+        "id": 934,
         "nodeType": "PragmaDirective",
         "src": "0:22:2",
         "literals": [
@@ -32,24 +32,24 @@
         ]
       },
       {
-        "id": 920,
+        "id": 953,
         "nodeType": "ContractDefinition",
-        "src": "24:243:2",
+        "src": "24:386:2",
         "nodes": [
           {
-            "id": 919,
+            "id": 949,
             "nodeType": "StructDefinition",
-            "src": "47:213:2",
+            "src": "47:281:2",
             "canonicalName": "Constants.LiquidationParameters",
             "members": [
               {
                 "constant": false,
-                "id": 910,
+                "id": 936,
                 "mutability": "mutable",
                 "name": "c_TOKEN_BORROWED",
                 "nameLocation": "94:16:2",
                 "nodeType": "VariableDeclaration",
-                "scope": 919,
+                "scope": 949,
                 "src": "86:24:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -58,7 +58,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 909,
+                  "id": 935,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "86:7:2",
@@ -72,12 +72,12 @@
               },
               {
                 "constant": false,
-                "id": 912,
+                "id": 938,
                 "mutability": "mutable",
                 "name": "c_TOKEN_COLLATERAL",
                 "nameLocation": "128:18:2",
                 "nodeType": "VariableDeclaration",
-                "scope": 919,
+                "scope": 949,
                 "src": "120:26:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -86,7 +86,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 911,
+                  "id": 937,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "120:7:2",
@@ -100,12 +100,12 @@
               },
               {
                 "constant": false,
-                "id": 914,
+                "id": 940,
                 "mutability": "mutable",
                 "name": "TOKEN_COLLATERAL",
                 "nameLocation": "164:16:2",
                 "nodeType": "VariableDeclaration",
-                "scope": 919,
+                "scope": 949,
                 "src": "156:24:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -114,7 +114,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 913,
+                  "id": 939,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "156:7:2",
@@ -128,12 +128,12 @@
               },
               {
                 "constant": false,
-                "id": 916,
+                "id": 942,
                 "mutability": "mutable",
                 "name": "BORROWER",
                 "nameLocation": "198:8:2",
                 "nodeType": "VariableDeclaration",
-                "scope": 919,
+                "scope": 949,
                 "src": "190:16:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -142,7 +142,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 915,
+                  "id": 941,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "190:7:2",
@@ -156,12 +156,12 @@
               },
               {
                 "constant": false,
-                "id": 918,
+                "id": 944,
                 "mutability": "mutable",
                 "name": "MAX_SEIZE_TOKENS_TO_SWAP_WITH",
                 "nameLocation": "224:29:2",
                 "nodeType": "VariableDeclaration",
-                "scope": 919,
+                "scope": 949,
                 "src": "216:37:2",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -170,10 +170,64 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 917,
+                  "id": 943,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
                   "src": "216:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 946,
+                "mutability": "mutable",
+                "name": "MINER_PAYMENT",
+                "nameLocation": "271:13:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 949,
+                "src": "263:21:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 945,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "263:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 948,
+                "mutability": "mutable",
+                "name": "MIN_ETH_TO_SWAP_FOR",
+                "nameLocation": "302:19:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 949,
+                "src": "294:27:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 947,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "294:7:2",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -184,8 +238,52 @@
             ],
             "name": "LiquidationParameters",
             "nameLocation": "54:21:2",
-            "scope": 920,
+            "scope": 953,
             "visibility": "public"
+          },
+          {
+            "id": 952,
+            "nodeType": "VariableDeclaration",
+            "src": "336:71:2",
+            "constant": true,
+            "mutability": "constant",
+            "name": "WBTC_ADDR",
+            "nameLocation": "353:9:2",
+            "scope": 953,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 950,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "336:7:2",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": {
+              "hexValue": "307832323630464143354535353432613737334161343466424366654466374331393362633243353939",
+              "id": 951,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "365:42:2",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              },
+              "value": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+            },
+            "visibility": "internal"
           }
         ],
         "abstract": false,
@@ -195,11 +293,11 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          920
+          953
         ],
         "name": "Constants",
         "nameLocation": "32:9:2",
-        "scope": 921,
+        "scope": 954,
         "usedErrors": []
       }
     ]
