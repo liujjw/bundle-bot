@@ -8,8 +8,9 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PROVIDER_ENDPOINT=mempool://mempool:8547/
-      - RUNNER_ENDPOINT=http://localhost:8080
-      - RUNNER_PORT=8080
+      - RUNNER_ENDPOINT=http://localhost:8081
+      - RUNNER_PORT=8081
+      - BULL_BOARD_PORT=8080
       - NODE_ENV=staging
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
       - WS_PROVIDER_ENDPOINT=ws://localhost:8546

@@ -23,13 +23,13 @@ const logger = createLogger({
   ],
 });
 
-if (process.env.NODE_ENV !== "production") {
+// if (process.env.NODE_ENV !== "production") {
   logger.add(
     new transports.Console({
       format: format.combine(format.colorize(), format.simple()),
     })
   );
-}
+// }
 
 /**
  * Starts a cluster of services. 
@@ -102,9 +102,15 @@ async function main() {
   workers.on("spawn", () => {
     logger.info(`started ${workersFilename}`);
   })
-  // workers.on("message", (message) => {
-  //   logger.info(JSON.stringify(message, null, 4));
-  // })
+  workers.on("message", (message) => {
+    logger.info(JSON.stringify(message, null, 4));
+  })
+
+  const bullBoardFilename = "bullBoard.js";
+  const bullBoard = fork(__dirname + `/${bullBoardFilename}`);
+  bullBoard.on("message", (message) => {
+    logger.info(message);
+  });
 
   process.on('SIGINT', function () { 
     schedule.gracefulShutdown()

@@ -14,11 +14,13 @@ task("deploy", "", async () => {
   const factory = await ethers.getContractFactory("CompoundV5");
   const bot = await factory.deploy({
     gasLimit: BigNumber.from(PARAMS.DEPLOY_GAS_LIMIT),
+    maxFeePerGas: BigNumber.from('24100000000'),
+    maxPriorityFeePerGas: BigNumber.from("2100000000"),
   });
   const receipt = await bot.deployTransaction.wait();
   assert(receipt.status != 0, "deploy failed");
   console.log(`deployed bot at ${receipt.contractAddress}`);
-  console.log(receipt);
+  // console.log(receipt);
 });
 
 /**

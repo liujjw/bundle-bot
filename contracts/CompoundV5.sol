@@ -188,8 +188,7 @@ contract CompoundV5 is IFlashLoanReceiver {
     * @notice Three cases:
     *           1) eth collateral: pay eth to liq, redeemed cether, got ether 
     *           2) eth borrowed: we liq to get arbitrary ctoken, redeemed, got erc20
-    *           3) eth borrowed: liq to get cether, redeemed cether, got ether; 
-    *               in this case no swap necessary
+    *           3) eth borrowed: liq to get cether...this is disallowed by compound
     *           4) eth not involved: liq to ctoken, redeem cerc20, get erc20
     *         Now, swap final product for what was borrowed to liqudate.
      */

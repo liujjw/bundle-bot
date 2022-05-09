@@ -1,2 +1,5 @@
 price update tx hash: 0x78718e83f3d0d70d4ccdade609f3fe93f6635a8ff2918191632173f855ba95ba
 rust/go tiny binaries to deploy onto aws
+
+rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
+also publish it normally
