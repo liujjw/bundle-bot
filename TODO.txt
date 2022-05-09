@@ -5,3 +5,9 @@ rearchitect runner worker code, and also make it so that we can send a bundle wi
 also publish it normally
 
 TODO init nonce 
+TODO update nonce for dead workers
+
+  // TODO info of {}
+  // TODO obvious reverts, but where? check demo-research.ts  
+    // liquidate seize too much in reverrt message 
+  // TODO: add users to this list, delete them fom the db, and never fetch them again

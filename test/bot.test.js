@@ -251,7 +251,8 @@ describe("Infra", function() {
 
 describe.only("Integrations", function() {
   // NOTE set DB and fork num appropriately
-  // TODO auto set fork num
+  // TODO auto set fork num (set provider)
+  // TODO allow fetching just one user at one blocknumber
   test.only(`math error in finder exchange rates section`, async function() {
     const finder = new FindShortfallPositions(
       sickCompoundAccounts.filter(acc =>
