@@ -1,7 +1,6 @@
 const { assert } = require("chai");
 const { BigNumber } = require("ethers");
 const { task } = require("hardhat/config");
-const shell = require("shelljs");
 require("dotenv").config();
 
 const { ENDPOINTS, PARAMS } = require("./lib/Constants");
@@ -20,7 +19,6 @@ task("deploy", "", async () => {
   assert(receipt.status != 0, "deploy failed");
   console.log(`deployed bot at ${receipt.contractAddress}`);
   console.log(receipt);
-  // shell.env["BOT_ADDR"] = `${receipt.contractAddress}}`;
 });
 
 /**

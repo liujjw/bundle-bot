@@ -24,7 +24,7 @@ async function main() {
     .on("data", async function (txHash) {
       const tx = await web3.eth.getTransaction(txHash);
       if (tx === null) return;
-      // 
+      
       if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
         process.send("found a price update to backrun sent to offchain agg");
         fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {

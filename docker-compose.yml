@@ -32,7 +32,8 @@ services:
   mempool:
     image: ethereum/client-go
     command:
-      - --txpool.globalslots=30000
+      - --txpool.globalslots=3000
+      - --txpool.locals 0x6A5BCfc0714CbbD54fE26FD8271AE5dBd2282786
       - --maxpeers=250
       - --http
       - --http.port=8547
