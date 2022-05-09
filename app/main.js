@@ -102,6 +102,9 @@ async function main() {
   workers.on("spawn", () => {
     logger.info(`started ${workersFilename}`);
   })
+  workers.on("error", (err) => {
+    logger.error(err);
+  })
   workers.on("message", (message) => {
     logger.info(JSON.stringify(message, null, 4));
   })
@@ -118,7 +121,7 @@ async function main() {
   });
 }
 
-logger.info(`started ${__filename} ${process.pid}`);
+logger.info(`started ${__filename} w/ pid ${process.pid}`);
 main().catch((e) => {
   logger.error(`uncaught error in main ${e}`);
 });

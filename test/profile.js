@@ -23,6 +23,7 @@ async function main() {
   const db = {
     host: ENDPOINTS.REDIS_HOST,
     port: ENDPOINTS.REDIS_PORT,
+    database: 14
   };
   const store = new AccountsDbClient(db);
   await store.init();

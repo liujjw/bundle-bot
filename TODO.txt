@@ -3,3 +3,5 @@ rust/go tiny binaries to deploy onto aws
 
 rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
 also publish it normally
+
+TODO init nonce 
