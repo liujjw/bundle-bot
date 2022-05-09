@@ -1,7 +1,7 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require("../lib/AccountsDbClient");
 const AuctionBidPricer = require("../lib/AuctionBidPricer");
-const { ENDPOINTS, FORK_2, FORK_5, TEST_PARAMS } = require("./TestConstants");
+const { ENDPOINTS, FORK_2, FORK_5, TEST_PARAMS, FORK, MATH_ERROR_FORK } = require("./TestConstants");
 const { ABIS, PARAMS, ADDRS } = require("../lib/Constants");
 const { sleep } = require("../lib/Utils");
 const Utils = require("../lib/Utils");
@@ -41,7 +41,7 @@ beforeAll(async () => {
   }
 
   hardhatNode = shell.exec(
-    `FORK_BLOCKNUMBER=${FORK_2.blockNumPrev} npx -c 'hardhat node'`,
+    `FORK_BLOCKNUMBER=${FORK.blockNum} npx -c 'hardhat node'`,
     { async: true, silent: true },
     (code, stdout, stderr) => {
       if (code !== 0) {
@@ -71,7 +71,8 @@ beforeAll(async () => {
   store = new AccountsDbClient(db, provider);
   await store.init();
   if (process.env.DB_READY === "false") {
-    await store.setCompoundAccounts(FORK_2.blockNumPrev);
+    console.log("please wait a while for DB to init");
+    await store.setCompoundAccounts(FORK.blockNum);
     await store.setCompoundParams();
     console.log("db has been set");
   }
@@ -110,7 +111,7 @@ afterAll(() => {
   hardhatNode.kill("SIGKILL");
 });
 
-describe.only("Contract", function () {
+describe("Contract", function () {
   test('backrun transmit post price for liq #2', async function() {
       await hre.network.provider.request({
         method: "hardhat_impersonateAccount",
@@ -151,7 +152,7 @@ describe.only("Contract", function () {
       expect(receipt.status).toBe(1);
   });
 
-  test.only(`validate liq #2 liquidateBorrow`, async function() {
+  test(`validate liq #2 liquidateBorrow`, async function() {
     const tx = await cUSDC.populateTransaction.liquidateBorrow(
       FORK_2.arb.borrower, 
       FORK_2.arb.repayAmount, 
@@ -248,7 +249,22 @@ describe("Infra", function() {
   });
 });
 
-describe("Integrations", function() {
+describe.only("Integrations", function() {
+  // NOTE set DB and fork num appropriately
+  // TODO auto set fork num
+  test.only(`math error in finder exchange rates section`, async function() {
+    const finder = new FindShortfallPositions(
+      sickCompoundAccounts.filter(acc =>
+        acc.id === MATH_ERROR_FORK.user),
+      compoundParams,
+      BigNumber.from(TEST_PARAMS.STANDARD_BASEFEE),
+      provider
+    );
+
+    // remember to add a breakpoint
+    await finder.getLiquidationTxsInfo();
+  });
+
   test(`(1) finds compound arbs given a low gas price (no backruns) at any 
   blockheight (2) liquidates a majority of arbs (3) eth balance of sender grows`, 
   async function () {
@@ -256,11 +272,10 @@ describe("Integrations", function() {
       TEST_PARAMS.DEFAULT_SENDER_ADDRESS
     );
     // 3 gewi
-    const lowTestingGasPrice = BigNumber.from("3000000000");
     const finder = new FindShortfallPositions(
       sickCompoundAccounts,
       compoundParams,
-      lowTestingGasPrice,
+      BigNumber.from(TEST_PARAMS.LOW_BASEFEE),
       provider
     );
     finder.on("error", err => {

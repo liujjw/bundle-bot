@@ -3,6 +3,15 @@ const { BigNumber } = require("ethers");
 // Mostly borrowed USDC/DAI to go long ETH/WBTC collateral. 
 // Some collateral USDC to borrowed DAI. 
 
+exports.FORK = {
+  blockNum: 14053711 - 15
+}
+
+exports.MATH_ERROR_FORK = {
+  user: "0x59df18148171fe8fc7ad263dc4eba9e25e03522e",
+  blockNum: 14743676,
+}
+
 exports.FORK_2 = {
   blockNumPrev: 14053711 - 15,
   baseFee: "132628475535",
@@ -344,15 +353,6 @@ exports.FORKS = {
   SET_COLLATERAL_FACTOR: new Error("have not found a param update sample tx"),
 };
 
-exports.getBlockNumberOnDate = async function (date) {
-  const EthDater = require("ethereum-block-by-date");
-  const ethers = require("ethers");
-  const provider = new ethers.providers.CloudflareProvider();
-
-  const dater = new EthDater(provider);
-  return await dater.getDate(date);
-};
-
 exports.ENDPOINTS = {
   REDIS_HOST: "localhost",
   REDIS_PORT: 6379,
@@ -372,5 +372,9 @@ exports.TEST_PARAMS = {
   TEST_RUNNER_FLAG: "test_runner",
   DB_NUMBER_DATA: 0,
   DB_NUMBER_JOBS: 1,
-  DB_NUMBER_MISC: 5
+  DB_NUMBER_MISC: 5,
+
+  STANDARD_BASEFEE: "30100000000",
+  LOW_BASEFEE: "3100000000",
+  HIGH_BASEFEE: "300100000000",
 };

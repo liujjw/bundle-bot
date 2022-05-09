@@ -4,7 +4,7 @@ const { task } = require("hardhat/config");
 require("dotenv").config();
 
 const { ENDPOINTS, PARAMS } = require("./lib/Constants");
-const TestConstants = require("./test/TestConstants");
+const { FORK_2, TEST_PARAMS } = require("./test/TestConstants");
 
 require("@openzeppelin/hardhat-upgrades");
 require("@nomiclabs/hardhat-waffle");
@@ -14,8 +14,8 @@ task("deploy", "", async () => {
   const factory = await ethers.getContractFactory("CompoundV5");
   const bot = await factory.deploy({
     gasLimit: BigNumber.from(PARAMS.DEPLOY_GAS_LIMIT),
-    maxFeePerGas: BigNumber.from('24100000000'),
-    maxPriorityFeePerGas: BigNumber.from("2100000000"),
+    maxFeePerGas: BigNumber.from(TEST_PARAMS.HIGH_BASEFEE),
+    maxPriorityFeePerGas: BigNumber.from("1"),
   });
   const receipt = await bot.deployTransaction.wait();
   assert(receipt.status != 0, "deploy failed");
@@ -67,7 +67,7 @@ module.exports = {
     hardhat: {
       forking: {
         blockNumber: Number.parseInt(
-          process.env.FORK_BLOCKNUMBER ?? TestConstants.FORK_2.blockNumPrev + 10
+          process.env.FORK_BLOCKNUMBER ?? FORK_2.blockNumPrev + 10
         ),
         url: ENDPOINTS.ALCHEMY,
         enabled: true,
