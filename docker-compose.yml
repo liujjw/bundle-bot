@@ -46,7 +46,9 @@ services:
       - "30303:30303"
     # docker run --name eth_node -d -p 8547:8547 -v /d/ethereum:/root \
     # ethereum/client-go --http --http.port 8547 \
-    #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 30000
+    #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 3000
 
-    # added some peers from all over the world, may or may not help latency
+    # added some peers from all over the world, although bootnodes
+    # have pretty good coverage already
     # check admin.peers() to admin.addPeer() nodes from ethernode
+    # enodes: 
