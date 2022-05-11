@@ -38,6 +38,7 @@ async function main() {
   const provider = new ethers.providers.JsonRpcProvider(
     process.env.PROVIDER_ENDPOINT
   );
+
   const db = {
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,

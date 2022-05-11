@@ -1,9 +1,7 @@
-price update tx hash: 0x78718e83f3d0d70d4ccdade609f3fe93f6635a8ff2918191632173f855ba95ba
-rust/go tiny binaries to deploy onto aws
-
 rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
 also publish it normally
 
+TODO set nonce programmatically 
 TODO init nonce 
 TODO update nonce for dead workers
 
@@ -11,3 +9,14 @@ TODO update nonce for dead workers
   // TODO obvious reverts, but where? check demo-research.ts  
     // liquidate seize too much in reverrt message 
   // TODO: add users to this list, delete them fom the db, and never fetch them again
+
+key is compromised, its saved in the .env in the git commit history
+and also on my computer 
+DO NOT MAKE REPO PUBLIC or share computer files
+
+switch from alchemy to geth node 
+
+Compound -> AAve -> multichain (buy ssds, minimize resource usage, vpc)
+
+2. make some vms as my fallback using blocknative by modiyfing the runner
+3. start docker and bot daemon automatically on startup or disable automatic updates

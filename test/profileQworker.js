@@ -37,7 +37,7 @@ taskQ.process(async function (job, done) {
     lowTestingGasPrice,
     provider
   );
-  finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
+  finder.minProfit = PARAMS.MIN_LIQ_PROFIT_LESS_MEV;
   //
   const scale = 1e8;
   const newPrice = BigNumber.from(2000 * scale);

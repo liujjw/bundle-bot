@@ -40,7 +40,7 @@ async function main() {
     lowTestingGasPrice,
     provider
   );
-  finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
+  finder.minProfit = PARAMS.MIN_LIQ_PROFIT_LESS_MEV;
   console.log(new Date());
   const arr = await finder.getLiquidationTxsInfo();
   console.log(new Date());

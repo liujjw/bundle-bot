@@ -113,6 +113,7 @@ afterAll(() => {
 
 describe("Contract", function () {
   test('backrun transmit post price for liq #2', async function() {
+      // tx hash: 0x78718e83f3d0d70d4ccdade609f3fe93f6635a8ff2918191632173f855ba95ba
       await hre.network.provider.request({
         method: "hardhat_impersonateAccount",
         params: ["0x7BFb89db2d7217c57C3Ad3d4B55826eFD17dC2e9"],
@@ -138,6 +139,8 @@ describe("Contract", function () {
 
   test(`validate liq #2 by sending acutal liquidators tx`, async function() {
       // other searcher
+      // txhash: 0x0073462f84bb56250aa41ae910240f4a2cce727b29faa2723848c9a721f408b3
+      // try replaying on tenderly
       await hre.network.provider.request({
         method: "hardhat_impersonateAccount",
         params: ["0xf8ddfa616f4575049a7dd8f4b5f3b335dc789157"],
@@ -196,7 +199,7 @@ describe("Infra", function() {
       lowTestingGasPrice,
       provider
     );
-    finder.minProfit = PARAMS.MIN_LIQ_PROFIT;
+    finder.minProfit = PARAMS.MIN_LIQ_PROFIT_LESS_MEV;
 
     const arr = await finder.getLiquidationTxsInfo();
     const arb = arr.find(
@@ -304,7 +307,7 @@ describe.only("Integrations", function() {
           elem.borrower,
           elem.maxSeizeTokens,
           mevInfo.weiTip,
-          mevInfo.weiTip.add(PARAMS.MIN_LIQ_PROFIT_IN_ETH)
+          mevInfo.weiTip.add(PARAMS.MIN_LIQ_PROFIT_LESS_MEV_IN_ETH)
         );
 
         const response = await lendingPool.flashLoan(
