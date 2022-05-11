@@ -26,7 +26,6 @@ async function main() {
       if (tx === null) return;
       
       if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
-        process.send("found a price update to backrun sent to offchain agg");
         fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -35,7 +34,6 @@ async function main() {
           process.send(e);
         });
       } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
-        process.send("found a param update to backrun sent to comptroller");
         fetch(`${process.env.RUNNER_ENDPOINT}/paramUpdate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
