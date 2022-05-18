@@ -1,10 +1,19 @@
 const { ADDRS, ABIS } = require("../lib/Constants");
-const { BigNumber, ethers } = require("ethers");
+const ethers = require("ethers");
 
-const provider = new ethers.getDefaultProvider();
-const signerWithProvider = new ethers.Wallet(process.env.MMM_PK, provider);
+const provider = new ethers.getDefaultProvider("http://localhost:8545");
+const signer = provider.getSigner();
 const lendingPool = new ethers.Contract(
   ADDRS.AAVE_V2_LENDING_POOL,
   ABIS.AAVE_V2_LENDING_POOL,
-  provider
+  signer
 );
+
+// eslint-disable-next-line require-jsdoc
+async function main() {
+  await lendingPool.flashLoan(
+
+  );
+}
+
+main.then();

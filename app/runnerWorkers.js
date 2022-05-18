@@ -30,7 +30,7 @@ if (cluster.isMaster) {
 } else {
   taskQueue.process(async function (job, jobDone) {
     if (await this.getActiveCount() === 0) {
-      const signer = new ethers.Wallet(process.env.MM0A_PK, 
+      const signer = new ethers.Wallet(process.env.MMM_PK, 
         new ethers.providers.JsonRpcProvider(process.env.PROVIDER_ENDPOINT));
       const nonce = (await signer.getTransactionCount()) + 1;
       const store = new AccountsDbClient({

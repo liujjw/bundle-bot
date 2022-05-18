@@ -56,7 +56,7 @@ module.exports = {
     },
     main_alchemy: {
       url: ENDPOINTS.ALCHEMY,
-      accounts: [process.env.MM0A_PK],
+      accounts: [process.env.MMM_PK],
     },
     main_infura: {
       url: ENDPOINTS.INFURA,

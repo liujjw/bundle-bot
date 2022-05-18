@@ -7,8 +7,8 @@ require("dotenv").config({ path: __dirname + "/../.env" });
 
 const provider =
   new ethers.providers.JsonRpcProvider(ENDPOINTS.ALCHEMY);
-const signerWithProvider = new ethers.Wallet(process.env.MM0A_PK, provider);
-const flashbotsAuthSigner = new ethers.Wallet(process.env.MM0A2_PK);
+const signerWithProvider = new ethers.Wallet(process.env.MMM_PK, provider);
+const flashbotsAuthSigner = new ethers.Wallet(process.env.MMM_PK);
 
 /**
  * 

@@ -26,3 +26,6 @@ timestamps seem to be too close: the miner starts mining just a second after i r
 so theres no time for the liq to get computed and included in the same block 
 thus i allow the arb to get included in the next block sans the backrun txs
 TODO still begs the question of how i can see the backrun longer before the miner starts mining
+
+
+Aave, Optimism, Polygon, BSC, AVAX, Solana, Cardano, new generalized arbs
