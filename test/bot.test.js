@@ -184,7 +184,7 @@ describe("Contract", function () {
   });
 });
 
-describe("Infra", function() {
+describe.only("Infra", function() {
   test(`finds a known liquidation (#2) at 
   ${FORK_2.blockNumPrev} by borrower ${FORK_2.borrower}`, async function () {
     const predicate = (val) =>
@@ -211,11 +211,15 @@ describe("Infra", function() {
     // console.log(arb);
   });
 
-  test(`fetches the current most recent data about compound accounts and 
-  params with the store`, async function () {
+  test(`fetches the current compound accounts and
+    params with the store at the test blocknum`, async function () {
     console.log(`sick accounts n=${sickCompoundAccounts.length}: \n`, 
       sickCompoundAccounts);
     console.log("params: \n", compoundParams);
+  });
+
+  test.only(`fetches aave params at test blocknum`, async function() {
+    await store.setAaveParams();
   });
 
   test("mempool listener works", async function () {
@@ -252,11 +256,11 @@ describe("Infra", function() {
   });
 });
 
-describe.only("Integrations", function() {
+describe("Integrations", function() {
   // NOTE set DB and fork num appropriately
   // TODO auto set fork num (set provider)
   // TODO allow fetching just one user at one blocknumber
-  test.only(`math error in finder exchange rates section`, async function() {
+  test(`math error in finder exchange rates section`, async function() {
     const finder = new FindShortfallPositions(
       sickCompoundAccounts.filter(acc =>
         acc.id === MATH_ERROR_FORK.user),

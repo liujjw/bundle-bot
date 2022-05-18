@@ -28,4 +28,7 @@ thus i allow the arb to get included in the next block sans the backrun txs
 TODO still begs the question of how i can see the backrun longer before the miner starts mining
 
 
+TODO once an arb is submitted add it to a hot list so we dont process it again and change the db 
+update schedule to be much higher
+
 Aave, Optimism, Polygon, BSC, AVAX, Solana, Cardano, new generalized arbs
