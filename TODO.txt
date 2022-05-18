@@ -31,4 +31,8 @@ TODO still begs the question of how i can see the backrun longer before the mine
 TODO once an arb is submitted add it to a hot list so we dont process it again and change the db 
 update schedule to be much higher
 
+centralized staking steth
+
+list of known and acceoted loadTokenPrices
+
 Aave, Optimism, Polygon, BSC, AVAX, Solana, Cardano, new generalized arbs
