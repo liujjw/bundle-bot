@@ -219,7 +219,8 @@ describe.only("Infra", function() {
   });
 
   test.only(`fetches aave params at test blocknum`, async function() {
-    await store.setAaveParams();
+    // await store.setAaveParams();
+    await store.setAaveAccounts();
   });
 
   test("mempool listener works", async function () {

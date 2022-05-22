@@ -1,38 +1,22 @@
-rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
+TODO Aave, L2s, Optimism, Polygon, BSC, AVAX, Solana, new generalized arbs
+TODO blocknative and vm infra, but need to switch to go first lol or rust , switch up
+TODO temporarily use macbook with caffeinate with ngraok and blocknative
+// TODO a subscription to graphql 
+
+TODO rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
 also publish it normally
-
-TODO set nonce programmatically 
-TODO init nonce 
 TODO update nonce for dead workers
-
-  // TODO info of {}
-  // TODO obvious reverts, but where? check demo-research.ts  
-    // liquidate seize too much in reverrt message 
-  // TODO: add users to this list, delete them fom the db, and never fetch them again
-
-key is compromised, its saved in the .env in the git commit history
-and also on my computer 
-DO NOT MAKE REPO PUBLIC or share computer files
+// TODO info of {}, require a logging library, redo errors
+// TODO obvious reverts, but where? check demo-research.ts  
+// liquidate seize too much in reverrt message 
+// TODO: add users to this list, delete them fom the db, and never fetch them again, hot list
 
 switch from alchemy to geth node 
-
-Compound -> AAve -> multichain (buy ssds, minimize resource usage, vpc)
-
-2. make some vms as my fallback using blocknative by modiyfing the runner
-3. start docker and bot daemon automatically on startup or disable automatic updates
-
 
 timestamps seem to be too close: the miner starts mining just a second after i receive the tx,
 so theres no time for the liq to get computed and included in the same block 
 thus i allow the arb to get included in the next block sans the backrun txs
 TODO still begs the question of how i can see the backrun longer before the miner starts mining
 
+TODO list of known and accepted loadTokenPrices
 
-TODO once an arb is submitted add it to a hot list so we dont process it again and change the db 
-update schedule to be much higher
-
-centralized staking steth
-
-list of known and acceoted loadTokenPrices
-
-Aave, Optimism, Polygon, BSC, AVAX, Solana, Cardano, new generalized arbs
