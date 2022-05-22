@@ -7,4 +7,5 @@ cache
 .env
 out
 generated
-nrgok
+ngrok
+ngrok*
