@@ -53,3 +53,8 @@ services:
     # have pretty good coverage already
     # check admin.peers() to admin.addPeer() nodes from ethernode
     # enodes: 
+  # ngrok:
+  # unzip the tar: tar zxvf
+  # connect acct: ngrok config add-authtoken 1qkz9zEEaGNX3aqiCmRdwLBiyyC_3YTgnAfswd9SukHYDgQjs
+  # start tunnel forward: ngrok http 80
+  # add webhook on blocknative

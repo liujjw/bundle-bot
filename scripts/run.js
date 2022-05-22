@@ -9,7 +9,7 @@ shell.exec(
   RUNNER_ENDPOINT=http://localhost:8082 \
   RUNNER_PORT=8082 \
   BULL_BOARD_PORT=8083\
-  NODE_ENV=production \
+  NODE_ENV=production\
   IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc \
   WS_PROVIDER_ENDPOINT=ws://localhost:8546 \
   DB_NUMBER_FOR_JOBS=15 \
