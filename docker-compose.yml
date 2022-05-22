@@ -54,7 +54,8 @@ services:
     # check admin.peers() to admin.addPeer() nodes from ethernode
     # enodes: 
   # ngrok:
-  # unzip the tar: tar zxvf
+  # download ngrok bin
+  # unzip the tar: tar zxvf or unzip on mac
   # connect acct: ngrok config add-authtoken 1qkz9zEEaGNX3aqiCmRdwLBiyyC_3YTgnAfswd9SukHYDgQjs
   # start tunnel forward: ngrok http 80
   # add webhook on blocknative
