@@ -5,7 +5,6 @@ const { ADDRS, PARAMS } = require("../lib/Constants");
 const schedule = require("node-schedule");
 const bodyParser = require("body-parser");
 const express = require("express");
-
 // TODO stalk base fee/price drops so that previously unprofitable
 // positions now are profitable
 
@@ -13,7 +12,7 @@ const express = require("express");
  * @notice DO NOT AWAIT FETCH
  * @param {*} tx 
  */
-function send(tx) {
+function send(tx) {  
   if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
     fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
       method: "POST",
@@ -34,9 +33,13 @@ function send(tx) {
 }
 
 /**
- * 
+ * Reverse proxy to Runner for ngrok forwarding.
  */
 function server() {
+  // TODO use blocknative as a fallback provider
+  // 1) install ngrok node wrapper, start ngrok, take note of forwarding address
+  // 2) use forwarding address as blocknative webhook address
+  // 3) add code to use as fallback when local node subscribe fails
   const app = express();
   app.use(bodyParser.json());
   app.post("/", async (req, res) => {
@@ -46,7 +49,9 @@ function server() {
     }
     res.send("ok");
   });
-  app.listen(Number.parseInt(process.env.BLOCKNATIVE_RP_PORT), () => {});
+  app.listen(Number.parseInt(process.env.BLOCKNATIVE_RP_PORT), () => {
+    console.log("blocknative listening on", process.env.BLOCKNATIVE_RP_PORT);
+  });
 }
 
 /**
@@ -60,7 +65,7 @@ async function subscribe() {
   web3.eth
     .subscribe("pendingTransactions", (error, result) => {
       if (error) {
-        throw new Error("could not subscribe to tx pool");
+        console.error(new Error("could not subscribe to tx pool"));
       }
     })
     .on("data", async function (txHash) {
@@ -92,4 +97,3 @@ async function check() {
 
 check().then();
 subscribe().then().catch(err => process.send(err));
-server();

@@ -17,4 +17,5 @@ shell.exec(
   NUM_WORKERS=5 \
   DB_READY=true \
   BOT_ADDR=0xEF43AE625f4e375C5035259f41136665fba97F38\
+  BLOCKNATIVE_RP_PORT=80\
   node app/main.js`);
