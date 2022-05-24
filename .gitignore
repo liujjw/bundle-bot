@@ -9,3 +9,6 @@ out
 generated
 ngrok
 ngrok*
+.terraform
+terraform.*
+*.pem
