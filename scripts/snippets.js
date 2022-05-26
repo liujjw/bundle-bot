@@ -1,3 +1,21 @@
+// (process.env.NODE_ENV !== "production") ? 
+//         await FlashbotsBundleProvider.create(
+//             this.signerWithProvider.provider,
+//             this.flashbotsAuthSigner,
+//             "https://relay-goerli.flashbots.net/",
+//             "goerli"
+//           )
+//         : 
+
+
+
+        
+//     process.env.NODE_ENV !== "production"
+//     ? new ethers.providers.JsonRpcProvider(ENDPOINTS.GOERLI)
+//     : 
+
+
+
 // const AccountsDbClient = require("../lib/AccountsDbClient");
 // const { AbiCoder } = require("@ethersproject/abi");
 // const { ethers } = require("ethers");

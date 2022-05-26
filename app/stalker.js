@@ -5,8 +5,7 @@ const { ADDRS, PARAMS } = require("../lib/Constants");
 const schedule = require("node-schedule");
 const bodyParser = require("body-parser");
 const express = require("express");
-const seenHashes = [];
-const firstSeen = new Map();
+let seenHashes = [];
 // TODO stalk base fee/price drops so that previously unprofitable
 // positions now are profitable
 
@@ -16,15 +15,14 @@ const firstSeen = new Map();
  * @param {*} from
  */
 function send(tx, from) {  
-  if (seenHashes.includes(tx.hash)) return;
-  seenHashes.push(tx.hash);
-  firstSeen.set(tx.hash, from);
-  if (seenHashes.length > 100) {
-    console.log(firstSeen);
+  if (seenHashes.length > 50) {
     seenHashes = [];
   }
 
   if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
+    if (seenHashes.includes(tx.hash)) return;
+    seenHashes.push(tx.hash);
+
     fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,6 +31,9 @@ function send(tx, from) {
       process.send(e);
     });
   } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
+    if (seenHashes.includes(tx.hash)) return;
+    seenHashes.push(tx.hash);
+
     fetch(`${process.env.RUNNER_ENDPOINT}/paramUpdate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -104,17 +105,19 @@ async function check() {
   });
 }
 
-check().then();
+check().then().catch(err => console.error(err));
 
 const web3IPC = new Web3(
   new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
 );
-subscribe(web3IPC, "ipc").then().catch(err => process.send(err));
+subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
 
 const web3Chainstack = new Web3(
   new Web3.providers.WebsocketProvider(
     "wss://ws-nd-032-574-945.p2pify.com/704be0327c206b1ccab62eb791083a0a"
   )
 );
-subscribe(web3Chainstack, "chainstack").then().catch(err => process.send(err));
+subscribe(web3Chainstack, "chainstack").then().catch(err => {
+  console.error(err);
+});
 

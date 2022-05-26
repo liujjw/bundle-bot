@@ -17,12 +17,13 @@ async function main() {
 
   const db = {
     host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
+    port: Number.parseInt(process.env.REDIS_PORT),
     database: process.env.DB_NUMBER_FOR_DATA
   };
   const store = new AccountsDbClient(db, provider);
   await store.init();
-
+  await store.setNonce(0);
+  
   const paramJob = schedule.scheduleJob(PARAMS.DB_UPDATE_PARAMS_SCHEDULE, 
     async function() {
       try {

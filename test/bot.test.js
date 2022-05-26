@@ -1,7 +1,7 @@
 const FindShortfallPositions = require("../lib/FindShortfallPositions");
 const AccountsDbClient = require("../lib/AccountsDbClient");
 const AuctionBidPricer = require("../lib/AuctionBidPricer");
-const { ENDPOINTS, FORK_2, FORK_5, TEST_PARAMS, FORK, MATH_ERROR_FORK } = require("./TestConstants");
+const { ENDPOINTS, FORK_2, FORKS, TEST_PARAMS, FORK, MATH_ERROR_FORK } = require("./TestConstants");
 const { ABIS, PARAMS, ADDRS } = require("../lib/Constants");
 const { sleep } = require("../lib/Utils");
 const Utils = require("../lib/Utils");
@@ -13,6 +13,7 @@ const hre = require("hardhat");
 const fetch = require("node-fetch");
 
 const Runner = require("../lib/Runner");
+const RunnerWorker = require("../lib/RunnerWorker");
 
 require("dotenv").config({ path: __dirname + "/../.env" });
 jest.setTimeout(300 * 1000);
@@ -185,6 +186,33 @@ describe("Contract", function () {
 });
 
 describe.only("Infra", function() {
+  /**
+   * @notice attach to running worker and use breakpoints 
+   */
+  test.only(`processing and bundle submission in RunnerWorker`, async function() {
+    shell.env["RUNNER_ENDPOINT"] = ENDPOINTS.RUNNER_ENDPOINT;
+    shell.env["RUNNER_PORT"] = ENDPOINTS.RUNNER_PORT;
+    shell.env["BOT_ADDR"] = ENDPOINTS.DEFAULT_BOT_ADDRESS;
+    shell.env["PROVIDER_ENDPOINT"] = ENDPOINTS.RPC_PROVIDER;
+    shell.env["MMM_PK"] = TEST_PARAMS.DEFAULT_SENDER_PK;
+    shell.env["NODE_ENV"] = TEST_PARAMS.TEST_RUNNER_FLAG;
+    shell.env["REDIS_HOST"] = ENDPOINTS.REDIS_HOST;
+    shell.env["REDIS_PORT"] = ENDPOINTS.REDIS_PORT;
+    shell.env["DB_NUMBER_FOR_DATA"] = TEST_PARAMS.DB_NUMBER_DATA;
+    await store.setNonce(0);
+
+    const runnerWorker = new RunnerWorker();
+    await runnerWorker.process({
+      chunkIndex: 0,
+      splitFactor: 5,
+      newParamType: "price",
+      newParamValue: {
+        value: BigNumber.from("1500").toString(), 
+        ticker: "ETH",
+      }
+    });
+  });
+
   test(`finds a known liquidation (#2) at 
   ${FORK_2.blockNumPrev} by borrower ${FORK_2.borrower}`, async function () {
     const predicate = (val) =>
@@ -218,7 +246,7 @@ describe.only("Infra", function() {
     console.log("params: \n", compoundParams);
   });
 
-  test.only(`fetches aave params at test blocknum`, async function() {
+  test(`fetches aave params at test blocknum`, async function() {
     // await store.setAaveParams();
     await store.setAaveAccounts();
   });
@@ -228,10 +256,10 @@ describe.only("Infra", function() {
     // assert standard json tx object format
   });
 
-  // need to test server and workers together bc workers assume the servers
-  // env vars
-  test(`arb processor (runner server) processes arb oppurtunities and 
-  bundle gets into mev mempool`, async function () {
+  /**
+   * @notice test the rest endpoints with ngrok and postman and debug breakpoints 
+   * */ 
+  test(`runner endpoint rest api`, async function () {
     shell.env["RUNNER_ENDPOINT"] = ENDPOINTS.RUNNER_ENDPOINT;
     shell.env["RUNNER_PORT"] = ENDPOINTS.RUNNER_PORT;
     shell.env["BOT_ADDR"] = ENDPOINTS.DEFAULT_BOT_ADDRESS;
@@ -239,21 +267,14 @@ describe.only("Infra", function() {
     shell.env["NODE_ENV"] = TEST_PARAMS.TEST_RUNNER_FLAG;
     shell.env["REDIS_HOST"] = ENDPOINTS.REDIS_HOST;
     shell.env["REDIS_PORT"] = ENDPOINTS.REDIS_PORT;
-    new Runner();
-    fetch(`${ENDPOINTS.RUNNER_ENDPOINT}/priceUpdate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(FORK_5.ETH_OFFCHAIN_AGG_TRANSMIT_CALL),
-    });
-    // have not found sample tx yet/does not happen often enough anyway
-    // fetch(`${ENDPOINTS.RUNNER_ENDPOINT}/paramUpdate`, {
-    //     method: "POST",
-    //     headers : { "Content-Type": "application/json" },
-    //     body: JSON.stringify(FORK_5.SET_COLLATERAL_FACTOR)
-    // })
+    shell.env["DB_NUMBER_FOR_DATA"] = TEST_PARAMS.DB_NUMBER_DATA;
+    shell.env["NUM_WORKERS"] = TEST_PARAMS.NUM_WORKERS;
 
-    // sleep test so server can catch up
-    await sleep(10000);
+    new Runner();
+    // things to test:
+    // FORKS.ETH_OFFCHAIN_AGG_TRANSMIT_CALL
+    // FORKS.SET_COLLATERAL_FACTOR
+    // server and worker env vars are kept
   });
 });
 
@@ -293,7 +314,7 @@ describe("Integrations", function() {
     const scale = 1e8;
     const newPrice = BigNumber.from(2000 * scale);
     finder.setParam("price", { ticker: "ETH", value: newPrice });
-    bidPricer.ethPrice = 2000;
+    bidPricer.ethPrice = 1500;
     finder.minProfit = 200;
     const arr = await finder.getLiquidationTxsInfo();
     let countSuccesses = 0;

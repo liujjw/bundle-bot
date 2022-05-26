@@ -1,55 +1,59 @@
-version: "3"
+version: "3.9"
 
 services:
   bot:
     image: liujjw/bot:0.1
     environment:
-      - REDIS_ENDPOINT=redis://redis:6379/
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - PROVIDER_ENDPOINT=mempool://mempool:8547/
-      - RUNNER_ENDPOINT=http://localhost:8081
-      - RUNNER_PORT=8081
-      - BULL_BOARD_PORT=8080
-      - NODE_ENV=staging
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6380
+      - PROVIDER_ENDPOINT=https://eth-mainnet.alchemyapi.io/v2/o8njW3moZs0bcAMMpyuPNrlHG4DbGysF
+      - RUNNER_ENDPOINT=http://localhost:8080
+      - RUNNER_PORT=8080
+      - BULL_BOARD_PORT=8081
+      - NODE_ENV=production
       - IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc
-      - WS_PROVIDER_ENDPOINT=ws://localhost:8546
       - DB_NUMBER_FOR_JOBS=15
       - DB_NUMBER_FOR_DATA=14
       - NUM_WORKERS=5
       - DB_READY=false
       - BOT_ADDR=0xEF43AE625f4e375C5035259f41136665fba97F38
     depends_on:
-      - redis
-      - mempool
-  redis:
+      - myredis
+      # - mempool
+  myredis:
     image: redis:latest
+    command: --port 6380    
     ports:
-      - "6379:6379"
+      - "6380:6380"
     volumes:
       - /d/redis_live:/data
-    # docker-compose exec redis redis-cli monitor for logs
     # docker run -it --network some-network --rm redis redis-cli -h some-redis
     # docker run -v /myredis/conf:/usr/local/etc/redis --name myredis redis redis-server /usr/local/etc/redis/redis.conf
-  mempool:
-    image: ethereum/client-go
-    command:
-      - --txpool.globalslots=3000
-      - --txpool.locals 0x6A5BCfc0714CbbD54fE26FD8271AE5dBd2282786
-      - --maxpeers=250
-      - --http
-      - --http.port=8547
-      - --http.api="eth,txpool,net,web3"
-    volumes:
-      - /d/ethereum:/root
-    ports:
-      - "8547:8547"
-      - "30303:30303"
-    # docker run --name eth_node -d -p 8547:8547 -v /d/ethereum:/root \
-    # ethereum/client-go --http --http.port 8547 \
-    #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 3000
 
-    # added some peers from all over the world, although bootnodes
-    # have pretty good coverage already
-    # check admin.peers() to admin.addPeer() nodes from ethernode
-    # enodes: 
+  # mempool:
+  #   image: ethereum/client-go
+  #   command:
+  #     - --txpool.globalslots=3000
+  #     - --txpool.locals 0x6A5BCfc0714CbbD54fE26FD8271AE5dBd2282786
+  #     - --maxpeers=250
+  #     - --http
+  #     - --http.port=8547
+  #     - --http.api="eth,txpool,net,web3"
+  #   volumes:
+  #     - /d/ethereum:/root
+  #   ports:
+  #     - "8547:8547"
+  #     - "30303:30303"
+  # docker run --name eth_node -d -p 8547:8547 -v /d/ethereum:/root \
+  # ethereum/client-go --http --http.port 8547 \
+  #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 3000
+
+  # added some peers from all over the world, although bootnodes
+  # have pretty good coverage already
+  # check admin.peers() to admin.addPeer() nodes from ethernode
+  # enodes: 
+  
+  # ngrok install: wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+  # untar: tar -xzvf
+  # ./ngrok config add-authtoken 1qkz9zEEaGNX3aqiCmRdwLBiyyC_3YTgnAfswd9SukHYDgQjs
+  # ./ngrok http 80
