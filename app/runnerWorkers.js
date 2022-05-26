@@ -1,6 +1,8 @@
 const Queue = require('bull');
 const cluster = require('cluster');
 const RunnerWorker = require("../lib/RunnerWorker");
+const logger = require("../lib/Logger");
+
 const ethers = require("ethers");
 const AccountsDbClient = require("../lib/AccountsDbClient");
 
@@ -24,19 +26,19 @@ if (cluster.isMaster) {
     throw err;
   })
   cluster.on("message", message => {
-    process.send(message);
+    logger.info(message);
   })
   cluster.on('exit', function (worker, code, signal) {
-    process.send('worker ' + worker.process.pid + ' died');
+    logger.error('worker ' + worker.process.pid + ' died');
   });
 } else {
   taskQueue.process(async function (job, jobDone) {
     const runnerWorker = new RunnerWorker();
     runnerWorker.on("error", err => {
-      process.send(err);
+      logger.error(err);
     })
     runnerWorker.on("info", message => {
-      process.send(message);
+      logger.info(message);
     });
     await runnerWorker.process(job.data);
     jobDone();

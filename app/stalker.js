@@ -5,7 +5,8 @@ const { ADDRS, PARAMS } = require("../lib/Constants");
 const schedule = require("node-schedule");
 const bodyParser = require("body-parser");
 const express = require("express");
-let seenHashes = [];
+const logger = require("../lib/Logger");
+// let seenHashes = [];
 // TODO stalk base fee/price drops so that previously unprofitable
 // positions now are profitable
 
@@ -15,31 +16,30 @@ let seenHashes = [];
  * @param {*} from
  */
 function send(tx, from) {  
-  if (seenHashes.length > 15) {
-    seenHashes = [];
-  }
-
+  // if (seenHashes.length > 15) {
+  //   seenHashes = [];
+  // }
   if (Object.values(ADDRS.OFFCHAIN_AGG).includes(tx.to)) {
-    if (seenHashes.includes(tx.hash)) return;
-    seenHashes.push(tx.hash);
+    // if (seenHashes.includes(tx.hash)) return;
+    // seenHashes.push(tx.hash);
 
     fetch(`${process.env.RUNNER_ENDPOINT}/priceUpdate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tx),
     }).catch(e => {
-      process.send(e);
+      logger.error(e);
     });
   } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
-    if (seenHashes.includes(tx.hash)) return;
-    seenHashes.push(tx.hash);
+    // if (seenHashes.includes(tx.hash)) return;
+    // seenHashes.push(tx.hash);
 
     fetch(`${process.env.RUNNER_ENDPOINT}/paramUpdate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tx),
     }).catch(e => {
-      process.send(e)
+      logger.error(e)
     });
   }
 }
@@ -75,7 +75,7 @@ async function subscribe(web3, from) {
   web3.eth
     .subscribe("pendingTransactions", (error, result) => {
       if (error) {
-        console.error(new Error("could not subscribe to tx pool"));
+        console.error(new Error(`could not subscribe to tx pool ${from}`));
       }
     })
     .on("data", async function (txHash) {
@@ -96,12 +96,12 @@ async function check() {
         headers: { "Content-Type": "application/json" },
         body: "",
       }).catch(e => {
-        process.send(e);
+        logger.error(e);
       });
     }
   );
   checkJob.on("error", (e) => {
-    process.send(`erorr checking with ${e}`);
+    logger.error(`erorr checking with ${e}`);
   });
 }
 
@@ -112,12 +112,12 @@ const web3IPC = new Web3(
 );
 subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
 
-const web3WS = new Web3(
-  new Web3.providers.WebsocketProvider(
-    process.env.WS_PROVIDER_ENDPOINT
-  )
-);
-subscribe(web3WS, "ws").then().catch(err => {
-  console.error(err);
-});
+// const web3WS = new Web3(
+//   new Web3.providers.WebsocketProvider(
+//     process.env.WS_PROVIDER_ENDPOINT
+//   )
+// );
+// subscribe(web3WS, "ws").then().catch(err => {
+//   console.error(err);
+// });
 

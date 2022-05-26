@@ -11,7 +11,6 @@ shell.exec(
   BULL_BOARD_PORT=8083\
   NODE_ENV=production\
   IPC_PROVIDER_ENDPOINT=/d/ethereum/.ethereum/geth.ipc \
-  WS_PROVIDER_ENDPOINT=ws://54.157.229.227:8548\
   DB_NUMBER_FOR_JOBS=15 \
   DB_NUMBER_FOR_DATA=14 \
   NUM_WORKERS=5 \

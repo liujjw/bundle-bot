@@ -1,4 +1,5 @@
 const Runner = require("../lib/Runner");
+const logger = require("../lib/Logger");
 
 /**
  * Assumes started as a child process.
@@ -6,14 +7,14 @@ const Runner = require("../lib/Runner");
 async function main() {
   const runner = new Runner();
   runner.on("error", err => {
-    process.send(err);
+    logger.error(err);
   })
   runner.on("info", message => {
-    process.send(message);
+    logger.info(message);
   });
 }
 
 main().catch((e) => {
-  process.send(e);
+  logger.error(e);
 });
 

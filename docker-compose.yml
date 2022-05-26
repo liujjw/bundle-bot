@@ -48,9 +48,10 @@ services:
   #   ports:
   #     - "8547:8547"
   #     - "30303:30303"
-  # docker run --name eth_node -d -p 8547:8547 -v /d/ethereum:/root \
-  # ethereum/client-go --http --http.port 8547 \
-  #--http.api "eth,txpool,net,web3" --maxpeers 250 --txpool.globalslots 3000
+  # docker run --name eth_node -d -p 8547:8547 -p 8548:8548 -v /d/ethereum:/root \
+  # ethereum/client-go --http --http.port 8547 --ws --ws.port 8548 \
+  # --http.api "eth,txpool,net,web3" --ws.api "eth,txpool,net,web3" \
+  # --maxpeers 250 --txpool.globalslots 1500
 
   # added some peers from all over the world, although bootnodes
   # have pretty good coverage already

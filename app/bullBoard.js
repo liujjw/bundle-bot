@@ -1,6 +1,7 @@
 const { createBullBoard } = require('@bull-board/api');
 const { BullAdapter } = require('@bull-board/api/bullAdapter');
 const { ExpressAdapter } = require('@bull-board/express');
+const logger = require("../lib/Logger");
 const express = require('express');
 const Queue = require('bull');
 
@@ -25,5 +26,5 @@ serverAdapter.setBasePath('/admin/queues');
 app.use('/admin/queues', serverAdapter.getRouter());
 const port = Number.parseInt(process.env.BULL_BOARD_PORT);
 app.listen(port, () => {
-  process.send(`bull board listening on /admin/queues/${port}`)
+  logger.info(`bull board listening on /admin/queues/${port}`)
 });
