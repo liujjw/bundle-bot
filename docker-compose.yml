@@ -1,5 +1,9 @@
 version: "3.9"
 
+# htop during low usage period (no arbs):
+# average of 3 cores (includes running geth node)
+# 9gb ram
+# round up tp t3.xlarge or m6i.xlarge  
 services:
   bot:
     image: liujjw/bot:0.1

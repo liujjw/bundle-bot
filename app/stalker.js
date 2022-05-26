@@ -15,7 +15,7 @@ let seenHashes = [];
  * @param {*} from
  */
 function send(tx, from) {  
-  if (seenHashes.length > 50) {
+  if (seenHashes.length > 15) {
     seenHashes = [];
   }
 
@@ -112,12 +112,12 @@ const web3IPC = new Web3(
 );
 subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
 
-const web3Chainstack = new Web3(
+const web3WS = new Web3(
   new Web3.providers.WebsocketProvider(
-    "wss://ws-nd-032-574-945.p2pify.com/704be0327c206b1ccab62eb791083a0a"
+    process.env.WS_PROVIDER_ENDPOINT
   )
 );
-subscribe(web3Chainstack, "chainstack").then().catch(err => {
+subscribe(web3WS, "ws").then().catch(err => {
   console.error(err);
 });
 
