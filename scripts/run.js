@@ -17,4 +17,5 @@ shell.exec(
   DB_READY=true \
   BOT_ADDR=0xEF43AE625f4e375C5035259f41136665fba97F38\
   BLOCKNATIVE_RP_PORT=80\
+  TX_FORMAT=GETH\
   node app/main.js`);
