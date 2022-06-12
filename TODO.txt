@@ -1,4 +1,5 @@
-todo respawn dead workers by using threadpool 
+test threadpool speed 
+test latency of node and improve (need to trim down runtime to be able to run geodistributed along with erigon)
 
 TODO a subscription to graphql 
 TODO switch to serverless for the aave upgrade and truly become microservices 
