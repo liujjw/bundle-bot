@@ -29,22 +29,16 @@ async function main() {
       try {
         await store.setCompoundParams();
       } catch (e) {
-        this.emit("error", e);
+        logger.warn(`problem updating db params ${e}`);
       }
-  });
-  paramJob.on("error", (e) => {
-    logger.error(`error updating db params with error ${e}`);
   });
   const accJob = schedule.scheduleJob(PARAMS.DB_UPDATE_ACCOUNTS_SCHEDULE, 
     async function() {
       try {
         await store.setCompoundAccounts();
       } catch (e) {
-        this.emit("error", e);
+        logger.warn(`problem updating db ${e}`);
       }
-  });
-  accJob.on("error", (e) => {
-    logger.error(`erorr updating db with error ${e}`);
   });
 
   if (process.env.DB_READY === "false") {
@@ -55,42 +49,24 @@ async function main() {
   const runner = fork(__dirname + `/${runnerFilename}`);
   runner.on("spawn", () => {
     logger.info(`started ${runnerFilename}`);
-  })
-  runner.on("error", (err) => {
-    logger.error(err);
   });
-  runner.on("message", (message, sendHandle) => {
-    logger.info(JSON.stringify(message, null, 4));
-  })
 
   const stalkerFilename = "stalker.js";
   const stalker = fork(__dirname + `/${stalkerFilename}`);
   stalker.on("spawn", () => {
     logger.info(`started ${stalkerFilename}`);
-  })
-  stalker.on("error", (err) => {
-    logger.error(err);
-  });
-  stalker.on("message", (message, sendHandle) => {
-    logger.info(JSON.stringify(message, null, 4));
   });
 
   const workersFilename = "runnerWorkers.js";
   const workers = fork(__dirname + `/${workersFilename}`);
   workers.on("spawn", () => {
     logger.info(`started ${workersFilename}`);
-  })
-  workers.on("error", (err) => {
-    logger.error(err);
-  })
-  workers.on("message", (message) => {
-    logger.info(JSON.stringify(message, null, 4));
-  })
+  });
 
   const bullBoardFilename = "bullBoard.js";
   const bullBoard = fork(__dirname + `/${bullBoardFilename}`);
-  bullBoard.on("message", (message) => {
-    logger.info(message);
+  bullBoard.on("spawn", () => {
+    logger.info(`started ${bullBoardFilename}`);
   });
 
   process.on('SIGINT', function () { 

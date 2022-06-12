@@ -28,7 +28,7 @@ function send(tx, from) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tx),
     }).catch(e => {
-      logger.error(e);
+      logger.error(`cannot send priceUpdate ${e}`);
     });
   } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
     // if (seenHashes.includes(tx.hash)) return;
@@ -39,7 +39,7 @@ function send(tx, from) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tx),
     }).catch(e => {
-      logger.error(e)
+      logger.error(`cannot send paramUpdate ${e}`)
     });
   }
 }
@@ -75,7 +75,7 @@ async function subscribe(web3, from) {
   web3.eth
     .subscribe("pendingTransactions", (error, result) => {
       if (error) {
-        console.error(new Error(`could not subscribe to tx pool ${from}`));
+        logger.error(`could not subscribe to tx pool using ${from} ${error}`);
       }
     })
     .on("data", async function (txHash) {
@@ -96,21 +96,18 @@ async function check() {
         headers: { "Content-Type": "application/json" },
         body: "",
       }).catch(e => {
-        logger.error(e);
+        logger.error(`cannot run check ${e}`);
       });
     }
   );
-  checkJob.on("error", (e) => {
-    logger.error(`erorr checking with ${e}`);
-  });
 }
 
-check().then().catch(err => console.error(err));
+check().then().catch(err => logger.error(err));
 
 const web3IPC = new Web3(
   new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
 );
-subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
+subscribe(web3IPC, "ipc").then().catch(err => logger.error(err));
 
 // server();
 // const web3WS = new Web3(

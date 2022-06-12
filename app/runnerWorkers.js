@@ -1,10 +1,6 @@
 const Queue = require('bull');
 const cluster = require('cluster');
-const RunnerWorker = require("../lib/RunnerWorker");
 const logger = require("../lib/Logger");
-
-const ethers = require("ethers");
-const AccountsDbClient = require("../lib/AccountsDbClient");
 
 require("dotenv").config({ path: __dirname + "/../.env" });
 
@@ -23,10 +19,7 @@ if (cluster.isMaster) {
   }
 
   cluster.on("error", err => {
-    throw err;
-  })
-  cluster.on("message", message => {
-    logger.info(message);
+    logger.error(`uncaught cluster error ${err}`);
   })
   cluster.on('exit', function (worker, code, signal) {
     logger.error('worker ' + worker.process.pid + ' died');
