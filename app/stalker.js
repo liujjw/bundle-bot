@@ -107,12 +107,12 @@ async function check() {
 
 check().then().catch(err => console.error(err));
 
-// const web3IPC = new Web3(
-//   new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
-// );
-// subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
+const web3IPC = new Web3(
+  new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
+);
+subscribe(web3IPC, "ipc").then().catch(err => console.error(err));
 
-server();
+// server();
 // const web3WS = new Web3(
 //   new Web3.providers.WebsocketProvider(
 //     process.env.WS_PROVIDER_ENDPOINT

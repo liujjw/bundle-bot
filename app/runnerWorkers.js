@@ -32,15 +32,5 @@ if (cluster.isMaster) {
     logger.error('worker ' + worker.process.pid + ' died');
   });
 } else {
-  taskQueue.process(async function (job, jobDone) {
-    const runnerWorker = new RunnerWorker();
-    runnerWorker.on("error", err => {
-      logger.error(err);
-    })
-    runnerWorker.on("info", message => {
-      logger.info(message);
-    });
-    await runnerWorker.process(job.data);
-    jobDone();
-  });
+  taskQueue.process("/root/defi-bot/app/runnerWorkersProcessor.js");
 }
