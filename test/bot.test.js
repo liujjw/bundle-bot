@@ -207,7 +207,7 @@ describe.only("Infra", function() {
       splitFactor: 5,
       newParamType: "price",
       newParamValue: {
-        value: BigNumber.from("1500").toString(), 
+        value: BigNumber.from("1000").toString(), 
         ticker: "ETH",
       }
     });
