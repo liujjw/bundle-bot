@@ -22,6 +22,7 @@ let compoundParams;
 let sickCompoundAccounts;
 let hardhatNode;
 let provider;
+let naturalProvider;
 let store;
 let lendingPool;
 let cUSDC;
@@ -63,6 +64,9 @@ beforeAll(async () => {
 
   provider = new ethers.providers.JsonRpcProvider(
     ENDPOINTS.RPC_PROVIDER
+  );
+  naturalProvider = new ethers.providers.JsonRpcProvider(
+    ENDPOINTS.RPC_PROVIDER_INFURA
   );
   const db = {
     host: ENDPOINTS.REDIS_HOST,
@@ -112,7 +116,7 @@ afterAll(() => {
   hardhatNode.kill("SIGKILL");
 });
 
-describe("Contract", function () {
+describe.only("Contract", function () {
   test('backrun transmit post price for liq #2', async function() {
       // tx hash: 0x78718e83f3d0d70d4ccdade609f3fe93f6635a8ff2918191632173f855ba95ba
       await hre.network.provider.request({
@@ -183,13 +187,17 @@ describe("Contract", function () {
       // --debug "testLiquidate2"
       // console.log
   });
+
+  test.only("liquidateBorrow failing", async function() {
+    
+  });
 });
 
-describe.only("Infra", function() {
+describe("Infra", function() {
   /**
    * @notice attach to running worker and use breakpoints 
    */
-  test.only(`processing and bundle submission in RunnerWorker`, async function() {
+  test(`processing and bundle submission in RunnerWorker`, async function() {
     shell.env["RUNNER_ENDPOINT"] = ENDPOINTS.RUNNER_ENDPOINT;
     shell.env["RUNNER_PORT"] = ENDPOINTS.RUNNER_PORT;
     shell.env["BOT_ADDR"] = ENDPOINTS.DEFAULT_BOT_ADDRESS;
