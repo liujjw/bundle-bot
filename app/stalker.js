@@ -2,11 +2,12 @@
 const fetch = require("node-fetch");
 const Web3 = require("web3");
 const net = require("net");
-const { ADDRS, PARAMS } = require("../lib/Constants");
+const { ADDRS, PARAMS, ENDPOINTS } = require("../lib/Constants");
 const schedule = require("node-schedule");
 const bodyParser = require("body-parser");
 const express = require("express");
 const logger = require("../lib/Logger");
+const { providers } = require("ethers");
 // let seenHashes = [];
 
 // TODO stalk base fee/price drops so that previously unprofitable
@@ -19,10 +20,11 @@ for (const key in OFFCHAIN_AGG_LOWERCASE) {
 
 /**
  * @notice DO NOT AWAIT FETCH
- * @param {*} tx 
+ * @param {Transaction|undefined} tx 
  * @param {*} source
+ * @param {Tranaction|undefined} provider
  */
-function send(tx, source) {  
+function send(tx, source, provider) {  
   // if (seenHashes.length > 15) {
   //   seenHashes = [];
   // }
@@ -46,6 +48,9 @@ function send(tx, source) {
       }).catch(e => {
         logger.error(`cannot send priceUpdate ${e}`);
       });
+      if (provider !== undefined) {
+        
+      }
     } else if (tx.to === ADDRS["COMPOUND_COMPTROLLER"]) {
       // if (seenHashes.includes(tx.hash)) return;
       // seenHashes.push(tx.hash);
@@ -76,13 +81,13 @@ function server() {
   app.post("/", async (req, res) => {
     const tx = req.body;
     if (tx.status === "pending") {
-      send(tx, source);
+      send(tx, source, undefined);
     }
     res.send("ok");
   });
   app.post("/test", async (req, res) => {
     const tx = req.body;
-    send(tx, source);
+    send(tx, source, undefined);
     logger.debug(`${__filename} received test tx`);
     res.send("ok");
   });
@@ -95,21 +100,27 @@ function server() {
 
 /**
  * 
- * @param {*} web3 
- * @param {*} source 
+ * @param {*} provider 
+ * @param {String} source 
  */
-async function subscribe(web3, source) {
-  web3.eth
+async function subscribe(provider, source) {
+  if (source.slice(0, 6) === "ethers") {
+    provider.on("pending", (tx) => {
+      console.log(tx);
+    });
+  } else {
+    provider.eth
     .subscribe("pendingTransactions", (error, result) => {
       if (error) {
         logger.error(`could not subscribe to tx pool using ${source} ${error}`);
       }
     })
     .on("data", async function (txHash) {
-      const tx = await web3.eth.getTransaction(txHash);
+      const tx = await provider.eth.getTransaction(txHash);      
       if (tx === null) return;
-      send(tx, source);
+      send(tx, source, provider);
     });
+  }
 }
 
 /**
@@ -118,7 +129,7 @@ async function subscribe(web3, source) {
 async function check() {
   const checkJob = schedule.scheduleJob(PARAMS.CHECK_SCHEDULE, 
     () => {
-      send(undefined, "check");
+      send(undefined, "check", undefined);
     }
   );
 }
@@ -131,6 +142,9 @@ const web3IPC = new Web3(
   new Web3.providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT, net)
 );
 subscribe(web3IPC, "ipc").then().catch(err => logger.error(err));
+
+// const provider = new providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT);
+// subscribe(provider, "ethers-ipc").then().catch(err => logger.error(err));
 
 // const web3WS = new Web3(
 //   new Web3.providers.WebsocketProvider(

@@ -189,7 +189,7 @@ describe.only("Contract", function () {
   });
 
   test.only("liquidateBorrow failing", async function() {
-    
+    // TODO use RunnerWorker constructBundle function or signedBundle if available
   });
 });
 

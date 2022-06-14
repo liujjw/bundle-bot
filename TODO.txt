@@ -1,29 +1,24 @@
-test threadpool speed 
-test latency of node and improve (need to trim down runtime to be able to run geodistributed along with erigon)
+TODO test latency of node and improve
+
+TODO stuck on aave getAccounts, could call one of their contracts over and over again
+but cant do graphql subscriptions; on the other hand dont understand their graphql; hybrid approach
+
+TODO maker auctions
 
 TODO a subscription to graphql 
+
 TODO switch to serverless for the aave upgrade and truly become microservices 
 (dont have a main that starts everything up)
+
 TODO could use erigon db snapshot in the cloud, then like rpc daemons all over the world
 
-TODO rearchitect runner worker code, and also make it so that we can send a bundle without backrun tx
-also publish it normally
-TODO update nonce for dead workers
-// TODO info of {}, require a logging library, redo errors
-// TODO obvious reverts, but where? check demo-research.ts  
-// liquidate seize too much in reverrt message 
-// TODO: add users to this list, delete them fom the db, and never fetch them again, hot list
+TODO obvious reverts, but where? check demo-research.ts, liquidate seize too much in reverrt message
+
+TODO: add users to this list, delete them fom the db, and never fetch them again, hot list
 
 TODO switch from alchemy to geth node 
 
-timestamps seem to be too close: the miner starts mining just a second after i receive the tx,
-so theres no time for the liq to get computed and included in the same block 
-thus i allow the arb to get included in the next block sans the backrun txs
-TODO still begs the question of how i can see the backrun longer before the miner starts mining
-
 TODO list of known and accepted loadTokenPrices
-
-TODO the loggers
 
 // https://www.reddit.com/r/ethereum/comments/jg29m0/guide_for_full_node_on_aws_with_reasonable_amount/
 // t4.gmedium cant get synced up, need something stronger
