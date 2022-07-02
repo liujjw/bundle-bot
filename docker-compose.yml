@@ -56,6 +56,24 @@ services:
   # globalslots should be small enough to allow for lookup (seems instantaneous at1500) 
   # but large enough so that a tx doesn't get kicked out
 
+# ./build/bin/geth --datadir=/d/ethereum/.ethereum \
+# --http --http.port 8547 --ws --ws.port 8548 \
+# --http.api "eth,txpool,net,web3" --ws.api "eth,txpool,net,web3" \
+# --maxpeers 100 \
+# --txpool.globalslots 1024 \
+# --txpool.lifetime 0h20m0s \
+# --nat upnp \
+# --verbosity 3 console 2> geth-logs7.log
+  # remember to change log filename so no overwrite
+  # --txpool.locals [0xCF4Be57aA078Dc7568C631BE7A73adc1cdA992F8,\
+  # 0x5a8216a9c47ee2E8Df1c874252fDEe467215C25b,\
+  # 0x57CD4848b12469618b689163f507817940AccA02,\
+  # 0x7663C5790E1eBf04197245d541279D13f3c2f362] \
+
+# ./geth --syncmode light --http --http.port 8555 \
+# --http.api "eth,debug,txpool" --ws --ws.port 8556 --ws.api "eth,debug,txpool" \
+# --light.nosyncserve --port 30304 
+  
   # added some peers from all over the world, although bootnodes
   # have pretty good coverage already
   # check admin.peers() to admin.addPeer() nodes from ethernode

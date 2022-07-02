@@ -105,8 +105,9 @@ function server() {
  */
 async function subscribe(provider, source) {
   if (source.slice(0, 6) === "ethers") {
+    provider.send("eth_blockNumber", []).then((reply) => console.debug(reply));
     provider.on("pending", (tx) => {
-      console.log(tx);
+      // console.debug(tx);
     });
   } else {
     provider.eth
@@ -116,8 +117,13 @@ async function subscribe(provider, source) {
       }
     })
     .on("data", async function (txHash) {
+      // console.debug(source);
+      // console.debug(txHash, new Date());
       const tx = await provider.eth.getTransaction(txHash);      
-      if (tx === null) return;
+      if (tx === null) {
+        // console.debug("tx evicted from pending pool");
+        return;
+      }
       send(tx, source, provider);
     });
   }
@@ -143,9 +149,6 @@ const web3IPC = new Web3(
 );
 subscribe(web3IPC, "ipc").then().catch(err => logger.error(err));
 
-// const provider = new providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT);
-// subscribe(provider, "ethers-ipc").then().catch(err => logger.error(err));
-
 // const web3WS = new Web3(
 //   new Web3.providers.WebsocketProvider(
 //     process.env.WS_PROVIDER_ENDPOINT
@@ -155,3 +158,8 @@ subscribe(web3IPC, "ipc").then().catch(err => logger.error(err));
 //   logger.error(err);
 // });
 
+// const provider = new providers.IpcProvider(process.env.IPC_PROVIDER_ENDPOINT);
+// subscribe(provider, "ethers-ipc").then().catch(err => logger.error(err));
+
+// const provider = new providers.WebSocketProvider(process.env.WS_PROVIDER_ENDPOINT);
+// subscribe(provider, "ethers-ws").then().catch(err => logger.error(err));

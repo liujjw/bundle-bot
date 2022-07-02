@@ -1,3 +1,6 @@
+
+# DEPRECATED! PLEASE REVIEW AND DELETE
+
 ## Auction Bid Pricing
 
 ### 95% rule
