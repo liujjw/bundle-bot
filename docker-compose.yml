@@ -56,6 +56,7 @@ services:
   # globalslots should be small enough to allow for lookup (seems instantaneous at1500) 
   # but large enough so that a tx doesn't get kicked out
 
+# 
 # ./build/bin/geth --datadir=/d/ethereum/.ethereum \
 # --http --http.port 8547 --ws --ws.port 8548 \
 # --http.api "eth,txpool,net,web3" --ws.api "eth,txpool,net,web3" \
