@@ -1,5 +1,5 @@
 
-# DEPRECATED! PLEASE REVIEW AND DELETE
+# [NOT UPDATED]
 
 ## Auction Bid Pricing
 
