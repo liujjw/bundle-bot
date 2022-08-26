@@ -1,5 +1,5 @@
 
-# [NOT UPDATED]
+# [NOT UPDATED OR COMPREHENSIVE]
 
 ## Auction Bid Pricing
 
