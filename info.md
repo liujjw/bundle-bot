@@ -1,5 +1,5 @@
 
-# [NOT UPDATED OR COMPREHENSIVE]
+# [OLD/INACCURATE/INCOMPLETE INFO :)]
 
 ## Auction Bid Pricing
 
@@ -31,9 +31,8 @@ Gas tokens are still a thing. To compete, we would need to have our own capital 
 
 Blocknative has one. (TODO)
 
-## Info
-
-### handle all todos and todo2 (designate as todo2 to triage todos, todo2 are less important), also to some extent similar to open issues
+## TODO
+todos and todo2 (todo2 are less important)
 
 ## Prod
 
