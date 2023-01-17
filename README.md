@@ -7,4 +7,4 @@ Express, Redis, Bull job queue, Node.js clusters and workers, Docker, AWS/GCP/Az
 # Todo
 - [x] Ethereum 1
 - [x] Compound V1
-- [] Alts
+- [ ] Alts
